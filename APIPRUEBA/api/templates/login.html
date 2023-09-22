@@ -135,11 +135,7 @@
                   <span class="app-brand-text demo text-body fw-bolder">Sneat</span>
                 </a>
               </div>
-              <!-- /Logo -->
-              <h4 class="mb-2">🤝Bienvenidos🤝</h4>
-              <p class="mb-4">Please sign-in to your account and start the adventure</p>
-
-              <form id="formAuthentication" class="mb-3" action="inicio.html" method="POST">
+              <form id="formAuthentication" class="mb-3" action="{% url 'inicio'%}" method="POST">
                 <div class="mb-3">
                   <label for="email" class="form-label">Email or Username</label>
                   <input
