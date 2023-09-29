@@ -14,3 +14,9 @@ class inicio(APIView):
         return render(request,self.template_name)
     def get(self, request):
         return render(request,self.template_name)
+class registro(APIView):
+    template_name = "registro.html"
+    def post(self, request):
+        return render(request,self.template_name)
+    def get(self, request):
+        return render(request,self.template_name)
