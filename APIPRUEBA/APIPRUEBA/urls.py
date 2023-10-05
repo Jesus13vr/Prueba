@@ -1,10 +1,13 @@
 from django.contrib import admin
 from django.urls import path
-from api.views import login,inicio,registro
+from api.views import Home
+from api import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-     path('login/', login.as_view(),name='login'),
-     path('inicio/', inicio.as_view(),name='inicio'),
-     path('registro/', registro.as_view(),name='registro'),
+    #path('admin/', admin.site.urls),
+     path('', Home.as_view(),name='index'),
+     path('signin/', views.signin,name='signin'),
+     path('signup/', views.signup,name='signup'),
+     path('logout/',views.signout, name='logout'),
+     path('enviar_correo/<str:nombre>/<str:correo>/<str:apellido>/<str:usuario>/<str:contra>/', views.enviar_correo, name='enviar_correo'),
 ]
