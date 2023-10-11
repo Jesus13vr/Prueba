@@ -38,6 +38,7 @@ def signup(request):
                 })
                 #return HttpResponse('Username already exist')
         #return HttpResponse('Password do not match')
+        
 def signout(request):
     logout(request)
     return redirect('signin')
