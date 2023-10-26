@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from rest_framework.views import APIView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+import secrets
+import string 
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from django.core.mail import send_mail
@@ -74,5 +76,41 @@ def enviar_correo(request, nombre, correo, apellido, usuario, contra):
 
     # Envía el correo
     send_mail(subject, '', from_email, recipient_list, html_message=contenido_correo)
-    
+    #ventana reseteo de contraseña
     return redirect('signin')
+
+class forgotpas(APIView):
+    def get(self,request):
+        return
+    
+def rest(request):
+    return render(request, 'rest.html')
+
+
+#codigo reseteo contraseña
+def generar_contrasena_temporal(length=10):
+    caracteres=string.ascii_letters + string.digits
+    contraseña_temporal=''.join(secrets.choice(caracteres)for i in range(length))
+    return contraseña_temporal
+
+
+#envio de correos
+def enviar_contrasena_temporal(request, username):
+    usuario = usuario.objects.get(username=username)  # Recupera el usuario por su nombre de usuario
+
+    # Genera una contraseña temporal
+    contrasena_temporal = generar_contrasena_temporal()
+
+    # Asigna la contraseña temporal al usuario
+    usuario.set_password(contrasena_temporal)
+    usuario.save()
+
+    # Envía un correo electrónico con la contraseña temporal
+    subject = 'Contraseña temporal'
+    message = f'Tu contraseña temporal es: {contrasena_temporal}'
+    from_email = 'jesusvillanueva203@gmail.com'
+    recipient_list = [usuario.email]
+
+    send_mail(subject, message, from_email, recipient_list)
+
+    return render(request,'enviar_correo.html')

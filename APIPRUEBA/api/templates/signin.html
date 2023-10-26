@@ -127,6 +127,7 @@
                     placeholder="Matricula"
                     autofocus
                   />
+                  
                 </div>
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
@@ -146,7 +147,12 @@
                   </div>
                 </div>
                 <div class="mb-3">
-                 
+                  <div class="mb-3 form-password-toggle">
+                    <div class="d-flex justify-content-between">
+                      <a href="{% url 'rest'%}">
+                        <span>Olvidaste tu contraseña?</span>
+                      </a>
+                    </div>
                 </div>
                 <div class="mb-3">
                   <button class="btn btn-primary d-grid w-100" type="submit">Iniciar sesion</button>
@@ -154,9 +160,9 @@
               </form>
 
               <p class="text-center">
-                <span>New on our platform?</span>
+                <span>Eres nuevo?</span>
                 <a href="{% url 'signup'%}" >
-                  <span>Create an account</span>
+                  <span>Crear cuenta</span>
                 </a>
               </p>
             </div>
