@@ -93,6 +93,9 @@ def generar_contrasena_temporal(length=10):
     contraseña_temporal=''.join(secrets.choice(caracteres)for i in range(length))
     return contraseña_temporal
 
+# Método que manda webos al pou
+def webos_pal_pou():
+    print("Webos pal pou")
 
 #envio de correos
 def enviar_contrasena_temporal(request, username):
