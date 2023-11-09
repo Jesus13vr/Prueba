@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import  dj_database_url
 import os 
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,14 +23,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-nbuaclwu$990g%ej=z*-3j&^&ont%xh=iuix8yn&6%a=%nif=4'
+SECRET_KEY = os.environ.get('SECRET_KEY',default='your secret key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'RENDER' not in os.environ
 
 ALLOWED_HOSTS = []
 
-
+RENDER_EXTERNAL_HOSTNAME= os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 # Application definition
 
 INSTALLED_APPS = [
@@ -51,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'white'
 ]
 
 ROOT_URLCONF = 'APIPRUEBA.urls'
@@ -77,15 +81,18 @@ WSGI_APPLICATION = 'APIPRUEBA.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dbmigracion',
-        'USER': 'postgres',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',  # O la dirección de tu servidor PostgreSQL
-        'PORT': '',           # Puerto de PostgreSQL (generalmente 5432)
-    }
+#DATABASES = {
+ #  'default': {
+        #'ENGINE': 'django.db.backends.postgresql',
+        #'NAME': 'dbmigracion',
+        #'USER': 'postgres',
+        #'PASSWORD': 'root',
+        #'HOST': 'localhost',  # O la dirección de tu servidor PostgreSQL
+        #'PORT': '',           # Puerto de PostgreSQL (generalmente 5432)
+#    }
+#}
+DATABASES ={
+    'default': dj_database_url
 }
 
 # Password validation
@@ -105,7 +112,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+DATABASES={
+    'default':dj_database_url.parse("postgres://dbsistema_wbez_user:ZfG2AlS4dxH08JF0On7Q0NGJVhvyR9tp@dpg-cl629nhk857s73cnlmqg-a.oregon-postgres.render.com/dbsistema_wbez")
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
