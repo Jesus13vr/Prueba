@@ -93,9 +93,6 @@ def generar_contrasena_temporal(length=10):
     contraseña_temporal=''.join(secrets.choice(caracteres)for i in range(length))
     return contraseña_temporal
 
-# Método que manda webos al pou
-def webos_pal_pou():
-    print("Webos pal pou")
 
 #envio de correos
 def enviar_contrasena_temporal(request, username):
@@ -117,3 +114,8 @@ def enviar_contrasena_temporal(request, username):
     send_mail(subject, message, from_email, recipient_list)
 
     return render(request,'enviar_correo.html')
+class google(APIView):
+    template_name = "googlecharts.html"
+    def get(self, request):
+            return render(request, self.template_name) 
+            
