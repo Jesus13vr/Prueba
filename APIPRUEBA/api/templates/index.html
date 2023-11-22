@@ -190,68 +190,29 @@
                   </li>
               </ul>
             </li>
-          
-          
-           
-          
+
             <!-- Forms & Tables -->
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">Forms &amp; Tables</span></li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Registrar Usuarios</span></li>
             <!-- Forms -->
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-detail"></i>
-                <div data-i18n="Form Elements">Form Elements</div>
+                <div data-i18n="Form Elements">Registro de Usuario</div>
               </a>
               <ul class="menu-sub">
+              
                 <li class="menu-item">
-                  <a href="forms-basic-inputs.html" class="menu-link">
-                    <div data-i18n="Basic Inputs">Basic Inputs</div>
+                  <a href="{% url 'signup'%}" class="menu-link">
+                    <div data-i18n="Input groups">Registro</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="forms-input-groups.html" class="menu-link">
-                    <div data-i18n="Input groups">Input groups</div>
+                  <a href="{% url 'signup'%}" class="menu-link">
+                    <div data-i18n="Input groups">Registro</div>
                   </a>
                 </li>
               </ul>
             </li>
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
-                <div data-i18n="Form Layouts">Form Layouts</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="form-layouts-vertical.html" class="menu-link">
-                    <div data-i18n="Vertical Form">Vertical Form</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="form-layouts-horizontal.html" class="menu-link">
-                    <div data-i18n="Horizontal Form">Horizontal Form</div>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <!-- Tables -->
-            <li class="menu-item">
-              <a href="tables-basic.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">Tables</div>
-              </a>
-            </li>
-            
-            <li class="menu-item">
-              <a
-                href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
-                target="_blank"
-                class="menu-link"
-              >
-                <i class="menu-icon tf-icons bx bx-support"></i>
-                <div data-i18n="Support">Support</div>
-              </a>
-            </li>
-            
           </ul>
         </aside>
         <!-- / Menu -->
@@ -369,7 +330,7 @@
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-              <iframe title="ya" width="100%" height="100%" src="https://app.powerbi.com/reportEmbed?reportId=ff502c9c-b3cc-4b03-ad5c-41bbd3424dd0&autoAuth=true&ctid=dcec6cc1-cc36-4bdf-a82c-eaddb2de00ea" frameborder="0" allowFullScreen="true"></iframe>
+              {% comment %} <iframe title="ya" width="100%" height="100%" src="https://app.powerbi.com/reportEmbed?reportId=ff502c9c-b3cc-4b03-ad5c-41bbd3424dd0&autoAuth=true&ctid=dcec6cc1-cc36-4bdf-a82c-eaddb2de00ea" frameborder="0" allowFullScreen="true"></iframe> {% endcomment %}
               <div id="piechart" style="width: 900px; height: 500px;"></div>
             </div>
             <!-- Footer -->
