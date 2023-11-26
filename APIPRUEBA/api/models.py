@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Rol(models.Model):
     id_Rol = models.AutoField(primary_key=True)
     Descripción = models.CharField(max_length=45)
-n
+
     class Meta:
         db_table = 'Rol'
 
