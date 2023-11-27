@@ -46,7 +46,7 @@
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.53;
   --bs-body-color: #697a8d;
-  --bs-body-bg: #f5f5f9;
+  --bs-body-bg: rgba(178, 252, 138, 0.502);
 }
 
 *,
@@ -2441,7 +2441,7 @@ textarea.form-control-lg {
      -moz-appearance: none;
           appearance: none;
   -webkit-print-color-adjust: exact;
-          color-adjust: exact;
+color-adjust: exact;
 }
 .form-check-input[type=checkbox] {
   border-radius: 0.25em;
@@ -3838,10 +3838,10 @@ textarea.form-control-lg {
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #fff;
+  background-color: #8ad86080;
   background-clip: border-box;
   border: 0 solid #d9dee3;
-  border-radius: 0.5rem;
+  border-radius: 0.8rem;
 }
 .card > hr {
   margin-right: 0;
@@ -15340,7 +15340,7 @@ html:not(.layout-menu-fixed) .menu-inner-shadow {
 }
 .layout-navbar[class*=bg-]:not(.bg-navbar-theme) .nav-item .input-group-text,
 .layout-navbar[class*=bg-]:not(.bg-navbar-theme) .nav-item .dropdown-toggle {
-  color: #fff;
+  color: #5af705 ;
 }
 @media (max-width: 1199.98px) {
   .layout-navbar .navbar-nav .nav-item.dropdown .dropdown-menu {
