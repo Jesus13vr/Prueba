@@ -135,7 +135,7 @@
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
             <li class="menu-item active">
-              <a href="inicio.html" class="menu-link">
+              <a href="{% url 'index'%}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">home</div>
               </a>
@@ -199,13 +199,7 @@
                 <i class="menu-icon tf-icons bx bx-detail"></i>
                 <div data-i18n="Form Elements">Registro de Usuario</div>
               </a>
-              <ul class="menu-sub">
-              
-                <li class="menu-item">
-                  <a href="{% url 'signup'%}" class="menu-link">
-                    <div data-i18n="Input groups">Registro</div>
-                  </a>
-                </li>
+              <ul class="menu-sub"> 
                 <li class="menu-item">
                   <a href="{% url 'signup'%}" class="menu-link">
                     <div data-i18n="Input groups">Registro</div>
