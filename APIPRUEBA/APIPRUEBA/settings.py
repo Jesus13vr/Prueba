@@ -145,7 +145,7 @@ EMAIL_HOST ='smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'jesusvillanueva203@gmail.com'
-EMAIL_HOST_PASSWORD = 'cduw sath pmny lbop'
+EMAIL_HOST_PASSWORD = 'htjc fbmu hudr mcmn'
 
 #Configuracion opcional del correo
 DEFAULT_FROM_EMAIL = 'jesusvillanueva2039@gmail.com'

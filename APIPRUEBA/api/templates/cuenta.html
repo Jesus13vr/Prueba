@@ -5,22 +5,17 @@
   class="light-style layout-menu-fixed"
   dir="ltr"
   data-theme="theme-default"
-  data-assets-path="{% static '/'%}"
+  data-assets-path=""{% static '/'%}"
   data-template="vertical-menu-template-free"
 >
   <head>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>    
-    {% if user.is_authenticated %}
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Inicio ADMON</title>
+    <title>Cuenta</title>
 
     <meta name="description" content="" />
 
@@ -36,49 +31,22 @@
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="{% static 'vendor/fonts/boxicons.css'%}" />
+    <link rel="stylesheet" href={% static 'vendor/fonts/boxicons.css'%} />
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="{% static 'vendor/css/core.css'%}" class="template-customizer-core-css" />
     <link rel="stylesheet" href="{% static 'vendor/css/theme-default.css'%}" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="{% static 'css/demo.css'%}" />
-
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{% static 'vendor/libs/perfect-scrollbar/perfect-scrollbar.css'%}" />
-
-    <link rel="stylesheet" href="{% static 'vendor/libs/apex-charts/apex-charts.css'%}" />
-
-    <!-- Page CSS -->
-
     <!-- Helpers -->
     <script src="{% static 'vendor/js/helpers.js'%}"></script>
 
+
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="{% static 'js/config.js'%}"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
 
-      function drawChart() {
-
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Aprobados',     11],
-          ['Reprobados',      2],
-          ['recurse',  2],
-        ]);
-
-        var options = {
-          title: 'indicadores'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-        chart.draw(data, options);
-      }
-    </script>
+<script src="{% static 'js/config.js'%}"></script>
   </head>
 
   <body>
@@ -150,7 +118,7 @@
 
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="{% url 'grafica'%}" class="menu-link">
+                  <a href="layouts-without-menu.html" class="menu-link">
                     <div data-i18n="Without menu">Graficas</div>
                   </a>
                 </li>
@@ -178,7 +146,7 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="{% url 'usu'%}" class="menu-link">
+                  <a href="pages-account-settings-account.html" class="menu-link">
                     <div data-i18n="Account">Datos Personales</div>
                   </a>
                 </li>
@@ -227,27 +195,17 @@
 
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- Search -->
-              {% comment %} <div class="navbar-nav align-items-center">
-                <div class="nav-item d-flex align-items-center">
-                  <i class="bx bx-search fs-4 lh-0"></i>
-                  <input
-                    type="text"
-                    class="form-control border-0 shadow-none"
-                    placeholder="Search..."
-                    aria-label="Search..."
-                  />
-                </div>
-              </div>
-              <!-- /Search --> {% endcomment %}
+              
+              <!-- /Search -->
 
               <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- Place this tag where you want the button to render. -->
                 
                 <!-- User -->
-                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                <i class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="{% static 'img/avatars/1.png'%}" alt class="w-px-40 h-auto rounded-circle" />
+                      <img src="{% static '/img/avatars/1.png'%}" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -256,7 +214,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src="{% static 'img/avatars/1.png'%}" alt class="w-px-40 h-auto rounded-circle" />
+                              <img src="{%static 'img/avatars/1.png'%}" alt class="w-px-40 h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -292,7 +250,7 @@
                       </a>
                     </li>
                   </ul>
-                </li>
+                </i>
                 <!--/ User -->
               </ul>
             </div>
@@ -305,10 +263,110 @@
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-              {% comment %} <iframe title="ya" width="100%" height="100%" src="https://app.powerbi.com/reportEmbed?reportId=ff502c9c-b3cc-4b03-ad5c-41bbd3424dd0&autoAuth=true&ctid=dcec6cc1-cc36-4bdf-a82c-eaddb2de00ea" frameborder="0" allowFullScreen="true"></iframe> {% endcomment %}
-              <div id="piechart" style="width: 900px; height: 500px;"></div>
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Account Settings /</span> Account</h4>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <ul class="nav nav-pills flex-column flex-md-row mb-3">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-user me-1"></i> Account</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages-account-settings-notifications.html"
+                        ><i class="bx bx-bell me-1"></i> Notifications</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages-account-settings-connections.html"
+                        ><i class="bx bx-link-alt me-1"></i> Connections</a
+                      >
+                    </li>
+                  </ul>
+                  <div class="card mb-4">
+                    <h5 class="card-header">Profile Details</h5>
+                    <!-- Account -->
+                    <div class="card-body">
+                      <div class="d-flex align-items-start align-items-sm-center gap-4">
+                        <img
+                          src="{% static 'img/avatars/1.png' %}
+                          alt="user-avatar"
+                          class="d-block rounded"
+                          height="100"
+                          width="100"
+                          id="uploadedAvatar"
+                        />
+                        <div class="button-wrapper">
+                          <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                            <span class="d-none d-sm-block">Upload new photo</span>
+                            <i class="bx bx-upload d-block d-sm-none"></i>
+                            <input
+                              type="file"
+                              id="upload"
+                              class="account-file-input"
+                              hidden
+                              accept="image/png, image/jpeg"
+                            />
+                          </label>
+                          <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                            <i class="bx bx-reset d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Reset</span>
+                          </button>
+
+                          <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+                        </div>
+                      </div>
+                    </div>
+                    <hr class="my-0" />
+                    <div class="card-body">
+                      <form id="formAccountSettings" method="POST" onsubmit="return false">
+                        <div class="row">
+                          <div class="mb-3 col-md-6">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input
+                              class="form-control"
+                              type="text"
+                              id="firstName"
+                              name="firstName"
+                              value="John"
+                              autofocus
+                            />
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input class="form-control" type="text" name="lastName" id="lastName" value="Doe" />
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <label for="email" class="form-label">E-mail</label>
+                            <input
+                              class="form-control"
+                              type="text"
+                              id="email"
+                              name="email"
+                              value="john.doe@example.com"
+                              placeholder="john.doe@example.com"
+                            />
+                          </div>
+                        </div>
+                        <div class="mt-2">
+                          <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                          <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+                        </div>
+                      </form>
+                    </div>
+                    <!-- /Account -->
+                  </div>
+                 
+                </div>
+              </div>
             </div>
-        
+            <!-- / Content -->
+
+            <!-- Footer -->
+            <footer class="content-footer footer bg-footer-theme">
+              
+            </footer>
+            <!-- / Footer -->
+
             <div class="content-backdrop fade"></div>
           </div>
           <!-- Content wrapper -->
@@ -321,29 +379,22 @@
     </div>
     <!-- / Layout wrapper -->
 
-   
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+    
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="{% static 'vendor/libs/jquery/jquery.js'%}"></script>
     <script src="{% static 'vendor/libs/popper/popper.js'%}"></script>
     <script src="{% static 'vendor/js/bootstrap.js'%}"></script>
     <script src="{% static 'vendor/libs/perfect-scrollbar/perfect-scrollbar.js'%}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+
     <script src="{% static 'vendor/js/menu.js'%}"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="{% static 'vendor/libs/apex-charts/apexcharts.js'%}"></script>
 
     <!-- Main JS -->
     <script src="{% static 'js/main.js'%}"></script>
+
 
     <!-- Page JS -->
     <script src="{% static 'js/dashboards-analytics.js'%}"></script>
@@ -352,6 +403,3 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
 </html>
-{% else %}
-<META HTTP-EQUIV="REFRESH" CONTENT="0;URL={% url 'signin'%}">
-{% endif %}

@@ -45,6 +45,7 @@ def signout(request):
     logout(request)
     return redirect('signin')
 
+
 def signin(request):
     if request.method == 'GET':
         return render(request, 'signin.html', {
@@ -82,9 +83,12 @@ def enviar_correo(request, nombre, correo, apellido, usuario, contra):
 class forgotpas(APIView):
     def get(self,request):
         return
-    
 def rest(request):
     return render(request, 'rest.html')
+def cuenta(request):
+    return render(request, 'cuenta.html')
+def grafica(request):
+    return render(request, 'grafica.html')
 
 
 #codigo reseteo contraseña
