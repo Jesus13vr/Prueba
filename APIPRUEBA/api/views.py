@@ -45,6 +45,7 @@ def signout(request):
     logout(request)
     return redirect('signin')
 
+
 def signin(request):
     if request.method == 'GET':
         return render(request, 'signin.html', {
@@ -82,9 +83,12 @@ def enviar_correo(request, nombre, correo, apellido, usuario, contra):
 class forgotpas(APIView):
     def get(self,request):
         return
-    
 def rest(request):
     return render(request, 'rest.html')
+def cuenta(request):
+    return render(request, 'cuenta.html')
+def grafica(request):
+    return render(request, 'grafica.html')
 
 
 #codigo reseteo contraseña
@@ -93,9 +97,6 @@ def generar_contrasena_temporal(length=10):
     contraseña_temporal=''.join(secrets.choice(caracteres)for i in range(length))
     return contraseña_temporal
 
-# Método que manda webos al pou
-def webos_pal_pou():
-    print("Webos pal pou")
 
 #envio de correos
 def enviar_contrasena_temporal(request, username):
@@ -117,3 +118,8 @@ def enviar_contrasena_temporal(request, username):
     send_mail(subject, message, from_email, recipient_list)
 
     return render(request,'enviar_correo.html')
+class google(APIView):
+    template_name = "googlecharts.html"
+    def get(self, request):
+            return render(request, self.template_name) 
+            

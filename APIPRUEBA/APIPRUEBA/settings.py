@@ -11,9 +11,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-#import  dj_database_url
+# import  dj_database_url
 import os 
-#import dj_database_url
+# import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -54,7 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleawer',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'APIPRUEBA.urls'
@@ -84,16 +84,16 @@ WSGI_APPLICATION = 'APIPRUEBA.wsgi.application'
 DATABASES = {
    'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dbmigracion',
+        'NAME': 'admon',
         'USER': 'postgres',
         'PASSWORD': 'root',
         'HOST': 'localhost',  # O la dirección de tu servidor PostgreSQL
         'PORT': '',           # Puerto de PostgreSQL (generalmente 5432)
-    }
+   }
 }
-#DATABASES ={
-#    'default': dj_database_url
-#}
+# DATABASES ={
+#     'default': dj_database_url
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -112,9 +112,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-#DATABASES={
-    #'default':dj_database_url.parse("postgres://dbsistema_wbez_user:ZfG2AlS4dxH08JF0On7Q0NGJVhvyR9tp@dpg-cl629nhk857s73cnlmqg-a.oregon-postgres.render.com/dbsistema_wbez")
-#}
+# DATABASES={
+#     'default':dj_database_url.parse("postgres://dbsistema_wbez_user:ZfG2AlS4dxH08JF0On7Q0NGJVhvyR9tp@dpg-cl629nhk857s73cnlmqg-a.oregon-postgres.render.com/dbsistema_wbez")
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -134,9 +134,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-if not DEBUG:
-    STATIC_ROOT= os.path.join(BASE_DIR,'staticfiles')
-    STATICFILES_STORAGE='whitenoise.storage.CompressedManifestStaticFilesStorage'
+# # Usar Google Cloud Storage para almacenar archivos estáticos.
+# STATIC_URL = 'https://storage.googleapis.com/lic_admon/static/'
+# # Usar Google Cloud Storage para almacenar archivos de medios.
+# DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+# GS_BUCKET_NAME = 'lic_admon'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -147,7 +149,7 @@ EMAIL_HOST ='smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'jesusvillanueva203@gmail.com'
-EMAIL_HOST_PASSWORD = 'cduw sath pmny lbop'
+EMAIL_HOST_PASSWORD = 'htjc fbmu hudr mcmn'
 
 #Configuracion opcional del correo
 DEFAULT_FROM_EMAIL = 'jesusvillanueva2039@gmail.com'

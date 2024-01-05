@@ -20,7 +20,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{% static 'img/favicon/favicon.ico' %}" />
+    <link rel="icon" type="image/x-icon" href="{% static 'img/c.jpeg' %}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -112,7 +112,7 @@
                  
                 </a>
               </div>
-              <center><h4 class="mb-2">Bienvenidos a ADMON 👋</h4>
+              <center><h4 class="mb-2" > 👩‍🏫 Bienvenidos a ADMON 👨‍🏫 </h4>
               <p class="mb-4">Inicia tu sesión </p>
               <p class="mb-4" style="color:red;">{{error}}</p></center>
               <form class="mb-3" action="/signin/" method="POST">
@@ -157,13 +157,6 @@
                 <div class="mb-3">
                   <button class="btn btn-primary d-grid w-100" type="submit">Iniciar sesion</button>
                 </div>
-              </form>
-
-              <p class="text-center">
-                <span>Eres nuevo?</span>
-                <a href="{% url 'signup'%}" >
-                  <span>Crear cuenta</span>
-                </a>
               </p>
             </div>
           </div>
