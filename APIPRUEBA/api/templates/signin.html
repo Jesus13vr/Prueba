@@ -1,191 +1,117 @@
-{% load static %}
+{%load static%}
 <!DOCTYPE html>
-<html
-  lang="en"
-  class="light-style customizer-hide"
-  dir="ltr"
-  data-theme="theme-default"
-  data-assets-path="{% static '/'%}"
-  data-template="vertical-menu-template-free"
->
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="{% static "img/apple-icon.png"%}">
+  <link rel="icon" type="image/png" href="{% static "img/favicon.png" %}">
+  <title>
+   LOGIN ADMON
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="{% static "css/nucleo-icons.css" %}" rel="stylesheet" />
+  <link href="{% static "css/nucleo-svg.css" %}" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link href="{% static "css/nucleo-svg.css" %}" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="{% static "css/argon-dashboard.css" %}" rel="stylesheet" />
+</head>
 
-    <title>Login ADMON</title>
-
-    <meta name="description" content="" />
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{% static 'img/c.jpeg' %}" />
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="{% static 'vendor/fonts/boxicons.css'%}" />
-
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="{% static 'vendor/css/core.css'%}" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="{% static 'vendor/css/theme-default.css'%}" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="{% static 'css/demo.css'%}" />
-
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{% static 'vendor/libs/perfect-scrollbar/perfect-scrollbar.css'%}" />
-
-    <!-- Page CSS -->
-    <!-- Page -->
-    <link rel="stylesheet" href="{% static 'vendor/css/pages/page-auth.css'%}" />
-    <!-- Helpers -->
-    <script src="{% static 'vendor/js/helpers.js' % }"></script>
-
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="{% static 'js/config.js'%}"></script>
-  </head>
-
-  <body>
-    <!-- Content -->
-
-    <div class="container-xxl">
-      <div class="authentication-wrapper authentication-basic container-p-y">
-        <div class="authentication-inner">
-          <!-- Register -->
-          <div class="card">
-            <div class="card-body">
-              <div class="app-brand justify-content-center">
-                      <defs>
-                        <path
-                          d="M13.7918663,0.358365126 L3.39788168,7.44174259 C0.566865006,9.69408886 -0.379795268,12.4788597 0.557900856,15.7960551 C0.68998853,16.2305145 1.09562888,17.7872135 3.12357076,19.2293357 C3.8146334,19.7207684 5.32369333,20.3834223 7.65075054,21.2172976 L7.59773219,21.2525164 L2.63468769,24.5493413 C0.445452254,26.3002124 0.0884951797,28.5083815 1.56381646,31.1738486 C2.83770406,32.8170431 5.20850219,33.2640127 7.09180128,32.5391577 C8.347334,32.0559211 11.4559176,30.0011079 16.4175519,26.3747182 C18.0338572,24.4997857 18.6973423,22.4544883 18.4080071,20.2388261 C17.963753,17.5346866 16.1776345,15.5799961 13.0496516,14.3747546 L10.9194936,13.4715819 L18.6192054,7.984237 L13.7918663,0.358365126 Z"
-                          id="path-1"
-                        ></path>
-                        <path
-                          d="M5.47320593,6.00457225 C4.05321814,8.216144 4.36334763,10.0722806 6.40359441,11.5729822 C8.61520715,12.571656 10.0999176,13.2171421 10.8577257,13.5094407 L15.5088241,14.433041 L18.6192054,7.984237 C15.5364148,3.11535317 13.9273018,0.573395879 13.7918663,0.358365126 C13.5790555,0.511491653 10.8061687,2.3935607 5.47320593,6.00457225 Z"
-                          id="path-3"
-                        ></path>
-                        <path
-                          d="M7.50063644,21.2294429 L12.3234468,23.3159332 C14.1688022,24.7579751 14.397098,26.4880487 13.008334,28.506154 C11.6195701,30.5242593 10.3099883,31.790241 9.07958868,32.3040991 C5.78142938,33.4346997 4.13234973,34 4.13234973,34 C4.13234973,34 2.75489982,33.0538207 2.37032616e-14,31.1614621 C-0.55822714,27.8186216 -0.55822714,26.0572515 -4.05231404e-15,25.8773518 C0.83734071,25.6075023 2.77988457,22.8248993 3.3049379,22.52991 C3.65497346,22.3332504 5.05353963,21.8997614 7.50063644,21.2294429 Z"
-                          id="path-4"
-                        ></path>
-                        <path
-                          d="M20.6,7.13333333 L25.6,13.8 C26.2627417,14.6836556 26.0836556,15.9372583 25.2,16.6 C24.8538077,16.8596443 24.4327404,17 24,17 L14,17 C12.8954305,17 12,16.1045695 12,15 C12,14.5672596 12.1403557,14.1461923 12.4,13.8 L17.4,7.13333333 C18.0627417,6.24967773 19.3163444,6.07059163 20.2,6.73333333 C20.3516113,6.84704183 20.4862915,6.981722 20.6,7.13333333 Z"
-                          id="path-5"
-                        ></path>
-                      </defs>
-                      <g id="g-app-brand" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                        <g id="Brand-Logo" transform="translate(-27.000000, -15.000000)">
-                          <g id="Icon" transform="translate(27.000000, 15.000000)">
-                            <g id="Mask" transform="translate(0.000000, 8.000000)">
-                              <mask id="mask-2" fill="white">
-                                <use xlink:href="#path-1"></use>
-                              </mask>
-                              <use fill="#696cff" xlink:href="#path-1"></use>
-                              <g id="Path-3" mask="url(#mask-2)">
-                                <use fill="#696cff" xlink:href="#path-3"></use>
-                                <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-3"></use>
-                              </g>
-                              <g id="Path-4" mask="url(#mask-2)">
-                                <use fill="#696cff" xlink:href="#path-4"></use>
-                                <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-4"></use>
-                              </g>
-                            </g>
-                            <g
-                              id="Triangle"
-                              transform="translate(19.000000, 11.000000) rotate(-300.000000) translate(-19.000000, -11.000000) "
-                            >
-                              <use fill="#696cff" xlink:href="#path-5"></use>
-                              <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-5"></use>
-                            </g>
-                          </g>
-                        </g>
-                      </g>
-                    </svg>
-                  </span>
-                 
-                </a>
-              </div>
-              <center><h4 class="mb-2" > 👩‍🏫 Bienvenidos a ADMON 👨‍🏫 </h4>
-              <p class="mb-4">Inicia tu sesión </p>
-              <p class="mb-4" style="color:red;">{{error}}</p></center>
-              <form class="mb-3" action="/signin/" method="POST">
-                {% csrf_token%}
-                <div class="mb-3">
-                  <label for="email" class="form-label"> Matricula </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="username"
-                    name="username"
-                    placeholder="Matricula"
-                    autofocus
-                  />
-                  
+<body class="">
+  <div class="container position-sticky z-index-sticky top-0">
+    <div class="row">
+      
+    </div>
+  </div>
+  <main class="main-content  mt-0">
+    <section>
+      <div class="page-header min-vh-100">
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+              <div class="card card-plain">
+                <div class="card-header pb-0 text-start">
+                  <h4 class="font-weight-bolder">Inicio de sesion </h4>
+                  <p class="mb-0">Ingresa tu matricula y tu contraseña</p>
                 </div>
-                <div class="mb-3 form-password-toggle">
-                  <div class="d-flex justify-content-between">
-                    <label class="form-label" for="password">Contraseña</label>
-                  
-                  </div>
-                  <div class="input-group input-group-merge">
-                    <input
-                      type="password"
-                      id="password"
-                      class="form-control"
-                      name="password"
-                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      aria-describedby="password"
-                    />
-                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <div class="mb-3 form-password-toggle">
-                    <div class="d-flex justify-content-between">
-                      <a href="{% url 'rest'%}">
-                        <span>Olvidaste tu contraseña?</span>
-                      </a>
+                <div class="card-body">
+                  <form class="mb-3" action="/signin/" method="POST">
+                    {% csrf_token%}
+                    <div class="mb-3">
+                      <label for="email" class="form-label"> Matricula </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="username"
+                        name="username"
+                        placeholder="Matricula"
+                        autofocus
+                      />
                     </div>
+                    <div class="mb-3 form-password-toggle">
+                      <div class="d-flex justify-content-between">
+                        <label class="form-label" for="password">Contraseña</label>
+                      
+                      </div>
+                      <div class="input-group input-group-merge">
+                        <input
+                          type="password"
+                          id="password"
+                          class="form-control"
+                          name="password"
+                          placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                          aria-describedby="password"
+                        />
+                        <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                      </div>
+                    </div>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="rememberMe">
+                      <label class="form-check-label" for="rememberMe">Remember me</label>
+                    </div>
+                    <div class="mb-3">
+                      <button class="btn btn-primary d-grid w-100" type="submit">Iniciar sesion</button>
+                    </div>
+                  </form>
                 </div>
-                <div class="mb-3">
-                  <button class="btn btn-primary d-grid w-100" type="submit">Iniciar sesion</button>
-                </div>
-              </p>
+                
+              </div>
+            </div>
+            <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+              <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden" style="background-image: url('data:image/jpeg;base64,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');
+          background-size: cover;">
+                <span class="mask bg-gradient-primary opacity-6"></span>
+                <h4 class="mt-5 text-white font-weight-bolder position-relative">"Licenciatura en Administracion "</h4>
+                <p class="text-white position-relative">La administración trata acerca de la gestión en el corto plazo, mientras se desarrollan los planes a largo plazo</p>
+              </div>
             </div>
           </div>
-          <!-- /Register -->
         </div>
       </div>
-    </div>
+    </section>
+  </main>
+  <!--   Core JS Files   -->
+  <script src="{% static "js/core/popper.min.js" %}"></script>
+  <script src="{% static "js/core/bootstrap.min.js" %}"></script>
+  <script src="{% static "js/plugins/perfect-scrollbar.min.js" %}"></script>
+  <script src="{% static "js/plugins/smooth-scrollbar.min.js" %}"></script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="{% static "js/argon-dashboard.min.js" %}"></script>
+</body>
 
-    <!-- / Content -->
-
-
-    <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
-    <script src="{% static 'vendor/libs/jquery/jquery.js'%}"></script>
-    <script src="{% static 'vendor/libs/popper/popper.js'%}"></script>
-    <script src="{% static 'vendor/js/bootstrap.js'%}"></script>
-    <script src="{% static 'vendor/libs/perfect-scrollbar/perfect-scrollbar.js'%}"></script>
-
-    <script src="{% static 'vendor/js/menu.js'%}"></script>
-    <!-- endbuild -->
-
-    <!-- Vendors JS -->
-
-    <!-- Main JS -->
-    <script src="{% static 'js/main.js'%}"></script>
-
-    <!-- Page JS -->
-
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-  </body>
 </html>
