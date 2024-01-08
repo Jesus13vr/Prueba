@@ -78,7 +78,7 @@
                       placeholder="Ingresa tu matricula"
                       autofocus
                       oninput="checkMatriculaLength(this.value)"
-                      maxlength="11" <!-- Agregamos el atributo maxlength -->
+                      maxlength="12" <!-- Agregamos el atributo maxlength -->
             
               </div>
               
@@ -101,6 +101,10 @@
                       } else if (matricula.length === 11) {
                           // Si la matrícula tiene 11 caracteres, asigna otro rol
                           roleInput.value = 'docente';
+                          roleFieldsDiv.style.display = 'block';
+                        } else if (matricula.length === 12) {
+                          // Si la matrícula tiene 11 caracteres, asigna otro rol
+                          roleInput.value = 'Jefe de Carrera';
                           roleFieldsDiv.style.display = 'block';
                       } else {
                           // Si la longitud de la matrícula no coincide, oculta el campo de rol

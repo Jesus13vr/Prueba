@@ -39,11 +39,10 @@ def signup(request):
                     "mensaje" : 'Username already exist'
                 })
                 #return HttpResponse('Username already exist')
-        #return HttpResponse('Password do not match')
-        
+        #return HttpResponse('Password do not match')       
 def signout(request):
     logout(request)
-    return redirect('signin')
+    return redirect('signup')
 
 def signin(request):
     if request.method == 'GET':
