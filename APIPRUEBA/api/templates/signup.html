@@ -71,14 +71,44 @@
                 <div class="mb-3">
                   <label for="username" class="form-label">Matricula</label>
                   <input
-                    type="text"
-                    class="form-control"
-                    id="username"
-                    name="username"
-                    placeholder="Ingresa tu matricula"
-                    autofocus
-                  />
-                </div>
+                      type="text"
+                      class="form-control"
+                      id="username"
+                      name="username"
+                      placeholder="Ingresa tu matricula"
+                      autofocus
+                      oninput="checkMatriculaLength(this.value)"
+                      maxlength="11" <!-- Agregamos el atributo maxlength -->
+            
+              </div>
+              
+              <!-- Div para mostrar campos específicos según la longitud de la matrícula -->
+              <div id="roleFields" class="mb-3" style="display: none;">
+                  <!-- Aquí puedes agregar campos específicos para cada rol -->
+                  <label for="role" class="form-label">Rol</label>
+                  <input type="text" class="form-control" id="role" name="role" readonly>
+              </div>
+              
+              <script>
+                  function checkMatriculaLength(matricula) {
+                      const roleFieldsDiv = document.getElementById('roleFields');
+                      const roleInput = document.getElementById('role');
+              
+                      if (matricula.length === 10) {
+                          // Si la matrícula tiene 10 caracteres, asigna el rol correspondiente
+                          roleInput.value = 'alumno';
+                          roleFieldsDiv.style.display = 'block';
+                      } else if (matricula.length === 11) {
+                          // Si la matrícula tiene 11 caracteres, asigna otro rol
+                          roleInput.value = 'docente';
+                          roleFieldsDiv.style.display = 'block';
+                      } else {
+                          // Si la longitud de la matrícula no coincide, oculta el campo de rol
+                          roleFieldsDiv.style.display = 'none';
+                      }
+                  }
+              </script>
+              
                 <div class="mb-3">
                   <label for="email" class="form-label">Correo</label>
                   <input type="email"

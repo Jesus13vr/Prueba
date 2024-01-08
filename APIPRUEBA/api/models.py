@@ -1,7 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 # Create your models here.
 #base de datos 
+# models.py
+
 class Rol(models.Model):
     id_Rol = models.AutoField(primary_key=True)
     Descripción = models.CharField(max_length=45)

@@ -45,22 +45,52 @@ def signout(request):
     logout(request)
     return redirect('signin')
 
-
 def signin(request):
     if request.method == 'GET':
-        return render(request, 'signin.html', {
-            'form': AuthenticationForm
-        })
+        return render(request, 'signin.html', {'form': AuthenticationForm})
     else:
-        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+
         if user is None:
-            return render(request, 'signin.html', {
-                'form': AuthenticationForm,
-                'error': 'Usuario o contraseña incorrecta'
-            })
-        else:
-            login(request, user)
-            return render(request, 'index.html')
+            return render(request, 'signin.html', {'form': AuthenticationForm, 'error': 'Usuario o contraseña incorrecta'})
+
+        # Acciones específicas según la cantidad de dígitos en la matrícula
+        if len(username) == 10:
+            # Acción para usuarios con matrícula de 10 dígitos 
+            # Por ejemplo, podrías considerarlos como alumnos
+            return render(request, 'index.html', {'user': user})
+        elif len(username) == 11:
+            # Acción para usuarios con matrícula de 11 dígitos
+            # Por ejemplo, podrías considerarlos como docentes
+            return render(request, 'index3.html', {'user': user})
+        elif len(username) == 12:
+            # Acción para usuarios con matrícula de 12 dígitos
+            # Por ejemplo, podrías considerarlos como jefes
+            return render(request, 'index2.html', {'user': user})
+        elif len(username) == 15:
+            # Acción para usuarios con matrícula de 12 dígitos
+            # Por ejemplo, podrías considerarlos como jefes
+            return render(request, 'index4.html', {'user': user})
+        
+
+
+# def signin(request):
+#     if request.method == 'GET':
+#         return render(request, 'signin.html', {
+#             'form': AuthenticationForm
+#         })
+#     else:
+#         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
+#         if user is None:
+#             return render(request, 'signin.html', {
+#                 'form': AuthenticationForm,
+#                 'error': 'Usuario o contraseña incorrecta'
+#             })
+#         else:
+#             login(request, user)
+#             return render(request, 'index.html')
 
 def enviar_correo(request, nombre, correo, apellido, usuario, contra):
     subject = 'Bienvenida'

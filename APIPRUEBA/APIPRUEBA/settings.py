@@ -154,3 +154,6 @@ EMAIL_HOST_PASSWORD = 'htjc fbmu hudr mcmn'
 #Configuracion opcional del correo
 DEFAULT_FROM_EMAIL = 'jesusvillanueva2039@gmail.com'
 EMAIL_SUBJECT_PREFIX = ''
+
+
+
