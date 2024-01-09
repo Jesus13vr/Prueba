@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from rest_framework.views import APIView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from .models import Materia  
 import secrets
 import string 
 from django.contrib.auth import login, logout, authenticate
@@ -68,10 +69,11 @@ def signin(request):
             # Acción para usuarios con matrícula de 12 dígitos
             # Por ejemplo, podrías considerarlos como jefes
             return render(request, 'index2.html', {'user': user})
-        elif len(username) == 15:
+        elif len(username) == 5:
             # Acción para usuarios con matrícula de 12 dígitos
             # Por ejemplo, podrías considerarlos como jefes
-            return render(request, 'index4.html', {'user': user})
+            return render(request, 'index4.html', {'user': user}
+                          )
         
 
 
@@ -118,6 +120,26 @@ def cuenta(request):
     return render(request, 'cuenta.html')
 def grafica(request):
     return render(request, 'grafica.html')
+def index2(request):
+    return render(request, 'index2.html')
+def index3(request):
+    return render(request, 'index3.html')
+def index4(request):
+    return render(request, 'index4.html')
+def registrar_materia(request):
+    if request.method == 'GET':
+        form = Materia()
+        return render(request, 'materia.html', {'form': form})
+    else:
+        form = Materia(request.POST)
+        if form.is_valid():
+            materia = form.save()
+            return redirect('materia')  
+        else:
+            return render(request, 'materia.html', {'form': form, 'error': 'Hubo un error en el formulario'})
+def meteria(request):
+    return render(request, 'materia.html')
+
 
 
 #codigo reseteo contraseña
@@ -151,4 +173,5 @@ class google(APIView):
     template_name = "googlecharts.html"
     def get(self, request):
             return render(request, self.template_name) 
+
             
