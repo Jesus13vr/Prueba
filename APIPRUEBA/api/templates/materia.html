@@ -42,10 +42,11 @@
           <div class="card z-index-0">
             <div class="card-header text-center pt-4">
               <h5>Registra al usuario</h5>
+              <h6 style="color:red;">{{ mensaje }}</h6>
             </div>
             
             <div class="card-body">
-              <form id="formAuthentication" class="mb-3" method="POST">
+              <form id="formAuthentication" class="mb-3" method="POST" action="{% url 'materia'%}">
                 {% csrf_token %}
                 <div class="mb-3">
                   <label for="nombre" class="form-label">Nombre de la Materia</label>

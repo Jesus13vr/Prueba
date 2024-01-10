@@ -126,20 +126,44 @@ def index3(request):
     return render(request, 'index3.html')
 def index4(request):
     return render(request, 'index4.html')
-def registrar_materia(request):
-    if request.method == 'GET':
-        form = Materia()
-        return render(request, 'materia.html', {'form': form})
-    else:
-        form = Materia(request.POST)
-        if form.is_valid():
-            materia = form.save()
-            return redirect('materia')  
+class insertar_materia:
+    def materia(request):
+        if request.method == 'GET':
+            return render(request, 'index4.html', {
+            'form': Materia,
+            })
         else:
-            return render(request, 'materia.html', {'form': form, 'error': 'Hubo un error en el formulario'})
+            
+            nombre=request.POST('nombre')
+            semestre=request.POST('semestre')
+            creditos=request.POST('creditos')
+            try:
+            # Crear y guardar materia
+                materia = Materia.objects.create(nombre=nombre, semestre=semestre, creditos=creditos)
+                materia.save()
+                print("se ejecuta el metodo")
+            except IntegrityError:
+                return render(request, 'materia.html', {
+                'form': Materia,
+                "mensaje": 'Error al registrar la materia'
+            })
 def meteria(request):
     return render(request, 'materia.html')
-
+class registrarMateria(APIView):
+    template_name = "materia.html"
+    def get(self,request):
+        return render(request, self.template_name)
+    def post(self,request):
+        nombre=request.POST.get('nombre')
+        semestre=request.POST.get('semestre')
+        creditos=request.POST.get('creditos')
+        try:
+        # Crear y guardar materia
+            materia = Materia(nombre=nombre, semestre=semestre, creditos=creditos)
+            materia.save()
+            return render(request, self.template_name, {"mensaje": 'Materia registrada con exito'})
+        except IntegrityError:
+            return render(request, self.template_name, {"mensaje": 'Error al registrar la materia'})
 
 
 #codigo reseteo contraseña
