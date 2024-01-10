@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect
 from rest_framework.views import APIView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from .models import Materia  
+from .models import Materia,Periodo 
+import datetime
+from datetime import datetime as fe
 import secrets
 import string 
 from django.contrib.auth import login, logout, authenticate
@@ -74,25 +76,6 @@ def signin(request):
             # Por ejemplo, podrías considerarlos como jefes
             return render(request, 'index4.html', {'user': user}
                           )
-        
-
-
-# def signin(request):
-#     if request.method == 'GET':
-#         return render(request, 'signin.html', {
-#             'form': AuthenticationForm
-#         })
-#     else:
-#         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
-#         if user is None:
-#             return render(request, 'signin.html', {
-#                 'form': AuthenticationForm,
-#                 'error': 'Usuario o contraseña incorrecta'
-#             })
-#         else:
-#             login(request, user)
-#             return render(request, 'index.html')
-
 def enviar_correo(request, nombre, correo, apellido, usuario, contra):
     subject = 'Bienvenida'
     from_email = 'jesusvillanueva203@gmail.com'
@@ -114,41 +97,7 @@ def enviar_correo(request, nombre, correo, apellido, usuario, contra):
 class forgotpas(APIView):
     def get(self,request):
         return
-def rest(request):
-    return render(request, 'rest.html')
-def cuenta(request):
-    return render(request, 'cuenta.html')
-def grafica(request):
-    return render(request, 'grafica.html')
-def index2(request):
-    return render(request, 'index2.html')
-def index3(request):
-    return render(request, 'index3.html')
-def index4(request):
-    return render(request, 'index4.html')
-class insertar_materia:
-    def materia(request):
-        if request.method == 'GET':
-            return render(request, 'index4.html', {
-            'form': Materia,
-            })
-        else:
-            
-            nombre=request.POST('nombre')
-            semestre=request.POST('semestre')
-            creditos=request.POST('creditos')
-            try:
-            # Crear y guardar materia
-                materia = Materia.objects.create(nombre=nombre, semestre=semestre, creditos=creditos)
-                materia.save()
-                print("se ejecuta el metodo")
-            except IntegrityError:
-                return render(request, 'materia.html', {
-                'form': Materia,
-                "mensaje": 'Error al registrar la materia'
-            })
-def meteria(request):
-    return render(request, 'materia.html')
+    
 class registrarMateria(APIView):
     template_name = "materia.html"
     def get(self,request):
@@ -164,7 +113,24 @@ class registrarMateria(APIView):
             return render(request, self.template_name, {"mensaje": 'Materia registrada con exito'})
         except IntegrityError:
             return render(request, self.template_name, {"mensaje": 'Error al registrar la materia'})
-
+   
+class RegistraPeriodo(APIView):
+    template_name = "periodo.html"
+    def get(self,request):
+        return render(request, self.template_name)
+    def post(self,request):
+        try:
+            fecha_inicio = request.POST.get('fecha_inicio')
+            fecha_format = fe.strptime(fecha_inicio, '%Y-%m-%d')
+            fecha_fin = request.POST.get('fecha_fin')
+            fecha_forma = fe.strptime(fecha_fin, '%Y-%m-%d')
+        # Crear y guardar materia
+            periodo = Periodo(fecha_inicio=fecha_format, fecha_fin=fecha_forma)
+            periodo.save()
+            return render(request, self.template_name, {"mensaje": 'periodo registrada con exito'})
+        except IntegrityError:
+            return render(request, self.template_name, {"mensaje": 'Error al registrar la periodo'})
+   
 
 #codigo reseteo contraseña
 def generar_contrasena_temporal(length=10):
@@ -198,4 +164,16 @@ class google(APIView):
     def get(self, request):
             return render(request, self.template_name) 
 
-            
+def rest(request):
+        return render(request, 'rest.html')
+def cuenta(request):
+        return render(request, 'cuenta.html')
+def grafica(request):
+        return render(request, 'grafica.html')
+def index2(request):
+         return render(request, 'index2.html')
+def index3(request):
+        return render(request, 'index3.html')
+def index4(request):
+         return render(request, 'index4.html')
+        

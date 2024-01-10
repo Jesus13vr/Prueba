@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
 #base de datos 
@@ -35,11 +36,16 @@ class Materia(models.Model):
 
     class Meta:
         db_table = 'Materia'
-
+class Periodo(models.Model):
+    idPeriodo = models.AutoField(primary_key=True)
+    fecha_inicio = models.DateField(default='2024-01-01', null=False)
+    fecha_fin = models.DateField(default='2024-01-02', null=False)
+    class Meta:
+        db_table = 'Periodo'
 class Seguimiento(models.Model):
     idSeguimiento = models.AutoField(primary_key=True)
     parcial = models.CharField(max_length=45)
-
+    Periodo_idPeriodo = models.ForeignKey(Periodo, on_delete=models.CASCADE)
     class Meta:
         db_table = 'Seguimiento'
 
@@ -50,3 +56,4 @@ class Docente(models.Model):
 
     class Meta:
         db_table = 'Docente'
+

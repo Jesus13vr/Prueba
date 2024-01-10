@@ -13,6 +13,7 @@ urlpatterns = [
      path('index4/', views.index4,name='index4'),
      path('materia/', registrarMateria.as_view(),name='materia'),
      path('signup/', views.signup,name='signup'),
+     path('periodo/', views.RegistraPeriodo,name='periodo'),
      path('logout/',views.signout, name='logout'),
      path('usu/',views.cuenta, name='usu'),
      path('grafica/',views.grafica, name='grafica'),
