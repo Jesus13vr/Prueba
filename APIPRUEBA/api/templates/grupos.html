@@ -41,40 +41,43 @@
         <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
           <div class="card z-index-0">
             <div class="card-header text-center pt-4">
-              <h5>Registra el periodo</h5>
+              <h5>grupo</h5>
               <h6 style="color:red;">{{ mensaje }}</h6>
             </div>
             
             <div class="card-body">
-              <form id="formAuthentication" class="mb-3" method="POST" action="{% url 'periodo'%}">
+              <form id="formGrupo" class="mb-3" method="POST" action="{% url 'grupo' %}">
                 {% csrf_token %}
+                
                 <div class="mb-3">
-                  <label for="fecha_inicio" class="form-label">Fecha de Inicio del Periodo</label>
-                  <input
-                      type="date"
-                      class="form-control"
-                      id="fecha_inicio"
-                      name="fecha_inicio"
-                      placeholder="Selecciona la fecha de inicio del periodo"
-                  />
-              </div>
-              
-              <div class="mb-3">
-                  <label for="fecha_fin" class="form-label">Fecha de Fin del Periodo</label>
-                  <input
-                      type="date"
-                      class="form-control"
-                      id="fecha_fin"
-                      name="fecha_fin"
-                      placeholder="Selecciona la fecha de fin del periodo"
-                  />
-              </div>
-               
+                    <label for="nombre_grupo" class="form-label">Nombre del Grupo</label>
+                    <input type="text" class="form-control" id="nombre_grupo" name="nombre_grupo" placeholder="Ingrese el nombre del grupo">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="periodo" class="form-label">Periodo</label>
+                    <select class="form-select" id="periodo" name="periodo">
+                        {% for periodo in periodos %}
+                            <option value="{{ periodo.id }}">{{ periodo.fecha_inicio }} - {{ periodo.fecha_fin }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="usuarios" class="form-label">Alumno</label>
+                    <select class="form-select" id="usuarios" name="usuarios">
+                        {% for usuario in usuarios %}
+                            <option value="{{ usuario.id }}">{{ usuario.username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
                 <button class="btn btn-primary d-grid w-100" type="submit">Registrar</button>
-              <a href="{% url 'index4'%}" class="d-flex align-items-center justify-content-center">
-                  <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
-                 Salir
-              </a>
+                <a href="{% url 'index4' %}" class="d-flex align-items-center justify-content-center">
+                    <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+                    Salir
+                </a>
+            </form>
             </form>
             </div>
           </div>

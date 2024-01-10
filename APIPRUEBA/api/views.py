@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect
 from rest_framework.views import APIView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from .models import Materia,Periodo 
+from .models import Materia,Periodo,Grupo
 import datetime
 from datetime import datetime as fe
 import secrets
 import string 
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import  authenticate
 from django.db import IntegrityError
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -19,7 +19,7 @@ class Home(APIView):
     def post(self, request):
         return render(request,self.template_name)
     def get(self, request):
-        return render(request,self.template_name)
+        return render(request,self.template_name,{'form': AuthenticationForm})
 def signup(request):
     if request.method =='GET':
         return render(request, 'signup.html',{
@@ -43,9 +43,7 @@ def signup(request):
                 })
                 #return HttpResponse('Username already exist')
         #return HttpResponse('Password do not match')       
-def signout(request):
-    logout(request)
-    return redirect('signup')
+
 
 def signin(request):
     if request.method == 'GET':
@@ -127,11 +125,36 @@ class RegistraPeriodo(APIView):
         # Crear y guardar materia
             periodo = Periodo(fecha_inicio=fecha_format, fecha_fin=fecha_forma)
             periodo.save()
-            return render(request, self.template_name, {"mensaje": 'periodo registrada con exito'})
+            return render(request, self.template_name, {"mensaje": 'Periodo registrada con exito'})
         except IntegrityError:
             return render(request, self.template_name, {"mensaje": 'Error al registrar la periodo'})
    
+class RegistraGrupo(APIView):
+    template_name = "grupos.html"
 
+    def get(self, request):
+        # Obtén la lista de usuarios y periodos para mostrar en el formulario
+        usuarios = User.objects.all()
+        periodos = Periodo.objects.all()
+        return render(request, self.template_name, {"usuarios": usuarios, "periodos": periodos})
+
+    def post(self, request):
+        try:
+            nombre_grupo = request.POST.get('nombre_grupo')
+            id = request.POST.get('id')
+            id_periodo = request.POST.get('id_periodo')
+
+            # Obten los objetos de usuario y periodo
+            usuario = User.objects.get(id=id)
+            periodo = Periodo.objects.get(id=id_periodo)
+
+            # Crear y guardar grupo
+            grupo = Grupo(nombre_grupo=nombre_grupo, usuario=id, periodo=periodo)
+            grupo.save()
+
+            return render(request, self.template_name, {"mensaje": 'Grupo registrado con éxito'})
+        except IntegrityError:
+            return render(request, self.template_name, {"mensaje": 'Error al registrar el grupo'})
 #codigo reseteo contraseña
 def generar_contrasena_temporal(length=10):
     caracteres=string.ascii_letters + string.digits
@@ -171,9 +194,11 @@ def cuenta(request):
 def grafica(request):
         return render(request, 'grafica.html')
 def index2(request):
-         return render(request, 'index2.html')
+         return render(request, 'index2.html',{'form': AuthenticationForm})
 def index3(request):
-        return render(request, 'index3.html')
+        return render(request, 'index3.html', {'form': AuthenticationForm})
 def index4(request):
-         return render(request, 'index4.html')
+         return render(request, 'index4.html', {'form': AuthenticationForm})
+def subir(request):
+         return render(request, 'subir.html', {'form': AuthenticationForm})
         

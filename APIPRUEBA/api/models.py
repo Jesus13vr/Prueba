@@ -42,6 +42,14 @@ class Periodo(models.Model):
     fecha_fin = models.DateField(default='2024-01-02', null=False)
     class Meta:
         db_table = 'Periodo'
+class Grupo(models.Model):
+    id_grupo = models.AutoField(primary_key=True)
+    nombre_grupo = models.CharField(max_length=255)
+    Periodo_idPeriodo = models.ForeignKey(Periodo, on_delete=models.CASCADE)
+    usuario= models.ForeignKey(User,on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'Grupos'
 class Seguimiento(models.Model):
     idSeguimiento = models.AutoField(primary_key=True)
     parcial = models.CharField(max_length=45)

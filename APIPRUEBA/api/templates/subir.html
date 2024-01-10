@@ -41,41 +41,75 @@
         <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
           <div class="card z-index-0">
             <div class="card-header text-center pt-4">
-              <h5>Registra el periodo</h5>
-              <h6 style="color:red;">{{ mensaje }}</h6>
+              <h5>Registrar Calificaciones</h5>
             </div>
             
             <div class="card-body">
-              <form id="formAuthentication" class="mb-3" method="POST" action="{% url 'periodo'%}">
+              <form id="formGrades" class="mb-3" method="POST">
                 {% csrf_token %}
+                
                 <div class="mb-3">
-                  <label for="fecha_inicio" class="form-label">Fecha de Inicio del Periodo</label>
+                  <label for="group" class="form-label">Selecciona el Grupo</label>
+                  <select class="form-select" id="group" name="group">
+                    {% for group in groups %}
+                      <option value="{{ group.id }}">{{ group.name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+    
+                <div class="mb-3">
+                  <label for="student_id" class="form-label">ID del Estudiante</label>
+                  <select class="form-select" id="student_id" name="student_id">
+                    {% for student in students %}
+                      <option value="{{ student.id }}">{{ student.name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+    
+                <div class="mb-3">
+                  <label for="first_partial" class="form-label">Primer Parcial</label>
                   <input
-                      type="date"
-                      class="form-control"
-                      id="fecha_inicio"
-                      name="fecha_inicio"
-                      placeholder="Selecciona la fecha de inicio del periodo"
+                    type="number"
+                    class="form-control"
+                    id="first_partial"
+                    name="first_partial"
+                    placeholder="Ingresa la calificación del primer parcial"
                   />
-              </div>
-              
-              <div class="mb-3">
-                  <label for="fecha_fin" class="form-label">Fecha de Fin del Periodo</label>
+                </div>
+    
+                {% if first_partial_submitted %}
+                <div class="mb-3">
+                  <label for="second_partial" class="form-label">Segundo Parcial</label>
                   <input
-                      type="date"
-                      class="form-control"
-                      id="fecha_fin"
-                      name="fecha_fin"
-                      placeholder="Selecciona la fecha de fin del periodo"
+                    type="number"
+                    class="form-control"
+                    id="second_partial"
+                    name="second_partial"
+                    placeholder="Ingresa la calificación del segundo parcial"
                   />
-              </div>
-               
-                <button class="btn btn-primary d-grid w-100" type="submit">Registrar</button>
-              <a href="{% url 'index4'%}" class="d-flex align-items-center justify-content-center">
+                </div>
+                {% endif %}
+    
+                {% if second_partial_submitted %}
+                <div class="mb-3">
+                  <label for="third_partial" class="form-label">Tercer Parcial</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="third_partial"
+                    name="third_partial"
+                    placeholder="Ingresa la calificación del tercer parcial"
+                  />
+                </div>
+                {% endif %}
+    
+                <button class="btn btn-primary d-grid w-100" type="submit">Registrar Calificaciones</button>
+                
+                <a href="{% url 'index' %}" class="d-flex align-items-center justify-content-center">
                   <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
-                 Salir
-              </a>
-            </form>
+                  Regresar
+                </a>              
+              </form>
             </div>
           </div>
         </div>
