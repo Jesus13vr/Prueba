@@ -1,25 +1,23 @@
 from django.contrib import admin
 from django.urls import path
-from api.views import Home,google
 from api import views
 from api.views import *
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
-     path('index', Home.as_view(),name='index'),
-     path('signin/', views.signin,name='signin'),
-     path('index2/', views.index2,name='index2'),
-     path('index3/', views.index3,name='index3'),
-     path('subir/', views.subir,name='subir'),
-     path('index4/', views.index4,name='index4'),
-     path('materia/', registrarMateria.as_view(),name='materia'),
+     path('', Home.as_view(),name='index'),
+     path('signin/', signin.as_view(),name='signin'),
      path('signup/', views.signup,name='signup'),
-     path('periodo/', RegistraPeriodo.as_view(),name='periodo'),
-     path('grupo/', RegistraGrupo.as_view(),name='grupo'),
-     path('usu/',views.cuenta, name='usu'),
-     path('grafica/',views.grafica, name='grafica'),
-     path('rest/',views.rest, name='rest'),
-     path('googlecharts/',google.as_view(), name='google'),
+     path('logout/', Signout.as_view(), name='logout'),
+     path('grupo/', Grupos.as_view(),name='grupo'),
+     path('docente/', Docentes.as_view(),name='docente'),
+     path('materia/', Materias.as_view(),name='materia'),
+     path('periodo/', Periodos.as_view(),name='periodo'),
+     path('alumno/', Alumno.as_view(),name='alumno'),
+     path('asignacion/', Asignaciones.as_view(),name='asignacion'),
+     path('calificaciones/', Calificaciones.as_view(),name='calificaciones'),
+     path('parciales/', Parciales.as_view(),name='parciales'),
+     path('historial_academico/', Historial.as_view(),name='historial'),
      path('enviar-contrasena-temporal/<str:correo>/',views.enviar_contrasena_temporal, name='enviar-cotrasena-temporal'),
      path('enviar_correo/<str:nombre>/<str:correo>/<str:apellido>/<str:usuario>/<str:contra>/', views.enviar_correo, name='enviar_correo'),
 ]
