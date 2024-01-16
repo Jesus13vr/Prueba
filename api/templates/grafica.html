@@ -1,0 +1,357 @@
+{%load static%}
+<!DOCTYPE html>
+<html
+  lang="en"
+  class="light-style layout-menu-fixed"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="{% static '/'%}"
+  data-template="vertical-menu-template-free"
+>
+  <head>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>    
+    {% if user.is_authenticated %}
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+
+    <title>Inicio ADMON</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'img/c.jpeg'%}" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="{% static 'vendor/fonts/boxicons.css'%}" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{% static 'vendor/css/core.css'%}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{% static 'vendor/css/theme-default.css'%}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{% static 'css/demo.css'%}" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="{% static 'vendor/libs/perfect-scrollbar/perfect-scrollbar.css'%}" />
+
+    <link rel="stylesheet" href="{% static 'vendor/libs/apex-charts/apex-charts.css'%}" />
+
+    <!-- Page CSS -->
+
+    <!-- Helpers -->
+    <script src="{% static 'vendor/js/helpers.js'%}"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="{% static 'js/config.js'%}"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Aprobados',     11],
+          ['Reprobados',      2],
+          ['recurse',  2],
+        ]);
+
+        var options = {
+          title: 'indicadores'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        <!-- Menu -->
+
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            
+              <span class="app-brand-logo demo">
+              
+                  
+                  <g id="g-app-brand" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g id="Brand-Logo" transform="translate(-27.000000, -15.000000)">
+                      <g id="Icon" transform="translate(27.000000, 15.000000)">
+                        <g id="Mask" transform="translate(0.000000, 8.000000)">
+                          <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                          </mask>
+                          <use fill="#696cff" xlink:href="#path-1"></use>
+                          <g id="Path-3" mask="url(#mask-2)">
+                            <use fill="#696cff" xlink:href="#path-3"></use>
+                            <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-3"></use>
+                          </g>
+                          <g id="Path-4" mask="url(#mask-2)">
+                            <use fill="#696cff" xlink:href="#path-4"></use>
+                            <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-4"></use>
+                          </g>
+                        </g>
+                        <g
+                          id="Triangle"
+                          transform="translate(19.000000, 11.000000) rotate(-300.000000) translate(-19.000000, -11.000000) "
+                        >
+                          <use fill="#696cff" xlink:href="#path-5"></use>
+                          <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-5"></use>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </span>
+              <span class="app-brand-text demo menu-text fw-bolder ms-2">"Admon"</span>
+          
+
+            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+              <i class="bx bx-chevron-left bx-sm align-middle"></i>
+            </a>
+          </div>
+
+          <div class="menu-inner-shadow"></div>
+
+          <ul class="menu-inner py-1">
+            <!-- Dashboard -->
+            <li class="menu-item active">
+              <a href="{% url 'index'%}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">home</div>
+              </a>
+            </li>
+
+            <!-- Layouts -->
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">Menu</div>
+              </a>
+
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="layouts-without-menu.html" class="menu-link">
+                    <div data-i18n="Without menu">Graficas</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="layouts-without-navbar.html" class="menu-link">
+                    <div data-i18n="Without navbar">Historial</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="layouts-container.html" class="menu-link">
+                    <div data-i18n="Container">Calificaciones</div>
+                  </a>
+                </li>
+                </li>
+              </ul>
+            </li>
+
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">Datos</span>
+            </li>
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                <div data-i18n="Account Settings">Usuario</div>
+              </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="pages-account-settings-account.html" class="menu-link">
+                    <div data-i18n="Account">Datos Personales</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="pages-account-settings-notifications.html" class="menu-link">
+                    <div data-i18n="Notifications">Cambio de contraseña</div>
+                  </a>
+                </li>
+                  </li>
+              </ul>
+            </li>
+
+            <!-- Forms & Tables -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Registrar Usuarios</span></li>
+            <!-- Forms -->
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-detail"></i>
+                <div data-i18n="Form Elements">Registro de Usuario</div>
+              </a>
+              <ul class="menu-sub"> 
+                <li class="menu-item">
+                  <a href="{% url 'signup'%}" class="menu-link">
+                    <div data-i18n="Input groups">Registro</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          <!-- Navbar -->
+
+          <nav
+            class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+            id="layout-navbar"
+          >
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <!-- Search -->
+              {% comment %} <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <input
+                    type="text"
+                    class="form-control border-0 shadow-none"
+                    placeholder="Search..."
+                    aria-label="Search..."
+                  />
+                </div>
+              </div>
+              <!-- /Search --> {% endcomment %}
+
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <!-- Place this tag where you want the button to render. -->
+                
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <img src="{% static 'img/avatars/1.png'%}" alt class="w-px-40 h-auto rounded-circle" />
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <img src="{% static 'img/avatars/1.png'%}" alt class="w-px-40 h-auto rounded-circle" />
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block">John Doe</span>
+                            <small class="text-muted">Admin</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="{% url 'usu'%}">
+                        <i class="bx bx-user me-2"></i>
+                        <span class="align-middle">My Profile</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <i class="bx bx-cog me-2"></i>
+                        <span class="align-middle">Settings</span>
+                      </a>
+                    </li>
+                    
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="{% url 'logout' %}">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!--/ User -->
+              </ul>
+            </div>
+          </nav>
+
+          <!-- / Navbar -->
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content -->
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <iframe title="ya" width="100%" height="100%" src="https://app.powerbi.com/reportEmbed?reportId=ff502c9c-b3cc-4b03-ad5c-41bbd3424dd0&autoAuth=true&ctid=dcec6cc1-cc36-4bdf-a82c-eaddb2de00ea" frameborder="0" allowFullScreen="true"></iframe>
+              {% comment %} <div id="piechart" style="width: 900px; height: 500px;"></div> {% endcomment %}
+            </div>
+        
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+   
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="{% static 'vendor/libs/jquery/jquery.js'%}"></script>
+    <script src="{% static 'vendor/libs/popper/popper.js'%}"></script>
+    <script src="{% static 'vendor/js/bootstrap.js'%}"></script>
+    <script src="{% static 'vendor/libs/perfect-scrollbar/perfect-scrollbar.js'%}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+    <script src="{% static 'vendor/js/menu.js'%}"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+    <script src="{% static 'vendor/libs/apex-charts/apexcharts.js'%}"></script>
+
+    <!-- Main JS -->
+    <script src="{% static 'js/main.js'%}"></script>
+
+    <!-- Page JS -->
+    <script src="{% static 'js/dashboards-analytics.js'%}"></script>
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>
+{% else %}
+<META HTTP-EQUIV="REFRESH" CONTENT="0;URL={% url 'signin'%}">
+{% endif %}
