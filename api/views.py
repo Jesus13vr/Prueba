@@ -338,6 +338,7 @@ class Calificaciones(APIView):
     template_name = "calificaciones.html"
     def get(self, request):
         permisos = request.user.fk_Rol.id_Rol
+        grupos = Grupo.objects.all()
         asignaciones_sin_calificaciones = Asignacion.objects.exclude(id_Asignacion__in=Subquery(Calificacion.objects.values('fk_Asignacion')))
         asignaciones_sin_calificaciones_parcial_2 = Asignacion.objects.exclude(
             id_Asignacion__in=Subquery(
@@ -368,9 +369,10 @@ class Calificaciones(APIView):
             )
         )
         user_id = request.user.id
-        return render(request, self.template_name, {"asignacionesuno": asignaciones_sin_calificaciones, "asignacionesdos": asignaciones_sin_calificaciones_parcial_2, "asignacionestres": asignaciones_sin_calificaciones_parcial_3, "user_id": user_id, "permisos": permisos})
+        return render(request, self.template_name, {"asignacionesuno": asignaciones_sin_calificaciones, "asignacionesdos": asignaciones_sin_calificaciones_parcial_2, "asignacionestres": asignaciones_sin_calificaciones_parcial_3, "user_id": user_id, "permisos": permisos, "grupos": grupos})
     def post(self, request):
         permisos = request.user.fk_Rol.id_Rol
+        grupos = Grupo.objects.all()
         asignaciones_sin_calificaciones = Asignacion.objects.exclude(id_Asignacion__in=Subquery(Calificacion.objects.values('fk_Asignacion')))
         asignaciones_sin_calificaciones_parcial_2 = Asignacion.objects.exclude(
             id_Asignacion__in=Subquery(
@@ -408,27 +410,27 @@ class Calificaciones(APIView):
                 asignacion = get_object_or_404(Asignacion, id_Asignacion=fk_Asignacion)
                 registrarCalificacion = Calificacion(fk_Asignacion=asignacion, Parcial_1=calificacion)
                 registrarCalificacion.save()
-                return render(request, self.template_name, {"mensaje": 'Calificación del 1er parcial registrada con éxito', "asignacionesuno": asignaciones_sin_calificaciones, "asignacionesdos": asignaciones_sin_calificaciones_parcial_2, "asignacionestres": asignaciones_sin_calificaciones_parcial_3, "user_id": user_id, "permisos": permisos})
+                return render(request, self.template_name, {"mensaje": 'Calificación del 1er parcial registrada con éxito', "asignacionesuno": asignaciones_sin_calificaciones, "asignacionesdos": asignaciones_sin_calificaciones_parcial_2, "asignacionestres": asignaciones_sin_calificaciones_parcial_3, "user_id": user_id, "permisos": permisos, "grupos": grupos})
             except IntegrityError:
-                return render(request, self.template_name, {"error": 'Error al registrar la calificación del 1er parcial.', "asignacionesuno": asignaciones_sin_calificaciones, "asignacionesdos": asignaciones_sin_calificaciones_parcial_2, "asignacionestres": asignaciones_sin_calificaciones_parcial_3, "user_id": user_id, "permisos": permisos})
+                return render(request, self.template_name, {"error": 'Error al registrar la calificación del 1er parcial.', "asignacionesuno": asignaciones_sin_calificaciones, "asignacionesdos": asignaciones_sin_calificaciones_parcial_2, "asignacionestres": asignaciones_sin_calificaciones_parcial_3, "user_id": user_id, "permisos": permisos, "grupos": grupos})
         if 'Parcial2' in request.POST:
             try:
                 asignacion_id = request.POST.get('fk_Asignacion')
                 calificacion = get_object_or_404(Calificacion, fk_Asignacion=asignacion_id)
                 calificacion.Parcial_2 = request.POST.get('calificacion')
                 calificacion.save()
-                return render(request, self.template_name, {"mensaje": 'Calificación del 2do parcial registrada con éxito', "asignacionesuno": asignaciones_sin_calificaciones, "asignacionesdos": asignaciones_sin_calificaciones_parcial_2, "asignacionestres": asignaciones_sin_calificaciones_parcial_3, "user_id": user_id, "permisos": permisos})
+                return render(request, self.template_name, {"mensaje": 'Calificación del 2do parcial registrada con éxito', "asignacionesuno": asignaciones_sin_calificaciones, "asignacionesdos": asignaciones_sin_calificaciones_parcial_2, "asignacionestres": asignaciones_sin_calificaciones_parcial_3, "user_id": user_id, "permisos": permisos, "grupos": grupos})
             except IntegrityError:
-                return render(request, self.template_name, {"error": 'Error al registrar la calificación del 2do parcial ', "asignacionesuno": asignaciones_sin_calificaciones, "asignacionesdos": asignaciones_sin_calificaciones_parcial_2, "asignacionestres": asignaciones_sin_calificaciones_parcial_3, "user_id": user_id, "permisos": permisos})
+                return render(request, self.template_name, {"error": 'Error al registrar la calificación del 2do parcial ', "asignacionesuno": asignaciones_sin_calificaciones, "asignacionesdos": asignaciones_sin_calificaciones_parcial_2, "asignacionestres": asignaciones_sin_calificaciones_parcial_3, "user_id": user_id, "permisos": permisos, "grupos": grupos})
         if 'Parcial3' in request.POST:
             try:
                 asignacion_id = request.POST.get('fk_Asignacion')
                 calificacion = get_object_or_404(Calificacion, fk_Asignacion=asignacion_id)
                 calificacion.Parcial_3 = request.POST.get('calificacion')
                 calificacion.save()
-                return render(request, self.template_name, {"mensaje": 'Calificación del 3er parcial registrada con éxito', "asignacionesuno": asignaciones_sin_calificaciones, "asignacionesdos": asignaciones_sin_calificaciones_parcial_2, "asignacionestres": asignaciones_sin_calificaciones_parcial_3, "user_id": user_id, "permisos": permisos})
+                return render(request, self.template_name, {"mensaje": 'Calificación del 3er parcial registrada con éxito', "asignacionesuno": asignaciones_sin_calificaciones, "asignacionesdos": asignaciones_sin_calificaciones_parcial_2, "asignacionestres": asignaciones_sin_calificaciones_parcial_3, "user_id": user_id, "permisos": permisos, "grupos": grupos})
             except IntegrityError:
-                return render(request, self.template_name, {"error": 'Error al registrar la calificación del 3er parcial ', "asignacionesuno": asignaciones_sin_calificaciones, "asignacionesdos": asignaciones_sin_calificaciones_parcial_2, "asignacionestres": asignaciones_sin_calificaciones_parcial_3, "user_id": user_id, "permisos": permisos})
+                return render(request, self.template_name, {"error": 'Error al registrar la calificación del 3er parcial ', "asignacionesuno": asignaciones_sin_calificaciones, "asignacionesdos": asignaciones_sin_calificaciones_parcial_2, "asignacionestres": asignaciones_sin_calificaciones_parcial_3, "user_id": user_id, "permisos": permisos, "grupos": grupos})
 
 class Parciales(APIView):
     template_name = "parciales.html"
@@ -453,6 +455,17 @@ class Historial(APIView):
         permisos = request.user.fk_Rol.id_Rol
         return render(request, self.template_name, {"permisos": permisos})
 
+class CalificacionesGrupos(APIView):
+    template_name = "calificaciones_grupos.html"
+    def get(self, request):
+        permisos = request.user.fk_Rol.id_Rol
+        grupos = Grupo.objects.all()
+        ultimo_periodo = Periodo.objects.latest('id_Periodo')
+        calificaciones = Calificacion.objects.filter(fk_Asignacion__fk_Periodo__Periodo=ultimo_periodo.Periodo)
+        return render(request, self.template_name, {"calificaciones": calificaciones, "permisos": permisos, "grupos": grupos})
+    def post(self, request):
+        permisos = request.user.fk_Rol.id_Rol
+        return render(request, self.template_name, {"permisos": permisos})
 class Charts(APIView):
     template_name= "googlecharts.html"
     def get(self, request):
@@ -485,3 +498,8 @@ def enviar_contrasena_temporal(request, username):
     send_mail(subject, message, from_email, recipient_list)
 
     return render(request,'enviar_correo.html')
+
+class Prueba(APIView):
+    template_name = "prueba.html"
+    def get(self, request):
+        return render(request, self.template_name)

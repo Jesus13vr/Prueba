@@ -145,6 +145,14 @@
             <span class="nav-link-text ms-1">Grupos y docentes</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{% url 'calificaciones_grupo' %}">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Calificaciones por grupo</span>
+          </a>
+        </li>
         {% endif %}
       </ul>
     </div>
@@ -285,6 +293,29 @@
       <div class="row">
         <div class="col-md-8">
           <div class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <p class="mb-0">Seleccionar Grupo:</p>
+            </div>
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <select id="grupoSelector" class="form-control" onchange="filtrarTabla()">
+                    <option value="todos">Todos</option>
+                    {% for grupo in grupos %}
+                    <option value="{{ grupo.Grupo }}">{{ grupo.Grupo }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div align="center"><button name="Parcial1" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block" type="submit">Asignar calificación</button></div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <br>
+          <div class="card">
             <div class="card-body">
               <div class="d-flex align-items-center">
                 <p class="mb-0">1er Parcial</p>
@@ -294,11 +325,11 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="example-text-input" class="form-control-label">Alumno y materia</label>
-                    <select name="fk_Asignacion" id="fk_Asignacion" class="form-control">
+                    <label for="example-text-input" class="form-control-label">Alumno, grupo y materia</label>
+                    <select name="fk_Asignacion" id="fk_Asignacion1" class="form-control">
                       {% for asignacion in asignacionesuno %}
                         {% if asignacion.fk_Docente.id == user_id %}
-                          <option value="{{ asignacion.id_Asignacion }}">{{ asignacion.fk_Alumno.first_name }} {{ asignacion.fk_Alumno.last_name }} - {{ asignacion.fk_Materia.Materia }}</option>
+                          <option value="{{ asignacion.id_Asignacion }}" data-grupo="{{ asignacion.fk_Grupo.Grupo }}">{{ asignacion.fk_Alumno.first_name }} {{ asignacion.fk_Alumno.last_name }} - {{ asignacion.fk_Grupo.Grupo }} - {{ asignacion.fk_Materia.Materia }}</option>
                         {% endif %}
                       {% endfor %}
                     </select>
@@ -306,7 +337,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label">Calificación</label>
-                      <input name="calificacion" id="calificacion" class="form-control" type="number" placeholder="Calificación" min="0" max="100">
+                      <input name="calificacion" id="calificacion" class="form-control" type="number" placeholder="Calificación">
                     </div>
                   </div>
                 </div>
@@ -329,11 +360,11 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="example-text-input" class="form-control-label">Alumno y materia</label>
-                  <select name="fk_Asignacion" id="fk_Asignacion" class="form-control">
+                  <label for="example-text-input" class="form-control-label">Alumno, grupo y materia</label>
+                  <select name="fk_Asignacion" id="fk_Asignacion2" class="form-control">
                     {% for asignacion in asignacionesdos %}
                       {% if asignacion.fk_Docente.id == user_id %}
-                        <option value="{{ asignacion.id_Asignacion }}">{{ asignacion.fk_Alumno.first_name }} {{ asignacion.fk_Alumno.last_name }} - {{ asignacion.fk_Materia.Materia }}</option>
+                        <option value="{{ asignacion.id_Asignacion }}" data-grupo="{{ asignacion.fk_Grupo.Grupo }}">{{ asignacion.fk_Alumno.first_name }} {{ asignacion.fk_Alumno.last_name }} - {{ asignacion.fk_Grupo.Grupo }} - {{ asignacion.fk_Materia.Materia }}</option>
                       {% endif %}
                     {% endfor %}
                   </select>
@@ -341,7 +372,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="example-text-input" class="form-control-label">Calificación</label>
-                    <input name="calificacion" id="calificacion" class="form-control" type="number" placeholder="Calificación" min="0" max="100">
+                    <input name="calificacion" id="calificacion" class="form-control" type="number" placeholder="Calificación">
                   </div>
                 </div>
               </div>
@@ -364,11 +395,11 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="example-text-input" class="form-control-label">Alumno y materia</label>
-                  <select name="fk_Asignacion" id="fk_Asignacion" class="form-control">
+                  <label for="example-text-input" class="form-control-label">Alumno, grupo y materia</label>
+                  <select name="fk_Asignacion" id="fk_Asignacion3" class="form-control">
                     {% for asignacion in asignacionestres %}
                       {% if asignacion.fk_Docente.id == user_id %}
-                        <option value="{{ asignacion.id_Asignacion }}">{{ asignacion.fk_Alumno.first_name }} {{ asignacion.fk_Alumno.last_name }} - {{ asignacion.fk_Materia.Materia }}</option>
+                        <option value="{{ asignacion.id_Asignacion }}" data-grupo="{{ asignacion.fk_Grupo.Grupo }}">{{ asignacion.fk_Alumno.first_name }} {{ asignacion.fk_Alumno.last_name }} - {{ asignacion.fk_Grupo.Grupo }} - {{ asignacion.fk_Materia.Materia }}</option>
                       {% endif %}
                     {% endfor %}
                   </select>
@@ -376,7 +407,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="example-text-input" class="form-control-label">Calificación</label>
-                    <input name="calificacion" id="calificacion" class="form-control" type="number" placeholder="Calificación" min="0" max="100">
+                    <input name="calificacion" id="calificacion" class="form-control" type="number" placeholder="Calificación">
                   </div>
                 </div>
               </div>
@@ -386,6 +417,60 @@
           </div>
         </div>
         </div>
+        <script>
+          function filtrarTabla() {
+            var selector = document.getElementById('grupoSelector');
+            var grupoSeleccionado = selector.value;
+          
+            // Filtrar el primer select
+            var select1 = document.getElementById('fk_Asignacion1');
+            var opciones1 = select1.options;
+            select1.selectedIndex = -1;
+          
+            for (var j = 0; j < opciones1.length; j++) {
+              var opcion1 = opciones1[j];
+              var grupoRelacionado1 = opcion1.getAttribute('data-grupo');
+          
+              if (grupoSeleccionado === 'todos' || grupoRelacionado1 === grupoSeleccionado) {
+                opcion1.style.display = '';
+              } else {
+                opcion1.style.display = 'none';
+              }
+            }
+          
+            // Filtrar el segundo select
+            var select2 = document.getElementById('fk_Asignacion2');
+            var opciones2 = select2.options;
+            select2.selectedIndex = -1;
+          
+            for (var k = 0; k < opciones2.length; k++) {
+              var opcion2 = opciones2[k];
+              var grupoRelacionado2 = opcion2.getAttribute('data-grupo');
+          
+              if (grupoSeleccionado === 'todos' || grupoRelacionado2 === grupoSeleccionado) {
+                opcion2.style.display = '';
+              } else {
+                opcion2.style.display = 'none';
+              }
+            }
+          
+            // Filtrar el tercer select
+            var select3 = document.getElementById('fk_Asignacion3');
+            var opciones3 = select3.options;
+            select3.selectedIndex = -1;
+          
+            for (var l = 0; l < opciones3.length; l++) {
+              var opcion3 = opciones3[l];
+              var grupoRelacionado3 = opcion3.getAttribute('data-grupo');
+          
+              if (grupoSeleccionado === 'todos' || grupoRelacionado3 === grupoSeleccionado) {
+                opcion3.style.display = '';
+              } else {
+                opcion3.style.display = 'none';
+              }
+            }
+          }
+          </script>
       </div>
       <footer class="footer pt-3  ">
         <div class="container-fluid">

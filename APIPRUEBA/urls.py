@@ -18,7 +18,9 @@ urlpatterns = [
      path('calificaciones/', Calificaciones.as_view(),name='calificaciones'),
      path('parciales/', Parciales.as_view(),name='parciales'),
      path('historial_academico/', Historial.as_view(),name='historial'),
+     path('calificaciones_por_grupo/', CalificacionesGrupos.as_view(),name='calificaciones_grupo'),
      path('charts/', Charts.as_view(),name='charts'),
      path('enviar-contrasena-temporal/<str:correo>/',views.enviar_contrasena_temporal, name='enviar-cotrasena-temporal'),
      path('enviar_correo/<str:nombre>/<str:correo>/<str:apellido>/<str:usuario>/<str:contra>/', views.enviar_correo, name='enviar_correo'),
+     path('prueba/', Prueba.as_view(),name='prueba'),
 ]

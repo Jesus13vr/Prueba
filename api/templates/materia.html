@@ -145,6 +145,14 @@
             <span class="nav-link-text ms-1">Grupos y docentes</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{% url 'calificaciones_grupo' %}">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Calificaciones por grupo</span>
+          </a>
+        </li>
         {% endif %}
       </ul>
     </div>
@@ -306,7 +314,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="example-text-input" class="form-control-label">No. de créditos</label>
-                    <input name="no_creditos" id="no_creditos" class="form-control" type="number" placeholder="No. de créditos" min="4" max="10">
+                    <input name="no_creditos" id="no_creditos" class="form-control" type="number" placeholder="No. de créditos">
                   </div>
                 </div>
                 <div align="center"><button name="Crear" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block" type="submit">Registrar materia</button></div>
