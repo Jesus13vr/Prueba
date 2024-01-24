@@ -10580,7 +10580,7 @@ fieldset:disabled .btn {
 }
 
 .bg-primary {
-  background-color: #5e72e4 !important;
+  background-color:#125237 !important; /* Color de fondo */
 }
 
 .bg-secondary {
@@ -20237,7 +20237,7 @@ fieldset:disabled .btn {
 }
 
 .badge.bg-primary {
-  background: #5e72e4;
+  background: #20c997;
 }
 
 .badge.bg-secondary {

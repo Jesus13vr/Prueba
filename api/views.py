@@ -64,6 +64,7 @@ class signin(APIView):
     template_name= "signin.html"
     def get(self, request):
         if request.user.is_authenticated:
+           
             return redirect('/')
         else:
             return render(request, self.template_name, {
@@ -77,6 +78,7 @@ class signin(APIView):
             if user is None:
                 return render(request, self.template_name, {
                     'form': AuthenticationForm,
+                    
                     'error': 'Usuario o contraseña incorrecta'
                 })
             else:
