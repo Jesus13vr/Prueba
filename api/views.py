@@ -516,6 +516,6 @@ def enviar_contrasena_temporal(request, username):
     return render(request,'enviar_correo.html')
 
 class Prueba(APIView):
-    template_name = "prueba.htmla"
+    template_name = "prueba.html"
     def get(self, request):
         return render(request, self.template_name)
