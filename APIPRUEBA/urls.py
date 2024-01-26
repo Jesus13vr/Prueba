@@ -2,6 +2,10 @@ from django.contrib import admin
 from django.urls import path
 from api import views
 from api.views import *
+from django.conf.urls import handler404
+from api.views import page_not_found
+
+handler404 = 'api.views.page_not_found'
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
