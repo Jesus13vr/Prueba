@@ -13,8 +13,11 @@ from django.db.models import Subquery, OuterRef, Exists
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 # Create your views here.
+@method_decorator(login_required, name='dispatch')
 class Home(APIView):
     template_name = "index.html"
     def get(self, request):
@@ -112,6 +115,7 @@ def enviar_correo(request, nombre, correo, apellido, usuario, contra):
     #ventana reseteo de contraseña
     return redirect('signin')
 
+@method_decorator(login_required, name='dispatch')
 class Grupos(APIView):
     template_name = "grupo.html"
     def get(self, request):
@@ -140,6 +144,7 @@ class Grupos(APIView):
             except Exception as e:
                 return render(request, self.template_name, {'error': 'No se pudo eliminar el grupo', "grupos": grupos, "permisos": permisos})
 
+@method_decorator(login_required, name='dispatch')
 class Docentes(APIView):
     template_name = "docente.html"
     def get(self, request):
@@ -174,6 +179,7 @@ class Docentes(APIView):
             except Exception as e:
                 return render(request, self.template_name, {'error': 'No se pudo eliminar el docente', "docentes": docentes, "permisos": permisos})
 
+@method_decorator(login_required, name='dispatch')
 class Materias(APIView):
     template_name = "materia.html"
     def get(self, request):
@@ -204,6 +210,7 @@ class Materias(APIView):
             except Exception as e:
                 return render(request, self.template_name, {'error': 'No se pudo eliminar la materia', "materias": materias, "permisos": permisos})
 
+@method_decorator(login_required, name='dispatch')
 class Periodos(APIView):
     template_name = "periodo.html"
     def get(self, request):
@@ -236,6 +243,7 @@ class Periodos(APIView):
             except Exception as e:
                 return render(request, self.template_name, {'error': 'No se pudo concluir el periodo', "periodos": periodos, "ultimo_periodo": ultimo_periodo, "permisos": permisos})
 
+@method_decorator(login_required, name='dispatch')
 class Alumno(APIView):
     template_name = "alumno.html"
     def get(self, request):
@@ -289,7 +297,8 @@ class Alumno(APIView):
                 return render(request,self.template_name, {'mensaje': 'El alumno se ha dado de baja correctamente', "alumnos": alumnos, "permisos": permisos})
             except Exception as e:
                 return render(request, self.template_name, {'error': 'No se pudo modificar ek status del alumno', "alumnos": alumnos, "permisos": permisos})
-        
+    
+@method_decorator(login_required, name='dispatch')  
 class Asignaciones(APIView):
     template_name = "asignaciones.html"
     def get(self, request):
@@ -336,6 +345,7 @@ class Asignaciones(APIView):
             except Exception as e:
                 return render(request, self.template_name, {'error': 'No se pudo eliminar la asignacion', "alumnos": alumnos, "materias": materias, "grupos": grupos, "ultimo_periodo":ultimo_periodo, "docentes": docentes, "asignaciones": asignaciones, "permisos": permisos})
 
+@method_decorator(login_required, name='dispatch')
 class Calificaciones(APIView):
     template_name = "calificaciones.html"
     def get(self, request):
@@ -434,6 +444,7 @@ class Calificaciones(APIView):
             except IntegrityError:
                 return render(request, self.template_name, {"error": 'Error al registrar la calificación del 3er parcial ', "asignacionesuno": asignaciones_sin_calificaciones, "asignacionesdos": asignaciones_sin_calificaciones_parcial_2, "asignacionestres": asignaciones_sin_calificaciones_parcial_3, "user_id": user_id, "permisos": permisos, "grupos": grupos})
 
+@method_decorator(login_required, name='dispatch')
 class Parciales(APIView):
     template_name = "parciales.html"
     def get(self, request):
@@ -446,6 +457,7 @@ class Parciales(APIView):
         permisos = request.user.fk_Rol.id_Rol
         return render(request, self.template_name, {"permisos": permisos})
 
+@method_decorator(login_required, name='dispatch')
 class Historial(APIView):
     template_name = "historial.html"
     def get(self, request):
@@ -457,6 +469,7 @@ class Historial(APIView):
         permisos = request.user.fk_Rol.id_Rol
         return render(request, self.template_name, {"permisos": permisos})
 
+@method_decorator(login_required, name='dispatch')
 class CalificacionesGrupos(APIView):
     template_name = "calificaciones_grupos.html"
     def get(self, request):
@@ -468,6 +481,7 @@ class CalificacionesGrupos(APIView):
     def post(self, request):
         permisos = request.user.fk_Rol.id_Rol
         return render(request, self.template_name, {"permisos": permisos})
+
 class Charts(APIView):
     template_name= "googlecharts.html"
     def get(self, request):
@@ -502,6 +516,6 @@ def enviar_contrasena_temporal(request, username):
     return render(request,'enviar_correo.html')
 
 class Prueba(APIView):
-    template_name = "prueba.html"
+    template_name = "prueba.htmla"
     def get(self, request):
         return render(request, self.template_name)

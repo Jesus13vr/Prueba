@@ -86,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'admon',
         'USER': 'postgres',
-        'PASSWORD': 'root',
+        'PASSWORD': '123',
         'HOST': 'localhost',  # O la dirección de tu servidor PostgreSQL
         'PORT': '',           # Puerto de PostgreSQL (generalmente 5432)
    }
@@ -135,6 +135,8 @@ AUTH_USER_MODEL = 'api.CustomUser'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
+
+LOGIN_URL = '/signin/'
 
 STATIC_URL = '/static/'
 # # Usar Google Cloud Storage para almacenar archivos estáticos.
