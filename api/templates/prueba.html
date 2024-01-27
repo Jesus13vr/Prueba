@@ -3,60 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Error 404 - Página no encontrada</title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      height: 100vh;
-    }
-
-    .container {
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 3em;
-      color: #333;
-    }
-
-    p {
-      font-size: 1.2em;
-      color: #555;
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    button {
-      font-size: 1em;
-      padding: 10px 20px;
-      background-color: #117A65;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    button:hover {
-      background-color: #17A589;
-    }
-  </style>
+  <title>Radar Chart</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h1>Error 404</h1>
-    <p>Lo sentimos, la página que estás buscando no se encuentra.</p>
-    <button onclick="window.location.href='tu_pagina_de_inicio.html'">Volver al inicio</button>
-  </div>
+  <canvas id="chart"></canvas>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      let ctx = document.getElementById("chart").getContext("2d");
+
+      let calificacionesData = [{% for calificacion in calificaciones %} 
+        {
+          materia: "{{ calificacion.fk_Asignacion.fk_Materia.Materia }}",
+          color: getRandomColor(0.5), // 50% de opacidad
+          data: [
+            {{ calificacion.Parcial_1 }},
+            {{ calificacion.Parcial_2 }},
+            {{ calificacion.Parcial_3 }}
+          ]
+        },
+      {% endfor %}];
+
+      let chartData = {
+        labels: ["Parcial 1", "Parcial 2", "Parcial 3"],
+        datasets: calificacionesData.map(item => ({
+          label: item.materia,
+          backgroundColor: item.color,
+          borderColor: item.color,
+          pointBackgroundColor: item.color,
+          data: item.data
+        }))
+      };
+
+      let chart = new Chart(ctx, {
+        type: "radar",
+        data: chartData,
+        options: {
+          title: {
+            text: "Calificaciones por Materia",
+            display: true
+          },
+          scale: {
+            angleLines: {
+              display: true
+            },
+            ticks: {
+              suggestedMin: 0,
+              suggestedMax: 100,
+              stepSize: 20
+            }
+          },
+          responsive: false, // Desactivar la respuesta automática al tamaño
+          maintainAspectRatio: false, // Desactivar la proporción de aspecto
+          width: 300, // Establecer la anchura del gráfico
+          height: 300 // Establecer la altura del gráfico
+        }
+      });
+
+      function getRandomColor(opacity) {
+        var letters = "0123456789ABCDEF";
+        var color = "#";
+        for (var i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color + Math.round(opacity * 255).toString(16); // Agregar componente de opacidad
+      }
+    });
+  </script>
 </body>
 </html>

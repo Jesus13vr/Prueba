@@ -518,7 +518,11 @@ def enviar_contrasena_temporal(request, username):
 class Prueba(APIView):
     template_name = "prueba.html"
     def get(self, request):
-        return render(request, self.template_name)
+        permisos = request.user.fk_Rol.id_Rol
+        user_id = request.user.id
+        ultimo_periodo = Periodo.objects.latest('id_Periodo')
+        calificaciones = Calificacion.objects.filter(fk_Asignacion__fk_Alumno=user_id, fk_Asignacion__fk_Periodo__Periodo=ultimo_periodo.Periodo)
+        return render(request, self.template_name, {"calificaciones": calificaciones, "permisos": permisos})
     
 def page_not_found(request, exception):
     return render(request, '404.html', status=404)
