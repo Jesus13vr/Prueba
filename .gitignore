@@ -4,4 +4,4 @@ env/
 __pycache__
 git add .gitignore
 git commit -m "Actualizar .gitignore para excluir el entorno virtual"
-git rm -r --cached venv
+
