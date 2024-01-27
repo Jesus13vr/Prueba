@@ -1,10 +1,5 @@
 # Virtual Environment
 venv/
-<<<<<<< HEAD
 env/
 git add .gitignore
 git commit -m "Actualizar .gitignore para excluir el entorno virtual"
-=======
-.env/
-__pycache__
->>>>>>> 675867d4511fafc003bfa8d3983ba17ee442d176
