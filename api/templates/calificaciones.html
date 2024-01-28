@@ -337,12 +337,19 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="example-text-input" class="form-control-label">Calificación</label>
-                      <input name="calificacion" id="calificacion" class="form-control" type="number" placeholder="Calificación">
-                    </div>
+                      <label for="calificacion" class="form-control-label">Calificación</label>
+                      <input name="calificacion" id="calificacion" class="form-control" type="number" placeholder="Calificación" min="0" max="100">
+                  </div>
                   </div>
                 </div>
-                <div align="center"><button name="Parcial1" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block" type="submit">Asignar calificación</button></div>
+                <div class="text-center">
+                  <button name="Parcial1" class="btn btn-sm btn-dark d-lg-none mb-2" type="submit">Asignar calificación</button>
+                </div>
+                
+                <div class="d-none d-lg-block text-center">
+                  <button name="Parcial1" class="btn btn-sm btn-dark" type="submit">Asignar calificación</button>
+                </div>
+                
               </div>
             </form>
             </div>
@@ -373,11 +380,17 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="example-text-input" class="form-control-label">Calificación</label>
-                    <input name="calificacion" id="calificacion" class="form-control" type="number" placeholder="Calificación">
+                    <input name="calificacion" id="calificacion" class="form-control" type="number" placeholder="Calificación" min="0" max="100">
                   </div>
                 </div>
               </div>
-              <div align="center"><button name="Parcial2" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block" type="submit">Asignar calificación</button></div>
+              <div class="text-center">
+                <button name="Parcial2" class="btn btn-sm btn-dark d-lg-none mb-2" type="submit">Asignar calificación</button>
+              </div>
+              
+              <div class="d-none d-lg-block text-center">
+                <button name="Parcial2" class="btn btn-sm btn-dark float-right mb-0" type="submit">Asignar calificación</button>
+              </div>
             </div>
           </form>
           </div>
@@ -408,15 +421,20 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="example-text-input" class="form-control-label">Calificación</label>
-                    <input name="calificacion" id="calificacion" class="form-control" type="number" placeholder="Calificación">
+                    <input name="calificacion" id="calificacion" class="form-control" type="number" placeholder="Calificación" min="0" max="100">
                   </div>
                 </div>
               </div>
-              <div align="center"><button name="Parcial3" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block" type="submit">Asignar calificación</button></div>
+              <div class="text-center">
+                <button name="Parcial3" class="btn btn-sm btn-dark d-lg-none mb-2" type="submit">Asignar calificación</button>
+              </div>
+              
+              <div class="d-none d-lg-block text-center">
+                <button name="Parcial3" class="btn btn-sm btn-dark" type="submit">Asignar calificación</button>
+              </div>
             </div>
           </form>
           </div>
-          
         </div>
         </div>
         <script>
