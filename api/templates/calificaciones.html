@@ -557,6 +557,62 @@
                 </div>
             </div>
         </div>
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                <div class="body">
+                  <table id="calificacionesTable" class="display" style="width:100%">
+                    <thead>
+                      <tr>
+                        <th>Alumno</th>
+                        <th>Grupo</th>
+                        <th>Materia</th>
+                        <th>Parcial 1</th>
+                        <th>Parcial 2</th>
+                        <th>Parcial 3</th>
+                        <th>Final</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for calificacion in calificaciones %}
+                        <tr>
+                      
+                            <td>{{ calificacion.fk_Asignacion.fk_Alumno.first_name  }} {{ calificacion.fk_Asignacion.fk_Alumno.last_name }}</td>
+                            <td>{{ calificacion.fk_Asignacion.fk_Grupo.Grupo  }}</td>
+                            <td>{{ calificacion.fk_Asignacion.fk_Materia.Materia }}</td>
+                            <td class="{% if calificacion.Parcial_1 <= 69 %}text-danger{% endif %}">{{ calificacion.Parcial_1 }}</td>
+                            <td class="{% if calificacion.Parcial_2 <= 69 %}text-danger{% endif %}">{{ calificacion.Parcial_2 }}</td>
+                            <td class="{% if calificacion.Parcial_3 <= 69 %}text-danger{% endif %}">{{ calificacion.Parcial_3 }}</td>
+                            <td id="resultado_{{ forloop.counter }}"></td>
+                            <script>
+                                var parcial1 = {{ calificacion.Parcial_1 }};
+                                var parcial2 = {{ calificacion.Parcial_2 }};
+                                var parcial3 = {{ calificacion.Parcial_3 }};
+                                var resultado = ((parcial1 + parcial2 + parcial3) / 3).toFixed(2);
+                                var resultadoElement = document.getElementById("resultado_{{ forloop.counter }}");
+                                resultadoElement.innerText = resultado;
+                                if (resultado <= 69) {
+                                    resultadoElement.classList.add("text-danger");
+                                }
+                            </script>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    
+      <script>
+        // Configuración de DataTables
+        $(document).ready(function () {
+          $('#calificacionesTable').DataTable();
+        });
+      </script>
+    
     </section>
 
     <!-- Jquery Core Js -->
