@@ -422,15 +422,15 @@
                                                                     <input type="hidden" name="Modificar" value="{{ materia.id_Materia }}">
                                                                     <div class="form-group">
                                                                         <label for="materia_modificado">Materia</label>
-                                                                        <input type="text" name="materia_modificado" id="materia_modificado" class="form-control" placeholder="Materia" value="{{ materia.Materia|default:'' }}" required>
+                                                                        <input type="text" name="materia_modificado" id="materia_modificado" class="form-control" placeholder="Materia" oninput="this.value = this.value.toUpperCase().replace(/[^A-Z\s]/g, '')" value="{{ materia.Materia|default:'' }}" required>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="clave_modificado">Clave</label>
-                                                                        <input type="text" name="clave_modificado" id="clave_modificado" class="form-control" placeholder="Clave" value="{{ materia.Clave|default:'' }}" required>
+                                                                        <input type="text" name="clave_modificado" id="clave_modificado" class="form-control" placeholder="Clave" oninput="this.value = this.value.toUpperCase()" value="{{ materia.Clave|default:'' }}" required>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="no_creditos_modificado">No. de créditos</label>
-                                                                        <input type="number" name="no_creditos_modificado" id="no_creditos_modificado" class="form-control" placeholder="No. de créditos" value="{{ materia.No_creditos|default:'' }}" required>
+                                                                        <input type="number" name="no_creditos_modificado" id="no_creditos_modificado" class="form-control" placeholder="No. de créditos" min="4" max="10" value="{{ materia.No_creditos|default:'' }}" required>
                                                                     </div>
                                                                     <button type="submit" class="btn btn-primary">Guardar cambios</button>
                                                                 </form>
