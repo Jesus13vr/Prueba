@@ -209,7 +209,18 @@ class Materias(APIView):
                 return render(request, self.template_name, {'error': 'La materia no se elimino porque esta siendo utilizada', "materias": materias, "permisos": permisos})
             except Exception as e:
                 return render(request, self.template_name, {'error': 'No se pudo eliminar la materia', "materias": materias, "permisos": permisos})
-
+        elif 'Modificar' in request.POST:
+            try:
+                materia_id = request.POST.get('Modificar')
+                materia = get_object_or_404(Materia, id_Materia=materia_id)
+                materia.Materia = request.POST.get('materia')
+                materia.Clave = request.POST.get('clave')
+                materia.No_creditos = request.POST.get('no_creditos')
+                editarMateria = Materia(Materia=materia, Clave=clave, No_creditos=no_creditos)
+                editarMateria.save()
+                return render(request, self.template_name, {'mensaje': 'La materia ha sido modificada', "materias": materias, "permisos": permisos})
+            except Exception as e:
+                return render(request, self.template_name, {'error': 'No se pudo modificar la materia', "materias": materias, "permisos": permisos})
 @method_decorator(login_required, name='dispatch')
 class Periodos(APIView):
     template_name = "periodo.html"
