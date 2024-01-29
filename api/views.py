@@ -216,9 +216,9 @@ class Materias(APIView):
                 materia_modificado = request.POST.get('materia_modificado')
                 clave_modificado = request.POST.get('clave_modificado')
                 no_creditos_modificado = request.POST.get('no_creditos_modificado')
-                materia = materia_modificado
-                clave = clave_modificado
-                no_creditos = no_creditos_modificado
+                materia.Materia = materia_modificado
+                materia.Clave = clave_modificado
+                materia.No_creditos = no_creditos_modificado
                 materia.save()
                 return render(request, self.template_name, {'mensaje': 'La materia ha sido modificada', "materias": materias, "permisos": permisos})
             except Exception as e:
