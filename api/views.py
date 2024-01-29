@@ -178,7 +178,46 @@ class Docentes(APIView):
                 return render(request, self.template_name, {'error': 'El docente no se elimino porque esta siendo utilizado', "docentes": docentes, "permisos": permisos})
             except Exception as e:
                 return render(request, self.template_name, {'error': 'No se pudo eliminar el docente', "docentes": docentes, "permisos": permisos})
+        elif 'Modificar' in request.POST:
+            try:
+                docente_id = request.POST.get('Modificar')
+                docente = get_object_or_404(CustomUser, id=docente_id)
+                first_name_modificado = request.POST.get('first_name_modificado')
+                last_name_modificado = request.POST.get('last_name_modificado')
+                email_modificado = request.POST.get('email_modificado')
+                docente.first_name = first_name_modificado
+                docente.last_name = last_name_modificado
+                docente.email = email_modificado
+                registrarDocente = CustomUser.objects.create_user(first_name=first_name, last_name=last_name, email=email)
+                docente.save()
+                
+                return render(request, self.template_name, {'mensaje': 'El docente ha sido modificado', "docentes": docentes, "permisos": permisos})
+            except models.ProtectedError as e:
+                return render(request, self.template_name, {'error': 'No se pudo modificar el docente', "docentes": docentes, "permisos": permisos})
+            except Exception as e:
+                return render(request, self.template_name, {'error': 'Algo salio mal', "docentes": docentes, "permisos": permisos})
+        elif 'Alta' in request.POST:
+            try:
+                docente_id = request.POST.get('Alta')
+                docente = get_object_or_404(CustomUser, id=docente_id)
+                status = get_object_or_404(Status, id_Status=1)
+                docente.fk_Status = status
+                docente.save()
+                return render(request, self.template_name, {'mensaje': 'El docente se ha dado de alta correctamente', "docentes": docentes, "permisos": permisos})
+            except IntegrityError:
+                return render(request, self.template_name, {'error': 'No se pudo modificar el status del docente', "docentes": docentes, "permisos": permisos})
 
+        elif 'Baja' in request.POST:
+            try:
+                docente_id = request.POST.get('Baja')
+                docente = get_object_or_404(CustomUser, id=docente_id)
+                status = get_object_or_404(Status, id_Status=2)
+                docente.fk_Status = status
+                docente.save()
+                return render(request, self.template_name, {'mensaje': 'El docente se ha dado de baja correctamente', "docentes": docentes, "permisos": permisos})
+            except Exception as e:
+                return render(request, self.template_name, {'error': 'No se pudo modificar el status del docente', "docentes": docentes, "permisos": permisos})
+       
 @method_decorator(login_required, name='dispatch')
 class Materias(APIView):
     template_name = "materia.html"
