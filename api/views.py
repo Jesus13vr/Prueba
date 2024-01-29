@@ -361,6 +361,9 @@ class Calificaciones(APIView):
     def get(self, request):
         permisos = request.user.fk_Rol.id_Rol
         grupos = Grupo.objects.all()
+        docente = request.user.id
+        ultimo_periodo = Periodo.objects.latest('id_Periodo')
+        calificaciones = Calificacion.objects.filter(fk_Asignacion__fk_Periodo__Periodo=ultimo_periodo.Periodo)
         asignaciones_sin_calificaciones = Asignacion.objects.exclude(id_Asignacion__in=Subquery(Calificacion.objects.values('fk_Asignacion')))
         asignaciones_sin_calificaciones_parcial_2 = Asignacion.objects.exclude(
             id_Asignacion__in=Subquery(
@@ -391,7 +394,7 @@ class Calificaciones(APIView):
             )
         )
         user_id = request.user.id
-        return render(request, self.template_name, {"asignacionesuno": asignaciones_sin_calificaciones, "asignacionesdos": asignaciones_sin_calificaciones_parcial_2, "asignacionestres": asignaciones_sin_calificaciones_parcial_3, "user_id": user_id, "permisos": permisos, "grupos": grupos})
+        return render(request, self.template_name, {"calificaciones": calificaciones, "asignacionesuno": asignaciones_sin_calificaciones, "asignacionesdos": asignaciones_sin_calificaciones_parcial_2, "asignacionestres": asignaciones_sin_calificaciones_parcial_3, "user_id": user_id, "permisos": permisos, "grupos": grupos})
     def post(self, request):
         permisos = request.user.fk_Rol.id_Rol
         grupos = Grupo.objects.all()
