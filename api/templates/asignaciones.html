@@ -401,16 +401,16 @@
                                 </h2>
                             </div>
                             <div class="table-responsive">
-                                <table id="calificacionesTable" class="display" style="width:100%">
+                                <table id="calificacionesTable" class="table table-bordered table-striped table-hover dataTable js-exportable">
                                     <thead>
                                         <tr>
                                             <th>Alumno</th>
                                             <th>Grupo</th>
+                                            <th>Periodo</th>
                                             <th>Materia</th>
-                                            <th>Parcial 1</th>
-                                            <th>Parcial 2</th>
-                                            <th>Parcial 3</th>
-                                            <th>Final</th>
+                                            <th>Docente</th>
+                                            <th></th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -431,7 +431,6 @@
                                                 <tr>
                                                     <td>{{ asignacion.fk_Alumno.first_name }} {{ asignacion.fk_Alumno.last_name }}</td>
                                                     <td>{{ asignacion.fk_Grupo.Grupo }}</td>
-                                                    <td>{{ asignacion.fk_Periodo.Periodo }}</td>
                                                     <td>{{ asignacion.fk_Materia.Materia }}</td>
                                                     <td>{{ asignacion.fk_Docente.first_name }} {{ asignacion.fk_Docente.last_name }}</td>
                                                     <td>
