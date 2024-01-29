@@ -329,9 +329,19 @@ class Asignaciones(APIView):
                 materia = get_object_or_404(Materia, id_Materia=fk_Materia)
                 periodo = get_object_or_404(Periodo, id_Periodo=ultimo_periodo.id_Periodo)
                 docente = get_object_or_404(CustomUser, id=fk_Docente)
-                registrarAsignacion = Asignacion(fk_Alumno=alumno, fk_Grupo=grupo, fk_Materia=materia, fk_Periodo=periodo, fk_Docente=docente)
-                registrarAsignacion.save()
-                return render(request, self.template_name, {"mensaje": 'Asignación registrada con éxito', "alumnos": alumnos, "materias": materias, "grupos": grupos, "ultimo_periodo":ultimo_periodo, "docentes": docentes, "asignaciones": asignaciones, "permisos": permisos})
+                asignacion_existente = Asignacion.objects.filter(
+                    fk_Alumno=fk_Alumno,
+                    fk_Materia=fk_Materia,
+                    fk_Periodo=periodo
+                ).exists()
+                if asignacion_existente:
+                    # Si ya existe, mostrar un mensaje de error
+                    return render(request, self.template_name, {'error':'Este alumno ya tiene asignada esta materia en este periodo.',"alumnos": alumnos, "materias": materias, "grupos": grupos, "ultimo_periodo":ultimo_periodo, "docentes": docentes, "asignaciones": asignaciones, "permisos": permisos})
+                else:
+
+                    registrarAsignacion = Asignacion(fk_Alumno=alumno, fk_Grupo=grupo, fk_Materia=materia, fk_Periodo=periodo, fk_Docente=docente)
+                    registrarAsignacion.save()
+                    return render(request, self.template_name, {"mensaje": 'Asignación registrada con éxito', "alumnos": alumnos, "materias": materias, "grupos": grupos, "ultimo_periodo":ultimo_periodo, "docentes": docentes, "asignaciones": asignaciones, "permisos": permisos})
             except IntegrityError:
                 return render(request, self.template_name, {"error": 'Error al crear la asignación', "alumnos": alumnos, "materias": materias, "grupos": grupos, "ultimo_periodo":ultimo_periodo, "docentes": docentes, "asignaciones": asignaciones, "permisos": permisos})
         elif 'Borrar' in request.POST:
