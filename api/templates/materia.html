@@ -406,15 +406,48 @@
                                                         </button>
                                                     </td>
                                                     <td>
+                                                        <!-- Botón para mostrar el formulario de modificación -->
                                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modificarMateria{{ materia.id_Materia }}">
                                                             Modificar
                                                         </button>
                                                     </td>
                                                 </tr>
-                                                    </form>
-                                                </td>
-                                            </tr>
+                                
+                                                <!-- Modal para el formulario de modificación -->
+                                                <div class="modal fade" id="modificarMateria{{ materia.id_Materia }}" tabindex="-1" role="dialog" aria-labelledby="modificarMateriaLabel{{ materia.id_Materia }}" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="modificarMateriaLabel{{ materia.id_Materia }}">Modificar Materia</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <!-- Formulario para la modificación -->
+                                                                <form method="POST" action="{% url 'materia' %}">
+                                                                    {% csrf_token %}
+                                                                    <input type="hidden" name="Modificar" value="{{ materia.id_Materia }}">
+                                                                    <div class="form-group">
+                                                                        <label for="materia_modificado">Materia</label>
+                                                                        <input type="text" name="materia_modificado" id="materia_modificado" class="form-control" placeholder="Materia" value="{{ materia.Materia|default:'' }}" required>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="clave_modificado">Clave</label>
+                                                                        <input type="text" name="clave_modificado" id="clave_modificado" class="form-control" placeholder="Clave" value="{{ materia.Clave|default:'' }}" required>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="no_creditos_modificado">No. de créditos</label>
+                                                                        <input type="number" name="no_creditos_modificado" id="no_creditos_modificado" class="form-control" placeholder="No. de créditos" value="{{ materia.No_creditos|default:'' }}" required>
+                                                                    </div>
+                                                                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             {% endfor %}
+                                        </form>
                                     </tbody>
                                 </table>
                             </div>

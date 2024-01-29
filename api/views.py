@@ -213,11 +213,13 @@ class Materias(APIView):
             try:
                 materia_id = request.POST.get('Modificar')
                 materia = get_object_or_404(Materia, id_Materia=materia_id)
-                materia.Materia = request.POST.get('materia')
-                materia.Clave = request.POST.get('clave')
-                materia.No_creditos = request.POST.get('no_creditos')
-                editarMateria = Materia(Materia=materia, Clave=clave, No_creditos=no_creditos)
-                editarMateria.save()
+                materia_modificado = request.POST.get('materia_modificado')
+                clave_modificado = request.POST.get('clave_modificado')
+                no_creditos_modificado = request.POST.get('no_creditos_modificado')
+                materia = materia_modificado
+                clave = clave_modificado
+                no_creditos = no_creditos_modificado
+                materia.save()
                 return render(request, self.template_name, {'mensaje': 'La materia ha sido modificada', "materias": materias, "permisos": permisos})
             except Exception as e:
                 return render(request, self.template_name, {'error': 'No se pudo modificar la materia', "materias": materias, "permisos": permisos})
