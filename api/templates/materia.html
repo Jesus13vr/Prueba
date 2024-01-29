@@ -1,386 +1,464 @@
-<!--
-=========================================================
-* Argon Dashboard 2 - v2.0.4
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
-{% if user.is_authenticated and permisos == 1 or permisos == 2 %}
-{%load static%}
+﻿{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="data:image/jpeg;base64,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">
-  <title>
-  Registro_materias
-</title>
-  <!--     Fonts and icons     -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-  <!-- Nucleo Icons -->
-  <link href="{% static 'css/nucleo-icons.css'%}" rel="stylesheet" />
-  <link href="{% static 'css/nucleo-svg.css'%}" rel="stylesheet" />
-  <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <link href="{% static 'css/nucleo-svg.css'%}" rel="stylesheet" />
-  <!-- CSS Files -->
-  <link id="pagestyle" href="{% static 'css/argon-dashboard.css'%}" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>ADMON - Gestión de materias</title>
+    <!-- Favicon-->
+    <link rel="icon" href="{% static 'images/ico.jpg' %}" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap Core Css -->
+    <link href="{% static 'plugins/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+
+    <!-- Waves Effect Css -->
+    <link href="{% static 'plugins/node-waves/waves.css' %}" rel="stylesheet" />
+
+    <!-- Animation Css -->
+    <link href="{% static 'plugins/animate-css/animate.css' %}" rel="stylesheet" />
+    
+    <!-- JQuery DataTable Css -->
+    <link href="{% static 'plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css' %}" rel="stylesheet">
+
+    <!-- Bootstrap Material Datetime Picker Css -->
+    <link href="{% static 'plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css' %}" rel="stylesheet" />
+
+    <!-- Wait Me Css -->
+    <link href="{% static 'plugins/waitme/waitMe.css' %}" rel="stylesheet" />
+
+    <!-- Bootstrap Select Css -->
+    <link href="{% static 'plugins/bootstrap-select/css/bootstrap-select.css' %}" rel="stylesheet" />
+
+    <!-- Custom Css -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="{% static 'css/themes/all-themes.css' %}" rel="stylesheet" />
 </head>
 
-<body class="g-sidenav-show bg-gray-100">
-  <div class="position-absolute w-100 min-height-300 top-0" style="background-image: url('https://booksandbooksdigital.com.co/ovas_unad/OVA-035/dist/assets/images/slide8_4.png'); background-position-y: 10%;">
-    <span class="mask bg-primary opacity-6"></span>
-  </div>
-  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
-    <div class="sidenav-header">
-      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand m-0">
-        <Strong><span class="ms-1 font-weight-bold">Admon</span></Strong>
-      </a>
-    </div>
-    <hr class="horizontal dark mt-0">
-    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" href="{% url 'index' %}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Inicio</span>
-          </a>
-        </li>
-        {% if permisos == 4 %}
-        <li class="nav-item mt-3">
-          <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Alumnos</h6>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="{% url 'parciales' %}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-collection text-info text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Calificaciones</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="{% url 'historial' %}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-collection text-info text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Historial academico</span>
-          </a>
-        </li>
-        {% endif %}
-        {% if permisos == 3 %}
-        <li class="nav-item mt-3">
-          <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Maestros</h6>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="{% url 'calificaciones' %}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Subir calificaciones</span>
-          </a>
-        </li>
-        {% endif %}
-        {% if permisos == 1 or permisos == 2 %}
-        <li class="nav-item mt-3">
-          <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Jefe de carrera</h6>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="{% url 'grupo' %}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Grupos</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="{% url 'docente' %}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Docentes</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="{% url 'materia' %}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Materias</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="{% url 'alumno' %}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Alumnos</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="{% url 'periodo' %}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Periodos</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="{% url 'asignacion' %}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Grupos y docentes</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="{% url 'calificaciones_grupo' %}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Calificaciones por grupo</span>
-          </a>
-        </li>
-        {% endif %}
-      </ul>
-    </div>
-    <div class="sidenav-footer mx-3 ">
-      <div class="card card-plain shadow-none" id="sidenavCard">
-        <img class="w-50 mx-auto" src="{% static 'img/logo-ct-dark.jpg'%}" alt="sidebar_illustration">
-      </div>
-    </div>
-  </aside>
-  <div class="main-content position-relative max-height-vh-100 h-100">
-    <!-- Navbar -->
-    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
-      <div class="container-fluid py-1 px-3">
-        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-          </div>
-          <ul class="navbar-nav  justify-content-end">
-            <li class="nav-item d-flex align-items-center">
-              <a href="{% url 'logout' %}" class="nav-link text-white font-weight-bold px-0">
-                <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Cerrar sesión</span>
-              </a>
-            </li>
-            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
-                <div class="sidenav-toggler-inner">
-                  <i class="sidenav-toggler-line bg-white"></i>
-                  <i class="sidenav-toggler-line bg-white"></i>
-                  <i class="sidenav-toggler-line bg-white"></i>
-                </div>
-              </a>
-            </li>
-            {% comment %} <li class="nav-item px-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white p-0">
-                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
-              </a>
-            </li>
-            <li class="nav-item dropdown pe-2 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa fa-bell cursor-pointer"></i>
-              </a>
-              <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-                <li class="mb-2">
-                  <a class="dropdown-item border-radius-md" href="javascript:;">
-                    <div class="d-flex py-1">
-                      <div class="my-auto">
-                        <img src="./assets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
-                      </div>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-sm font-weight-normal mb-1">
-                          <span class="font-weight-bold">New message</span> from Laur
-                        </h6>
-                        <p class="text-xs text-secondary mb-0">
-                          <i class="fa fa-clock me-1"></i>
-                          13 minutes ago
-                        </p>
-                      </div>
+<body class="theme-teal">
+    <!-- Page Loader -->
+    <div class="page-loader-wrapper">
+        <div class="loader">
+            <div class="preloader">
+                <div class="spinner-layer pl-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
                     </div>
-                  </a>
-                </li>
-                <li class="mb-2">
-                  <a class="dropdown-item border-radius-md" href="javascript:;">
-                    <div class="d-flex py-1">
-                      <div class="my-auto">
-                        <img src="./assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm bg-gradient-dark  me-3 ">
-                      </div>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-sm font-weight-normal mb-1">
-                          <span class="font-weight-bold">New album</span> by Travis Scott
-                        </h6>
-                        <p class="text-xs text-secondary mb-0">
-                          <i class="fa fa-clock me-1"></i>
-                          1 day
-                        </p>
-                      </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
                     </div>
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item border-radius-md" href="javascript:;">
-                    <div class="d-flex py-1">
-                      <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
-                        <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                          <title>credit-card</title>
-                          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                              <g transform="translate(1716.000000, 291.000000)">
-                                <g transform="translate(453.000000, 454.000000)">
-                                  <path class="color-background" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z" opacity="0.593633743"></path>
-                                  <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
-                                </g>
-                              </g>
-                            </g>
-                          </g>
-                        </svg>
-                      </div>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-sm font-weight-normal mb-1">
-                          Payment successfully completed
-                        </h6>
-                        <p class="text-xs text-secondary mb-0">
-                          <i class="fa fa-clock me-1"></i>
-                          2 days
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </li> {% endcomment %}
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <!-- Titulo -->
-    <div class="card shadow-lg mx-4 card-profile-bottom">
-      <div class="card-body p-3">
-        <div class="row gx-4">
-          <div class="col-auto">
-            <div class="avatar avatar-xl position-relative">
-              <img src="data:image/jpeg;base64,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" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                </div>
             </div>
-          </div>
-          <div class="col-auto my-auto">
-            <div class="h-100">
-              <h5 class="mb-1">
-                Gestión de materias
-              </h5>
-              <p class="mb-0 font-weight-bold text-sm">
-                <font color="green">{{ mensaje }}</font><font color="red">{{ error }}</font>
-              </p>
-            </div>
-          </div>
+            <p>Cargando contenido...</p>
         </div>
-      </div>
     </div>
-    <div class="container-fluid py-4">
-      <div class="row">
-        <div class="col-md-8">
-          <div class="card">
-            <div class="card-body">
-            <form action="{% url 'materia' %}" method="POST">
-              {% csrf_token %}
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="example-text-input" class="form-control-label">Materia</label>
-                    <input name="materia" id="materia" class="form-control" type="text" placeholder="Materia">
-                  </div>
-                </div>
-                <br>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="example-text-input" class="form-control-label">Clave</label>
-                    <input name="clave" id="clave" class="form-control" type="text" placeholder="Clave">
-                  </div>
-                </div>
-                <br>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="example-text-input" class="form-control-label">No. de créditos</label>
-                    <input name="no_creditos" id="no_creditos" class="form-control" type="number" placeholder="No. de créditos">
-                  </div>
-                </div>
-                <div align="center"><button name="Crear" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block" type="submit">Registrar materia</button></div>
-              </div>
-            </form>
-            </div>
-          </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <div class="card">
-          <div class="card-body">
-            <table class="table table-bordered">
-              <tr>
-                <th>Materia</th>
-                <th>Clave</th>
-                <th>No. de créditos</th>
-                <th></th>
-              </tr>
-              <form method="POST" action="{% url 'materia' %}">
-                {% csrf_token %}
-                {% for materia in materias %}
-                <input type="hidden" name="materia_id" value="{{ materia.id_Materia }}">
-                <tr>
-                  <td><p>{{ materia.Materia }}</p></td>
-                  <td><p>{{ materia.Clave }}</p></td>
-                  <td><p>{{ materia.No_creditos }}</p></td>
-                  <td><button type="submit" name="Borrar" value="{{ materia.id_Materia }}" style="background-color:red;" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block" onclick="return confirm('¿Estas seguro que quieres borrar esta materia?')">Eliminar</button></td>
-                </tr>
-                {% endfor %}
-              </form>
-            </table>
-          </div>
+    <!-- #END# Page Loader -->
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+    <!-- #END# Overlay For Sidebars -->
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <div class="search-icon">
+            <i class="material-icons">search</i>
         </div>
+        <input type="text" placeholder="START TYPING...">
+        <div class="close-search">
+            <i class="material-icons">close</i>
         </div>
-      </div>
-      <footer class="footer pt-3  ">
+    </div>
+    <!-- #END# Search Bar -->
+    <!-- Top Bar -->
+    <nav class="navbar">
         <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-          </div>
+            <div class="navbar-header">
+                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+                <a href="javascript:void(0);" class="bars"></a>
+                <a class="navbar-brand" href="{% url 'index' %}"><Strong>ADMON</Strong></a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Call Search -->
+                    <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
+                    <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
+                </ul>
+            </div>
         </div>
-      </footer>
-    </div>
-  </div>
-  <!--   Core JS Files   -->
-  <script src="{% static "js/core/popper.min.js" %}"></script>
-  <script src="{% static "js/core/bootstrap.min.js" %}"></script>
-  <script src="{% static "js/plugins/perfect-scrollbar.min.js" %}"></script>
-  <script src="{% static "js/plugins/smooth-scrollbar.min.js" %}"></script>
-  <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-  </script>
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="{% static 'js/argon-dashboard.min.js'%}"></script>
-</body>
+    </nav>
+    <!-- #Top Bar -->
+    <section>
+        <!-- Left Sidebar -->
+        <aside id="leftsidebar" class="sidebar">
+            <!-- User Info -->
+            <div class="user-info">
+                <div class="image">
+                    <img src="{% static 'images/user.png' %}" width="48" height="48" alt="User" />
+                </div>
+                <div class="info-container">
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ user.first_name }} {{ user.last_name }}
+                    </div>
+                    <div class="email">{{ user.username }} <Strong>-</Strong> {{ user.fk_Rol.Rol }}</div>
+                    <div class="btn-group user-helper-dropdown">
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="javascript:void(0);"><i class="material-icons">person</i>Perfil</a></li>
+                            <li role="seperator" class="divider"></li>
+                            <li><a href="{% url 'logout' %}"><i class="material-icons">input</i>Cerrar sesión</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- #User Info -->
+            <!-- Menu -->
+            <div class="menu">
+                <ul class="list">
+                    <li class="header">MENÚ</li>
+                    <li>
+                        <a href="{% url 'index' %}">
+                            <i class="material-icons">home</i>
+                            <span>Inicio</span>
+                        </a>
+                    </li>
+                    {% if permisos == 4 %}
+                    <li>
+                        <a href="{% url 'parciales' %}">
+                            <i class="material-icons">assignment</i>
+                            <span>Calificaciones</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'historial' %}">
+                            <i class="material-icons">reorder</i>
+                            <span>Historial academico</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if permisos == 3 %}
+                    <li>
+                        <a href="{% url 'calificaciones' %}">
+                            <i class="material-icons">assignment_returned</i>
+                            <span>Subir calificaciones</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if permisos == 1 or permisos == 2 %}
+                    <li>
+                        <a href="{% url 'grupo' %}">
+                            <i class="material-icons">group</i>
+                            <span>Grupos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'docente' %}">
+                            <i class="material-icons">people</i>
+                            <span>Docentes</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="{% url 'materia' %}">
+                            <i class="material-icons">book</i>
+                            <span>Materias</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'alumno' %}">
+                            <i class="material-icons">person</i>
+                            <span>Alumnos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'periodo' %}">
+                            <i class="material-icons">timeline</i>
+                            <span>Periodos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'asignacion' %}">
+                            <i class="material-icons">group_work</i>
+                            <span>Grupos y docentes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'calificaciones_grupo' %}">
+                            <i class="material-icons">library_books</i>
+                            <span>Calificaciones por grupo</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+            <!-- #Menu -->
+            <!-- Footer -->
+            {% comment %} <div class="legal">
+                <div class="copyright">
+                    &copy; 2016 - 2017 <a href="javascript:void(0);">AdminBSB - Material Design</a>.
+                </div>
+                <div class="version">
+                    <b>Version: </b> 1.0.5
+                </div>
+            </div> {% endcomment %}
+            <!-- #Footer -->
+        </aside>
+        <!-- #END# Left Sidebar -->
+        <!-- Right Sidebar -->
+        <aside id="rightsidebar" class="right-sidebar">
+            <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                <li role="presentation" class="active"><a href="#skins" data-toggle="tab">COLOR</a></li>
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active in active" id="skins">
+                    <ul class="demo-choose-skin">
+                        <li data-theme="red">
+                            <div class="red"></div>
+                            <span>Rojo</span>
+                        </li>
+                        <li data-theme="pink">
+                            <div class="pink"></div>
+                            <span>Rosa</span>
+                        </li>
+                        <li data-theme="purple">
+                            <div class="purple"></div>
+                            <span>Morado</span>
+                        </li>
+                        <li data-theme="deep-purple">
+                            <div class="deep-purple"></div>
+                            <span>Morado oscuro</span>
+                        </li>
+                        <li data-theme="indigo">
+                            <div class="indigo"></div>
+                            <span>Índigo</span>
+                        </li>
+                        <li data-theme="blue">
+                            <div class="blue"></div>
+                            <span>Azul</span>
+                        </li>
+                        <li data-theme="light-blue">
+                            <div class="light-blue"></div>
+                            <span>Azul claro</span>
+                        </li>
+                        <li data-theme="cyan">
+                            <div class="cyan"></div>
+                            <span>Cian</span>
+                        </li>
+                        <li data-theme="teal" class="active">
+                            <div class="teal"></div>
+                            <span>Verde azulado</span>
+                        </li>
+                        <li data-theme="green">
+                            <div class="green"></div>
+                            <span>Verde</span>
+                        </li>
+                        <li data-theme="light-green">
+                            <div class="light-green"></div>
+                            <span>Verde claro</span>
+                        </li>
+                        <li data-theme="lime">
+                            <div class="lime"></div>
+                            <span>Lima</span>
+                        </li>
+                        <li data-theme="yellow">
+                            <div class="yellow"></div>
+                            <span>Amarillo</span>
+                        </li>
+                        <li data-theme="amber">
+                            <div class="amber"></div>
+                            <span>Ámbar</span>
+                        </li>
+                        <li data-theme="orange">
+                            <div class="orange"></div>
+                            <span>Naranja</span>
+                        </li>
+                        <li data-theme="deep-orange">
+                            <div class="deep-orange"></div>
+                            <span>Naranja intenso</span>
+                        </li>
+                        <li data-theme="brown">
+                            <div class="brown"></div>
+                            <span>Café</span>
+                        </li>
+                        <li data-theme="grey">
+                            <div class="grey"></div>
+                            <span>Gris</span>
+                        </li>
+                        <li data-theme="blue-grey">
+                            <div class="blue-grey"></div>
+                            <span>Gris azulado</span>
+                        </li>
+                        <li data-theme="black">
+                            <div class="black"></div>
+                            <span>Negro</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+        <!-- #END# Right Sidebar -->
+    </section>
 
+    <section class="content">
+        <div class="container-fluid">
+            <div class="header">
+                <h2>
+                    MATERIAS
+                </h2>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="body">
+                            <div class="header">
+                                <h2>
+                                    <Strong>Registrar una materia</Strong>
+                                </h2>
+                            </div>
+                            {% if mensaje %}
+                            <div class="alert bg-green alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                {{ mensaje }}
+                            </div>
+                            {% endif %}
+                            {% if error %}
+                            <div class="alert bg-red alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                {{ error }}
+                            </div>
+                            {% endif %}
+                            <br>
+                            <form action="{% url 'materia' %}" method="POST">
+                                {% csrf_token %}
+                                <div class="row clearfix">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <h2 class="card-inside-title">Materia:</h2>
+                                            <div class="form-line">
+                                                <input type="text" name="materia" id="materia" class="form-control" placeholder="Materia" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <h2 class="card-inside-title">Clave:</h2>
+                                            <div class="form-line">
+                                                <input type="text" name="clave" id="clave" class="form-control" placeholder="Clave" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <h2 class="card-inside-title">No. de creditos:</h2>
+                                            <div class="form-line">
+                                                <input type="number" name="no_creditos" id="no_creditos" class="form-control" class="form-control" placeholder="No. de creditos" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <button type="submit" name="Crear" class="btn btn-success waves-effect">
+                                                    <i class="material-icons">book</i>
+                                                    <span>Registrar materia</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="body">
+                            <div class="header">
+                                <h2>
+                                    <Strong>Docentes</Strong>
+                                </h2>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                    <thead>
+                                        <tr>
+                                            <th>Materia</th>
+                                            <th>Clave</th>
+                                            <th>No. de creditos</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Materia</th>
+                                            <th>Clave</th>
+                                            <th>No. de creditos</th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <form method="POST" action="{% url 'materia' %}">
+                                            {% csrf_token %}
+                                            {% for materia in materias %}
+                                                <tr>
+                                                    <td>{{ materia.Materia }}</td>
+                                                    <td>{{ materia.Clave }}</td>
+                                                    <td>{{ materia.No_creditos }}</td>
+                                                    <td>
+                                                        <button type="submit" name="Borrar" value="{{ materia.id_Materia }}" class="btn btn-danger waves-effect"
+                                                        onclick="return confirm('¿Quieres borrar esta materia?')">
+                                                            <i class="material-icons">delete</i>
+                                                            <span>Borrar</span>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </form>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jquery Core Js -->
+    <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+
+    <!-- Bootstrap Core Js -->
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.js' %}"></script>
+
+    <!-- Select Plugin Js -->
+    <script src="{% static 'plugins/bootstrap-select/js/bootstrap-select.js' %}"></script>
+
+    <!-- Slimscroll Plugin Js -->
+    <script src="{% static 'plugins/jquery-slimscroll/jquery.slimscroll.js' %}"></script>
+
+    <!-- Waves Effect Plugin Js -->
+    <script src="{% static 'plugins/node-waves/waves.js' %}"></script>
+
+    <!-- Jquery DataTable Plugin Js -->
+    <script src="{% static 'plugins/jquery-datatable/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.flash.min.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/jszip.min.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/pdfmake.min.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/vfs_fonts.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.print.min.js' %}"></script>
+
+    <!-- Autosize Plugin Js -->
+    <script src="{% static 'plugins/autosize/autosize.js' %}"></script>
+
+    <!-- Moment Plugin Js -->
+    <script src="{% static 'plugins/momentjs/moment.js' %}"></script>
+
+    <!-- Bootstrap Material Datetime Picker Plugin Js -->
+    <script src="{% static 'plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js' %}"></script>
+
+    <!-- Custom Js -->
+    <script src="{% static 'js/admin.js' %}"></script>
+    <script src="{% static 'js/pages/forms/basic-form-elements.js' %}"></script>
+    <script src="{% static 'js/pages/tables/jquery-datatable.js' %}"></script>
+
+    <!-- Demo Js -->
+    <script src="{% static 'js/demo.js' %}"></script>
+</body>
 </html>
-{% else%}
-<meta http-equiv="refresh" content="0;url={% url 'index' %}"> 
-{% endif %}
