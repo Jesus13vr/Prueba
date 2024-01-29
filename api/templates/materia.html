@@ -337,7 +337,7 @@
                                         <div class="form-group">
                                             <h2 class="card-inside-title">Materia:</h2>
                                             <div class="form-line">
-                                                <input type="text" name="materia" id="materia" class="form-control" placeholder="Materia" />
+                                                <input type="text" name="materia" id="materia" class="form-control" placeholder="Materia" oninput="this.value = this.value.toUpperCase().replace(/[^A-Z\s]/g, '')" />
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -349,7 +349,7 @@
                                         <div class="form-group">
                                             <h2 class="card-inside-title">No. de creditos:</h2>
                                             <div class="form-line">
-                                                <input type="number" name="no_creditos" id="no_creditos" class="form-control" class="form-control" placeholder="No. de creditos" />
+                                                <input type="number" name="no_creditos" id="no_creditos" class="form-control" placeholder="No. de créditos" min="4" max="10" />
                                             </div>
                                         </div>
                                         <div class="form-group">
