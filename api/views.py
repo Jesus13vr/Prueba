@@ -337,7 +337,7 @@ class Asignaciones(APIView):
                 if asignacion_existente:
                     # Si ya existe, mostrar un mensaje de error
                     return render(request, self.template_name, {'error':'Este alumno ya tiene asignada esta materia en este periodo.',"alumnos": alumnos, "materias": materias, "grupos": grupos, "ultimo_periodo":ultimo_periodo, "docentes": docentes, "asignaciones": asignaciones, "permisos": permisos})
-                elif registrarAsignacion:
+                else:
 
                     registrarAsignacion = Asignacion(fk_Alumno=alumno, fk_Grupo=grupo, fk_Materia=materia, fk_Periodo=periodo, fk_Docente=docente)
                     registrarAsignacion.save()
