@@ -407,44 +407,53 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <form method="POST" action="{% url 'alumno' %}">
-                                            {% csrf_token %}
-                                            {% for alumno in alumnos %}
-                                                <tr>
-                                                    <td>{{ alumno.first_name }}</td>
-                                                    <td>{{ alumno.last_name }}</td>
-                                                    <td>{{ alumno.email }}</td>
-                                                    <td>{{ alumno.fk_Status.Status }}</td>
-                                                    {% if alumno.fk_Status.Status == "Activo" %}
-                                                    <td><button type="submit" name="Egresar" value="{{ alumno.id }}" class="btn btn-primary waves-effect"
+                                        {% for alumno in alumnos %}
+                                            <tr>
+                                                <td>{{ alumno.first_name }}</td>
+                                                <td>{{ alumno.last_name }}</td>
+                                                <td>{{ alumno.email }}</td>
+                                                <td>{{ alumno.fk_Status.Status }}</td>
+                                                {% if alumno.fk_Status.Status == "Activo" %}
+                                                <td>
+                                                    <form method="POST" action="{% url 'alumno' %}">
+                                                    {% csrf_token %}
+                                                        <button type="submit" name="Egresar" value="{{ alumno.id }}" class="btn btn-primary waves-effect"
                                                         onclick="return confirm('¿Estas seguro que quieres Egresar a este alumno?')">
                                                             <i class="material-icons">exit_to_app</i>
                                                             <span>Egresar alumno</span>
                                                         </button>
-                                                    </td>
-                                                    {% endif %}
-                                                    {% if alumno.fk_Status.Status == "Baja" %}
-                                                    <td><button type="submit" name="Alta" value="{{ alumno.id }}" class="btn btn-success waves-effect"
+                                                    </form>
+                                                </td>
+                                                {% endif %}
+                                                {% if alumno.fk_Status.Status == "Baja" %}
+                                                <td>
+                                                    <form method="POST" action="{% url 'alumno' %}">
+                                                    {% csrf_token %}
+                                                        <button type="submit" name="Alta" value="{{ alumno.id }}" class="btn btn-success waves-effect"
                                                         onclick="return confirm('¿Estas seguro que quieres Egresar a este alumno?')">
                                                             <i class="material-icons">file_upload</i>
                                                             <span>Dar de alta</span>
                                                         </button>
-                                                    </td>
-                                                    {% endif %}
-                                                    {% if alumno.fk_Status.Status == "Activo" %}
-                                                    <td><button type="submit" name="Baja" value="{{ alumno.id }}" class="btn btn-danger waves-effect"
+                                                    </form>
+                                                </td>
+                                                {% endif %}
+                                                {% if alumno.fk_Status.Status == "Activo" %}
+                                                <td>
+                                                    <form method="POST" action="{% url 'alumno' %}">
+                                                    {% csrf_token %}
+                                                        <button type="submit" name="Baja" value="{{ alumno.id }}" class="btn btn-danger waves-effect"
                                                         onclick="return confirm('¿Estas seguro que quieres dar de baja este alumno?')">
                                                             <i class="material-icons">close</i>
                                                             <span>Dar de baja</span>
                                                         </button>
-                                                    </td>
-                                                    {% endif %}
-                                                    <td>
-                                                        
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
-                                        </form>
+                                                    </form>
+                                                </td>
+                                                {% endif %}
+                                                <td>
+                                                    
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </div>

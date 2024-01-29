@@ -374,7 +374,6 @@
                                             <th>Periodo</th>
                                             <th>Status</th>
                                             <th></th>
-                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -382,28 +381,27 @@
                                             <th>Periodo</th>
                                             <th>Status</th>
                                             <th></th>
-                                            <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <form method="POST" action="{% url 'periodo' %}">
-                                            {% csrf_token %}
-                                            {% for periodo in periodos %}
-                                                <tr>
-                                                    <td>{{ periodo.Periodo }}</td>
-                                                    <td>{{ periodo.fk_Status.Status }}</td>
-                                                    {% if periodo.fk_Status.Status == "Activo" %}
-                                                        <td>
+                                        {% for periodo in periodos %}
+                                            <tr>
+                                                <td>{{ periodo.Periodo }}</td>
+                                                <td>{{ periodo.fk_Status.Status }}</td>
+                                                {% if periodo.fk_Status.Status == "Activo" %}
+                                                    <td>
+                                                        <form method="POST" action="{% url 'periodo' %}">
+                                                            {% csrf_token %}
                                                             <button type="submit" name="Borrar" value="{{ periodo.id_Periodo }}" class="btn btn-danger waves-effect"
                                                             onclick="return confirm('¿Estas seguro que quieres concluir este periodo?')">
                                                                 <i class="material-icons">close</i>
                                                                 <span>Concluir</span>
                                                             </button>
-                                                        </td>
-                                                    {% endif %}
-                                                </tr>
-                                            {% endfor %}
-                                        </form>
+                                                        </form>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
