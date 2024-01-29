@@ -380,6 +380,7 @@
                                             <th>Clave</th>
                                             <th>No. de creditos</th>
                                             <th></th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -387,6 +388,7 @@
                                             <th>Materia</th>
                                             <th>Clave</th>
                                             <th>No. de creditos</th>
+                                            <th></th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
@@ -397,22 +399,12 @@
                                                 <td>{{ materia.Clave }}</td>
                                                 <td>{{ materia.No_creditos }}</td>
                                                 <td>
-                                                    <form method="POST" action="{% url 'materia' %}">
-                                                        {% csrf_token %}
-                                                        <button type="submit" name="Borrar" value="{{ materia.id_Materia }}" class="btn btn-danger waves-effect"
-                                                        onclick="return confirm('¿Quieres borrar esta materia?')">
-                                                            <i class="material-icons">delete</i>
-                                                            <span>Borrar</span>
-                                                        </button>
-                                                    </td>
-                                                    <td>
-                                                        <!-- Botón para mostrar el formulario de modificación -->
-                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modificarMateria{{ materia.id_Materia }}">
-                                                            Modificar
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                
+                                                    <button type="button" name="Borrar" value="{{ materia.id_Materia }}" class="btn btn-primary waves-effect"
+                                                        data-toggle="modal" data-target="#modificarMateria{{ materia.id_Materia }}">
+                                                            <i class="material-icons">edit</i>
+                                                            <span>Modificar</span>
+                                                    </button>
+                                                </td>
                                                 <!-- Modal para el formulario de modificación -->
                                                 <div class="modal fade" id="modificarMateria{{ materia.id_Materia }}" tabindex="-1" role="dialog" aria-labelledby="modificarMateriaLabel{{ materia.id_Materia }}" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
@@ -446,8 +438,18 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <td>
+                                                    <form method="POST" action="{% url 'materia' %}">
+                                                        {% csrf_token %}
+                                                        <button type="submit" name="Borrar" value="{{ materia.id_Materia }}" class="btn btn-danger waves-effect"
+                                                        onclick="return confirm('¿Quieres borrar esta materia?')">
+                                                            <i class="material-icons">delete</i>
+                                                            <span>Borrar</span>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                                </tr>
                                             {% endfor %}
-                                        </form>
                                     </tbody>
                                 </table>
                             </div>
