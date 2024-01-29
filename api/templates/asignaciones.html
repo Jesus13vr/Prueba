@@ -397,11 +397,11 @@
                         <div class="body">
                             <div class="header">
                                 <h2>
-                                    <Strong>Docentes</Strong>
+                                    <Strong>Asignaciones</Strong>
                                 </h2>
                             </div>
                             <div class="table-responsive">
-                                <table id="calificacionesTable" class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                                     <thead>
                                         <tr>
                                             <th>Alumno</th>
@@ -409,7 +409,6 @@
                                             <th>Periodo</th>
                                             <th>Materia</th>
                                             <th>Docente</th>
-                                            <th></th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -421,28 +420,28 @@
                                             <th>Materia</th>
                                             <th>Docente</th>
                                             <th></th>
-                                            <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <form method="POST" action="{% url 'asignacion' %}">
-                                            {% csrf_token %}
-                                            {% for asignacion in asignaciones %}
-                                                <tr>
-                                                    <td>{{ asignacion.fk_Alumno.first_name }} {{ asignacion.fk_Alumno.last_name }}</td>
-                                                    <td>{{ asignacion.fk_Grupo.Grupo }}</td>
-                                                    <td>{{ asignacion.fk_Materia.Materia }}</td>
-                                                    <td>{{ asignacion.fk_Docente.first_name }} {{ asignacion.fk_Docente.last_name }}</td>
-                                                    <td>
+                                        {% for asignacion in asignaciones %}
+                                            <tr>
+                                                <td>{{ asignacion.fk_Alumno.first_name }} {{ asignacion.fk_Alumno.last_name }}</td>
+                                                <td>{{ asignacion.fk_Grupo.Grupo }}</td>
+                                                <td>{{ asignacion.fk_Periodo.Periodo }}</td>
+                                                <td>{{ asignacion.fk_Materia.Materia }}</td>
+                                                <td>{{ asignacion.fk_Docente.first_name }} {{ asignacion.fk_Docente.last_name }}</td>
+                                                <td>
+                                                    <form method="POST" action="{% url 'asignacion' %}">
+                                                        {% csrf_token %}
                                                         <button type="submit" name="Borrar" value="{{ asignacion.id_Asignacion }}" class="btn btn-danger waves-effect"
                                                         onclick="return confirm('¿Quieres borrar esta asignación?')">
                                                             <i class="material-icons">delete</i>
                                                             <span>Borrar</span>
                                                         </button>
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
-                                        </form>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
