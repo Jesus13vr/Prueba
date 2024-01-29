@@ -7720,7 +7720,12 @@ fieldset[disabled] .form-control {
 
 /* Login Page ================================== */
 .login-page {
-  background-color: #00BCD4;
+  background-image: url('https://blogibsamericas.com/wp-content/uploads/2023/01/Blog_Motivos_Adm_1280x640-2.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 80vh; /* Esto asegura que la imagen de fondo cubra toda la altura de la pantalla */
+    margin: 0; /* Elimina el margen predeterminado del body */
   padding-left: 0;
   max-width: 360px;
   margin: 5% auto;
@@ -7740,12 +7745,12 @@ fieldset[disabled] .form-control {
       display: block;
       width: 100%;
       text-align: center;
-      color: #fff; }
+      color: #000; }
     .login-page .login-box .logo small {
       display: block;
       width: 100%;
       text-align: center;
-      color: #fff;
+      color: #000;
       margin-top: -5px; }
 
 /* Sign Up Page ================================ */
