@@ -443,7 +443,7 @@
                                                                 <!-- Formulario para la modificación -->
                                                                 <form method="POST" action="{% url 'docente' %}">
                                                                     {% csrf_token %}
-                                                                    <input type="hidden" name="docente_id" value="{{ docente.id }}">
+                                                                    <input type="hidden" name="Modificar" value="{{ docente.id }}">
                                                                     
                                                                     <div class="form-group">
                                                                         <label for="first_name_modificado">Nombre</label>
