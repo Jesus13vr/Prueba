@@ -416,9 +416,8 @@
                                                 <td>
                                                     <form method="POST" action="{% url 'docente' %}">
                                                         {% csrf_token %}
-                                                        <input type="hidden" name="docente_id" value="{{ docente.id }}">
                                                         <button type="submit" name="Borrar" class="btn btn-danger waves-effect"
-                                                            onclick="return confirm('¿Quieres borrar este docente?')">
+                                                            onclick="return confirm('¿Quieres borrar este docente?')" value="{{ docente.id }}">
                                                             <i class="material-icons">delete</i>
                                                             <span>Borrar</span>
                                                         </button>
@@ -469,7 +468,7 @@
                                                     <form method="POST" action="{% url 'docente' %}">
                                                     {% csrf_token %}
                                                         <button type="submit" name="Alta" value="{{ docente.id }}" class="btn btn-success waves-effect"
-                                                        onclick="return confirm('¿Estas seguro que quieres Egresar a este alumno?')">
+                                                        onclick="return confirm('¿Estas seguro que quieres reincorporar a este docenter al sistema?')">
                                                             <i class="material-icons">file_upload</i>
                                                             <span>Dar de alta</span>
                                                         </button>
@@ -481,7 +480,7 @@
                                                     <form method="POST" action="{% url 'docente' %}">
                                                     {% csrf_token %}
                                                         <button type="submit" name="Baja" value="{{ docente.id }}" class="btn btn-danger waves-effect"
-                                                        onclick="return confirm('¿Estas seguro que quieres dar de baja este alumno?')">
+                                                        onclick="return confirm('¿Estas seguro que quieres dar de baja este docente?')">
                                                             <i class="material-icons">close</i>
                                                             <span>Dar de baja</span>
                                                         </button>
