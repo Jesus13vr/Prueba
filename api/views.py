@@ -216,7 +216,7 @@ class Docentes(APIView):
             except models.ProtectedError as e:
                 return render(request, self.template_name, {'error': 'El docente no se elimino porque esta siendo utilizado', "docentes": docentes, "permisos": permisos})
             except Exception as e:
-                return render(request, self.template_name, {'error': 'No se pudo eliminar el docente xd', "docentes": docentes, "permisos": permisos})
+                return render(request, self.template_name, {'error': 'No se pudo eliminar el docente', "docentes": docentes, "permisos": permisos})
         elif 'Modificar' in request.POST:
             try:
                 docente_id = request.POST.get('Modificar')
