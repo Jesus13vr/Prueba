@@ -227,9 +227,7 @@ class Docentes(APIView):
                 docente.first_name = first_name_modificado
                 docente.last_name = last_name_modificado
                 docente.email = email_modificado
-                registrarDocente = CustomUser.objects.create_user(first_name=first_name, last_name=last_name, email=email)
                 docente.save()
-                
                 return render(request, self.template_name, {'mensaje': 'El docente ha sido modificado', "docentes": docentes, "permisos": permisos})
             except models.ProtectedError as e:
                 return render(request, self.template_name, {'error': 'No se pudo modificar el docente', "docentes": docentes, "permisos": permisos})
