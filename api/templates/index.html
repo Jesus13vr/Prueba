@@ -34,7 +34,7 @@
 
     <!-- Chart js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
 </head>
 
 <body class="theme-teal">
@@ -331,104 +331,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- #END# Widgets -->
-                {% comment %} <div class="row clearfix">
-                    <!-- Visitors -->
-                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                        <div class="card">
-                            <div class="body bg-pink">
-                                <div class="sparkline" data-type="line" data-spot-Radius="4" data-highlight-Spot-Color="rgb(233, 30, 99)" data-highlight-Line-Color="#fff"
-                                    data-min-Spot-Color="rgb(255,255,255)" data-max-Spot-Color="rgb(255,255,255)" data-spot-Color="rgb(255,255,255)"
-                                    data-offset="90" data-width="100%" data-height="92px" data-line-Width="2" data-line-Color="rgba(255,255,255,0.7)"
-                                    data-fill-Color="rgba(0, 188, 212, 0)">
-                                    12,10,9,6,5,6,10,5,7,5,12,13,7,12,11
-                                </div>
-                                <ul class="dashboard-stat-list">
-                                    <li>
-                                        TODAY
-                                        <span class="pull-right"><b>1 200</b> <small>USERS</small></span>
-                                    </li>
-                                    <li>
-                                        YESTERDAY
-                                        <span class="pull-right"><b>3 872</b> <small>USERS</small></span>
-                                    </li>
-                                    <li>
-                                        LAST WEEK
-                                        <span class="pull-right"><b>26 582</b> <small>USERS</small></span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- #END# Visitors -->
-                    <!-- Latest Social Trends -->
-                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                        <div class="card">
-                            <div class="body bg-cyan">
-                                <div class="m-b--35 font-bold">LATEST SOCIAL TRENDS</div>
-                                <ul class="dashboard-stat-list">
-                                    <li>
-                                        #socialtrends
-                                        <span class="pull-right">
-                                            <i class="material-icons">trending_up</i>
-                                        </span>
-                                    </li>
-                                    <li>
-                                        #materialdesign
-                                        <span class="pull-right">
-                                            <i class="material-icons">trending_up</i>
-                                        </span>
-                                    </li>
-                                    <li>#adminbsb</li>
-                                    <li>#freeadmintemplate</li>
-                                    <li>#bootstraptemplate</li>
-                                    <li>
-                                        #freehtmltemplate
-                                        <span class="pull-right">
-                                            <i class="material-icons">trending_up</i>
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- #END# Latest Social Trends -->
-                    <!-- Answered Tickets -->
-                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                        <div class="card">
-                            <div class="body bg-teal">
-                                <div class="font-bold m-b--35">ANSWERED TICKETS</div>
-                                <ul class="dashboard-stat-list">
-                                    <li>
-                                        TODAY
-                                        <span class="pull-right"><b>12</b> <small>TICKETS</small></span>
-                                    </li>
-                                    <li>
-                                        YESTERDAY
-                                        <span class="pull-right"><b>15</b> <small>TICKETS</small></span>
-                                    </li>
-                                    <li>
-                                        LAST WEEK
-                                        <span class="pull-right"><b>90</b> <small>TICKETS</small></span>
-                                    </li>
-                                    <li>
-                                        LAST MONTH
-                                        <span class="pull-right"><b>342</b> <small>TICKETS</small></span>
-                                    </li>
-                                    <li>
-                                        LAST YEAR
-                                        <span class="pull-right"><b>4 225</b> <small>TICKETS</small></span>
-                                    </li>
-                                    <li>
-                                        ALL
-                                        <span class="pull-right"><b>8 752</b> <small>TICKETS</small></span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- #END# Answered Tickets -->
-                </div> {% endcomment %}
 
                 <div class="row clearfix">
                     <!-- Task Info -->
@@ -494,7 +396,67 @@
                             </div>
                         </div>
                     </div>
-                    <!-- #END# Task Info -->
+                    <!-- Grafica indice de reprobacion -->
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="card">
+                            <div class="header">
+                                <h2>
+                                    Indices de reprobación
+                                </h2>
+                            </div>
+                            <div align="center">
+                                <canvas id="apro_repro" width="400" height="300"></canvas>
+                            </div>
+
+                        <script>
+                        // Datos de ejemplo: materias y calificaciones
+                        var calificaciones = [
+                        {% for calificacion in calificaciones %}
+                        ({{ calificacion.Parcial_1 }} + {{ calificacion.Parcial_2 }} + {{ calificacion.Parcial_3 }})/3,
+                        {% endfor %}
+                        ];
+
+                        // Contadores para valores por encima y por debajo de 80
+                        var aprobadas = 0;
+                        var reprobadas = 0;
+
+                        // Contar valores por encima y por debajo de 80
+                        for (var i = 0; i < calificaciones.length; i++) {
+                            if (calificaciones[i] >= 69) {
+                                aprobadas++;
+                            } else {
+                                reprobadas++;
+                            }
+                        }
+
+                        // Obtén el contexto del canvas
+                        var ctxBar = document.getElementById('apro_repro').getContext('2d');
+
+                        // Configuración de la gráfica de barras
+                        var barChart = new Chart(ctxBar, {
+                            type: 'bar',
+                            data: {
+                            labels: ['Aprobadas', 'Reprobadas'],
+                            datasets: [{
+                                data: [aprobadas, reprobadas],
+                                backgroundColor: ['rgba(0, 255, 0, 0.2)', 'rgba(255, 99, 132, 0.2)'], // Colores de fondo de las barras
+                                borderColor: ['rgba(0, 255, 0, 1)', 'rgba(255, 99, 132, 1)'],         // Colores del borde de las barras
+                                borderWidth: 1
+                            }]
+                            },
+                            options: {
+                            scales: {
+                                y: {
+                                beginAtZero: true,
+                                max: calificaciones.length // Puedes ajustar este valor según tus necesidades
+                                }
+                            }
+                            }
+                        });
+                        </script>
+
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row clearfix">
