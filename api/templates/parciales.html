@@ -300,6 +300,160 @@
             <!-- #END# Basic Examples -->
             <!-- Exportable Table -->
             <div class="row clearfix">
+                <!-- Grafica primer parcial -->
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                Calificaciones del 1er parcial
+                            </h2>
+                        </div>
+                        <div align="center">
+                            <canvas id="parcial1" width="400" height="400"></canvas>
+                        </div>
+                        
+                        <script>
+                            // Datos de ejemplo: materias y calificaciones
+                            var materias = [{% for calificacion in calificaciones %}
+                            "{{ calificacion.fk_Asignacion.fk_Materia.Materia }}",
+                            {% endfor %}];
+                            var calificaciones = [{% for calificacion in calificaciones %}
+                            {{ calificacion.Parcial_1 }},
+                            {% endfor %}];
+                          
+                            // Obtén el contexto del canvas
+                            var ctx = document.getElementById('parcial1').getContext('2d');
+                          
+                            // Configuración de la gráfica de radar
+                            var radarChart = new Chart(ctx, {
+                              type: 'radar',
+                              data: {
+                                labels: materias,
+                                datasets: [{
+                                  label: '1er parcial',
+                                  data: calificaciones,
+                                  backgroundColor: 'rgba(40, 116, 166, 0.2)', // Color de fondo del área
+                                  borderColor: 'rgba(40, 116, 166, 1)',     // Color del borde del área
+                                  borderWidth: 2,
+                                  pointBackgroundColor: 'rgba(40, 116, 166, 1)', // Color de los puntos
+                                }]
+                              },
+                              options: {
+                                scale: {
+                                  ticks: {
+                                    beginAtZero: true,
+                                    max: 100, // Puedes ajustar este valor según tus necesidades
+                                  }
+                                }
+                              }
+                            });
+                          </script>
+                          
+                    </div>
+                </div>
+                <!-- Grafica segundo parcial -->
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                Calificaciones del 2do parcial
+                            </h2>
+                        </div>
+                        <div align="center">
+                            <canvas id="parcial2" width="400" height="400"></canvas>
+                        </div>
+                        
+                        <script>
+                            // Datos de ejemplo: materias y calificaciones
+                            var materias = [{% for calificacion in calificaciones %}
+                            "{{ calificacion.fk_Asignacion.fk_Materia.Materia }}",
+                            {% endfor %}];
+                            var calificaciones = [{% for calificacion in calificaciones %}
+                            {{ calificacion.Parcial_2 }},
+                            {% endfor %}];
+                          
+                            // Obtén el contexto del canvas
+                            var ctx = document.getElementById('parcial2').getContext('2d');
+                          
+                            // Configuración de la gráfica de radar
+                            var radarChart = new Chart(ctx, {
+                              type: 'radar',
+                              data: {
+                                labels: materias,
+                                datasets: [{
+                                  label: '2do parcial',
+                                  data: calificaciones,
+                                  backgroundColor: 'rgba(40, 180, 99, 0.2)', // Color de fondo del área
+                                  borderColor: 'rgba(40, 180, 99, 1)',     // Color del borde del área
+                                  borderWidth: 2,
+                                  pointBackgroundColor: 'rgba(740, 180, 99, 1)', // Color de los puntos
+                                }]
+                              },
+                              options: {
+                                scale: {
+                                  ticks: {
+                                    beginAtZero: true,
+                                    max: 100, // Puedes ajustar este valor según tus necesidades
+                                  }
+                                }
+                              }
+                            });
+                          </script>
+                          
+                    </div>
+                </div>
+                <!-- Grafica segundo parcial -->
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                Calificaciones del 3er parcial
+                            </h2>
+                        </div>
+                        <div align="center">
+                            <canvas id="parcial3" width="400" height="400"></canvas>
+                        </div>
+                        
+                        <script>
+                            // Datos de ejemplo: materias y calificaciones
+                            var materias = [{% for calificacion in calificaciones %}
+                            "{{ calificacion.fk_Asignacion.fk_Materia.Materia }}",
+                            {% endfor %}];
+                            var calificaciones = [{% for calificacion in calificaciones %}
+                            {{ calificacion.Parcial_2 }},
+                            {% endfor %}];
+                        
+                            // Obtén el contexto del canvas
+                            var ctx = document.getElementById('parcial3').getContext('2d');
+                        
+                            // Configuración de la gráfica de radar
+                            var radarChart = new Chart(ctx, {
+                            type: 'radar',
+                            data: {
+                                labels: materias,
+                                datasets: [{
+                                label: '3er parcial',
+                                data: calificaciones,
+                                backgroundColor: 'rgba(231, 76, 60, 0.2)', // Color de fondo del área
+                                borderColor: 'rgba(231, 76, 60, 1)',     // Color del borde del área
+                                borderWidth: 2,
+                                pointBackgroundColor: 'rgba(231, 76, 60, 1)', // Color de los puntos
+                                }]
+                            },
+                            options: {
+                                scale: {
+                                ticks: {
+                                    beginAtZero: true,
+                                    max: 100, // Puedes ajustar este valor según tus necesidades
+                                }
+                                }
+                            }
+                            });
+                        </script>
+                        
+                    </div>
+                </div>
+                <!-- Tabla de calificaciones -->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
@@ -346,75 +500,6 @@
                                 </table>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="card">
-                        <div align="center">
-                            <canvas id="chart"></canvas>
-                        </div>
-
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function () {
-                            let ctx = document.getElementById("chart").getContext("2d");
-
-                            let calificacionesData = [{% for calificacion in calificaciones %} 
-                                {
-                                materia: "{{ calificacion.fk_Asignacion.fk_Materia.Materia }}",
-                                color: getRandomColor(0.5), // 50% de opacidad
-                                data: [
-                                    {{ calificacion.Parcial_1 }},
-                                    {{ calificacion.Parcial_2 }},
-                                    {{ calificacion.Parcial_3 }}
-                                ]
-                                },
-                            {% endfor %}];
-
-                            let chartData = {
-                                labels: ["Parcial 1", "Parcial 2", "Parcial 3"],
-                                datasets: calificacionesData.map(item => ({
-                                label: item.materia,
-                                backgroundColor: item.color,
-                                borderColor: item.color,
-                                pointBackgroundColor: item.color,
-                                data: item.data
-                                }))
-                            };
-
-                            let chart = new Chart(ctx, {
-                                type: "radar",
-                                data: chartData,
-                                options: {
-                                title: {
-                                    text: "Calificaciones por Materia",
-                                    display: true
-                                },
-                                scale: {
-                                    angleLines: {
-                                    display: true
-                                    },
-                                    ticks: {
-                                    suggestedMin: 0,
-                                    suggestedMax: 100,
-                                    stepSize: 20
-                                    }
-                                },
-                                responsive: false, // Desactivar la respuesta automática al tamaño
-                                maintainAspectRatio: false, // Desactivar la proporción de aspecto
-                                width: 300, // Establecer la anchura del gráfico
-                                height: 300 // Establecer la altura del gráfico
-                                }
-                            });
-
-                            function getRandomColor(opacity) {
-                                var letters = "0123456789ABCDEF";
-                                var color = "#";
-                                for (var i = 0; i < 6; i++) {
-                                color += letters[Math.floor(Math.random() * 16)];
-                                }
-                                return color + Math.round(opacity * 255).toString(16); // Agregar componente de opacidad
-                            }
-                            });
-                        </script>
                     </div>
                 </div>
             </div>
