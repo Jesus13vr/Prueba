@@ -26,7 +26,6 @@ class Home(APIView):
             user_id = request.user.id
             ultimo_periodo = Periodo.objects.latest('id_Periodo')
             calificaciones = Calificacion.objects.filter(fk_Asignacion__fk_Alumno=user_id, fk_Asignacion__fk_Periodo__Periodo=ultimo_periodo.Periodo)
-                
             if permisos == 4:
                 total_calificaciones = []
                 for calificacion in calificaciones:

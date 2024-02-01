@@ -304,7 +304,7 @@
                 <div class="row clearfix">
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                         <h4>MEJOR CALIFICACIÓN<h4>
-                        <div class="info-box bg-light-green hover-expand-effect">
+                        <div class="info-box bg-green hover-expand-effect">
                             <div class="icon">
                                 <i class="material-icons">done</i>
                             </div>
@@ -316,7 +316,7 @@
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                         <h4>PEOR CALIFICACIÓN<h4>
-                        <div class="info-box bg-pink hover-expand-effect">
+                        <div class="info-box bg-red hover-expand-effect">
                             <div class="icon">
                                 <i class="material-icons">close</i>
                             </div>
@@ -436,7 +436,6 @@
                             <div class="body">
                             <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                             <div id="chart_div"></div>
-                            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js" ></script>
                             <script type="text/javascript">
                                                 google.charts.load("current", {packages:['corechart']});
                                                 google.charts.setOnLoadCallback(drawChart);
@@ -448,10 +447,20 @@
                                     "{{ calificacion.fk_Asignacion.fk_Materia.Materia }}",
                                     ({{ calificacion.Parcial_1 }} + {{ calificacion.Parcial_2 }} + {{ calificacion.Parcial_3 }})/3 ,
                                     {% with resultado=calificacion.Parcial_1|add:calificacion.Parcial_2|add:calificacion.Parcial_3 %}
-                                        {% if resultado <= 209 %}
-                                        "red"
+                                        {% if resultado <= 209 %} // menos de 7
+                                        "#CB4335" //rojo
+                                        {% elif resultado >= 210 and resultado <= 239 %} // de 7 a 7.9
+                                        "#E67E22" //naranja
+                                        {% elif resultado >= 240 and resultado <= 254 %} // de 8 a 8.4
+                                        "#F1C40F" //amarillo
+                                        {% elif resultado >= 255 and resultado <= 269 %} // de 8.5 a 9
+                                        "#16A085" //amaverde
+                                        {% elif resultado >= 270 and resultado <= 284 %} // de 9 a 9.4
+                                        "#16A085" //verde
+                                        {% elif resultado >= 285 and resultado <= 300 %} // de 9.5 a 10
+                                        "#2E86C1" //azul
                                         {% else %}
-                                        "green"
+                                        "black"
                                         {% endif %}
                                     {% endwith %}
                                 ],
