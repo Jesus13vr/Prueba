@@ -1,75 +1,67 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Radar Chart</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario de Eventos - Control Escolar</title>
+
+    <!-- Agrega los archivos CSS de FullCalendar -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+
+    <!-- Agrega jQuery, necesario para FullCalendar -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Agrega la librería FullCalendar -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+
+    <style>
+        /* Puedes personalizar el estilo según tus preferencias */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #calendar {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
-  <canvas id="chart"></canvas>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      let ctx = document.getElementById("chart").getContext("2d");
+    <h1>Calendario de Eventos - Control Escolar</h1>
 
-      let calificacionesData = [{% for calificacion in calificaciones %} 
-        {
-          materia: "{{ calificacion.fk_Asignacion.fk_Materia.Materia }}",
-          color: getRandomColor(0.5), // 50% de opacidad
-          data: [
-            {{ calificacion.Parcial_1 }},
-            {{ calificacion.Parcial_2 }},
-            {{ calificacion.Parcial_3 }}
-          ]
-        },
-      {% endfor %}];
+    <!-- Div para mostrar el calendario -->
+    <div id="calendar"></div>
 
-      let chartData = {
-        labels: ["Parcial 1", "Parcial 2", "Parcial 3"],
-        datasets: calificacionesData.map(item => ({
-          label: item.materia,
-          backgroundColor: item.color,
-          borderColor: item.color,
-          pointBackgroundColor: item.color,
-          data: item.data
-        }))
-      };
-
-      let chart = new Chart(ctx, {
-        type: "radar",
-        data: chartData,
-        options: {
-          title: {
-            text: "Calificaciones por Materia",
-            display: true
-          },
-          scale: {
-            angleLines: {
-              display: true
+    <script>
+        // Ejemplo de eventos
+        var eventos = [
+            {
+                title: 'Clases de Matemáticas',
+                start: '2024-02-01T10:00:00',
+                end: '2024-02-01T12:00:00',
             },
-            ticks: {
-              suggestedMin: 0,
-              suggestedMax: 100,
-              stepSize: 20
-            }
-          },
-          responsive: false, // Desactivar la respuesta automática al tamaño
-          maintainAspectRatio: false, // Desactivar la proporción de aspecto
-          width: 300, // Establecer la anchura del gráfico
-          height: 300 // Establecer la altura del gráfico
-        }
-      });
+            {
+                title: 'Reunión de Profesores',
+                start: '2024-02-05T15:00:00',
+                end: '2024-02-05T17:00:00',
+            },
+            // Puedes agregar más eventos según sea necesario
+        ];
 
-      function getRandomColor(opacity) {
-        var letters = "0123456789ABCDEF";
-        var color = "#";
-        for (var i = 0; i < 6; i++) {
-          color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color + Math.round(opacity * 255).toString(16); // Agregar componente de opacidad
-      }
-    });
-  </script>
+        // Configuración de FullCalendar
+        $(document).ready(function () {
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                events: eventos
+            });
+        });
+    </script>
+
 </body>
 </html>

@@ -583,6 +583,20 @@ class CalificacionesGrupos(APIView):
         permisos = request.user.fk_Rol.id_Rol
         return render(request, self.template_name, {"permisos": permisos})
 
+@method_decorator(login_required, name='dispatch')
+class SeguimientoCalificaciones(APIView):
+    template_name = "seguimiento_calificaciones.html"
+    def get(self, request):
+        permisos = request.user.fk_Rol.id_Rol
+        docente = request.user.id
+        grupos = Grupo.objects.all()
+        ultimo_periodo = Periodo.objects.latest('id_Periodo')
+        calificaciones = Calificacion.objects.filter(fk_Asignacion__fk_Periodo__Periodo=ultimo_periodo.Periodo, fk_Asignacion__fk_Docente__id=docente)
+        return render(request, self.template_name, {"calificaciones": calificaciones, "permisos": permisos, "grupos": grupos})
+    def post(self, request):
+        permisos = request.user.fk_Rol.id_Rol
+        return render(request, self.template_name, {"permisos": permisos})
+
 class Charts(APIView):
     template_name= "googlecharts.html"
     def get(self, request):
@@ -624,6 +638,15 @@ class Prueba(APIView):
         ultimo_periodo = Periodo.objects.latest('id_Periodo')
         calificaciones = Calificacion.objects.filter(fk_Asignacion__fk_Alumno=user_id, fk_Asignacion__fk_Periodo__Periodo=ultimo_periodo.Periodo)
         return render(request, self.template_name, {"calificaciones": calificaciones, "permisos": permisos})
-    
+
+@method_decorator(login_required, name='dispatch')
+class Unauthorized(APIView):
+    template_name = "unauthorized.html"
+    def get(self, request):
+        permisos = request.user.fk_Rol.id_Rol
+        return render(request, self.template_name, {'permisos': permisos})
+    def post(self, request):
+        return render(request, self.template_name)
+
 def page_not_found(request, exception):
     return render(request, '404.html', status=404)

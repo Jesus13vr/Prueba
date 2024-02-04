@@ -1,3 +1,4 @@
+{% if user.is_authenticated and permisos == 1 or permisos == 2 %}
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -125,29 +126,6 @@
                             <span>Inicio</span>
                         </a>
                     </li>
-                    {% if permisos == 4 %}
-                    <li>
-                        <a href="{% url 'parciales' %}">
-                            <i class="material-icons">assignment</i>
-                            <span>Calificaciones</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'historial' %}">
-                            <i class="material-icons">reorder</i>
-                            <span>Historial academico</span>
-                        </a>
-                    </li>
-                    {% endif %}
-                    {% if permisos == 3 %}
-                    <li>
-                        <a href="{% url 'calificaciones' %}">
-                            <i class="material-icons">assignment_returned</i>
-                            <span>Subir calificaciones</span>
-                        </a>
-                    </li>
-                    {% endif %}
-                    {% if permisos == 1 or permisos == 2 %}
                     <li>
                         <a href="{% url 'grupo' %}">
                             <i class="material-icons">group</i>
@@ -190,7 +168,6 @@
                             <span>Calificaciones por grupo</span>
                         </a>
                     </li>
-                    {% endif %}
                 </ul>
             </div>
             <!-- #Menu -->
@@ -331,6 +308,9 @@
                             {% endif %}
                             <br>
                             {% if ultimo_periodo.fk_Status.Status == "Activo" %}
+                            <div class="form-group">
+                                <p class="card-inside-title" style="color:red;">Actualmente existe un periodo activo, por lo que no es posible iniciar otro.</p>
+                            </div>
                             {% else %}
                             <form action="{% url 'periodo' %}" method="POST">
                                 {% csrf_token %}
@@ -456,3 +436,6 @@
     <script src="{% static 'js/demo.js' %}"></script>
 </body>
 </html>
+{% else%}
+<meta http-equiv="refresh" content="0;url={% url 'unauthorized' %}"> 
+{% endif %}

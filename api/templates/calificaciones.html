@@ -1,4 +1,5 @@
-﻿{% load static %}
+﻿{% if user.is_authenticated and permisos == 3 %}
+{% load static %}
 <!DOCTYPE html>
 <html>
 
@@ -122,72 +123,18 @@
                             <span>Inicio</span>
                         </a>
                     </li>
-                    {% if permisos == 4 %}
-                    <li>
-                        <a href="{% url 'parciales' %}">
-                            <i class="material-icons">assignment</i>
-                            <span>Calificaciones</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'historial' %}">
-                            <i class="material-icons">reorder</i>
-                            <span>Historial academico</span>
-                        </a>
-                    </li>
-                    {% endif %}
-                    {% if permisos == 3 %}
                     <li class="active">
                         <a href="{% url 'calificaciones' %}">
                             <i class="material-icons">assignment_returned</i>
                             <span>Subir calificaciones</span>
                         </a>
                     </li>
-                    {% endif %}
-                    {% if permisos == 1 or permisos == 2 %}
                     <li>
-                        <a href="{% url 'grupo' %}">
-                            <i class="material-icons">group</i>
-                            <span>Grupos</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'docente' %}">
-                            <i class="material-icons">people</i>
-                            <span>Docentes</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'materia' %}">
-                            <i class="material-icons">book</i>
-                            <span>Materias</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'alumno' %}">
-                            <i class="material-icons">person</i>
-                            <span>Alumnos</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'periodo' %}">
-                            <i class="material-icons">timeline</i>
-                            <span>Periodos</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'asignacion' %}">
-                            <i class="material-icons">group_work</i>
-                            <span>Grupos y docentes</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'calificaciones_grupo' %}">
+                        <a href="{% url 'seguimiento_calificaciones' %}">
                             <i class="material-icons">library_books</i>
-                            <span>Calificaciones por grupo</span>
+                            <span>Seguimiento de calificaciones</span>
                         </a>
                     </li>
-                    {% endif %}
                 </ul>
             </div>
             <!-- #Menu -->
@@ -559,13 +506,6 @@
         </div>
       </section>
     
-      <script>
-        // Configuración de DataTables
-        $(document).ready(function () {
-          $('#calificacionesTable').DataTable();
-        });
-      </script>
-    
     </section>
 
     <!-- Jquery Core Js -->
@@ -600,3 +540,6 @@
     <script src="{% static 'js/demo.js' %}"></script>
 </body>
 </html>
+{% else%}
+<meta http-equiv="refresh" content="0;url={% url 'unauthorized' %}"> 
+{% endif %}

@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY',default='your secret key')
 DEBUG = True
 # DEBUG = False
 
-ALLOWED_HOSTS = ['192.168.137.231','localhost']
+ALLOWED_HOSTS = ['192.168.137.231', '192.168.1.66','localhost']
 
 RENDER_EXTERNAL_HOSTNAME= os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:

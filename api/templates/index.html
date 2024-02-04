@@ -142,6 +142,12 @@
                             <span>Subir calificaciones</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{% url 'seguimiento_calificaciones' %}">
+                            <i class="material-icons">library_books</i>
+                            <span>Seguimiento de calificaciones</span>
+                        </a>
+                    </li>
                     {% endif %}
                     {% if permisos == 1 or permisos == 2 %}
                     <li>
@@ -340,280 +346,296 @@
                                 <h2>CALIFICACIONES SEMESTRALES</h2>
                             </div>
                             <div class="body">
-                            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                            <div id="chart_div"></div>
-                            <script type="text/javascript">
-                                                google.charts.load("current", {packages:['corechart']});
-                                                google.charts.setOnLoadCallback(drawChart);
-                                                function drawChart() {
-                                                var data = google.visualization.arrayToDataTable([
-                                                    ["Materia", "Calificación", { role: "style" } ],
-                                                {% for calificacion in calificaciones %}
-                                [
-                                    "{{ calificacion.fk_Asignacion.fk_Materia.Materia }}",
-                                    ({{ calificacion.Parcial_1 }} + {{ calificacion.Parcial_2 }} + {{ calificacion.Parcial_3 }})/3 ,
-                                    {% with resultado=calificacion.Parcial_1|add:calificacion.Parcial_2|add:calificacion.Parcial_3 %}
-                                        {% if resultado <= 209 %} // menos de 7
-                                        "#CB4335" //rojo
-                                        {% elif resultado >= 210 and resultado <= 239 %} // de 7 a 7.9
-                                        "#E67E22" //naranja
-                                        {% elif resultado >= 240 and resultado <= 254 %} // de 8 a 8.4
-                                        "#F1C40F" //amarillo
-                                        {% elif resultado >= 255 and resultado <= 269 %} // de 8.5 a 9
-                                        "#16A085" //amaverde
-                                        {% elif resultado >= 270 and resultado <= 284 %} // de 9 a 9.4
-                                        "#16A085" //verde
-                                        {% elif resultado >= 285 and resultado <= 300 %} // de 9.5 a 10
-                                        "#2E86C1" //azul
-                                        {% else %}
-                                        "black"
-                                        {% endif %}
-                                    {% endwith %}
-                                ],
-                                {% endfor %}
-                                                ]);
+                                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                                <div id="chart_div" class="chart-container"></div>
+                                <script type="text/javascript">
+                                    google.charts.load("current", { packages: ['corechart'] });
+                                    google.charts.setOnLoadCallback(drawChart);
 
-                                                var view = new google.visualization.DataView(data);
-                                                view.setColumns([0, 1,
-                                                                { calc: "stringify",
-                                                                    sourceColumn: 1,
-                                                                    type: "string",
-                                                                    role: "annotation" },
-                                                                2]);
+                                    function drawChart() {
+                                        var data = google.visualization.arrayToDataTable([
+                                            ["Materia", "Calificación", { role: "style" }],
+                                            {% for calificacion in calificaciones %}
+                                            [
+                                                "{{ calificacion.fk_Asignacion.fk_Materia.Materia }}",
+                                                ({{ calificacion.Parcial_1 }} + {{ calificacion.Parcial_2 }} + {{ calificacion.Parcial_3 }}) / 3,
+                                                {% with resultado=calificacion.Parcial_1|add:calificacion.Parcial_2|add:calificacion.Parcial_3 %}
+                                                {% if resultado <= 209 %}
+                                                "#CB4335"
+                                                {% elif resultado >= 210 and resultado <= 239 %}
+                                                "#E67E22"
+                                                {% elif resultado >= 240 and resultado <= 254 %}
+                                                "#F1C40F"
+                                                {% elif resultado >= 255 and resultado <= 269 %}
+                                                "#16A085"
+                                                {% elif resultado >= 270 and resultado <= 284 %}
+                                                "#16A085"
+                                                {% elif resultado >= 285 and resultado <= 300 %}
+                                                "#2E86C1"
+                                                {% else %}
+                                                "black"
+                                                {% endif %}
+                                                {% endwith %}
+                                            ],
+                                            {% endfor %}
+                                        ]);
 
-                                                var options = {
-                                                    title: "Calificaciones finales",
-                                                    width: 600,
-                                                    height: 400,
-                                                    bar: {groupWidth: "95%"},
-                                                    legend: { position: "none" },
-                                                };
-                                                var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
-                                                chart.draw(view, options);
-                                                }
-                            </script>
-                            <div id="columnchart_values"></div>
+                                        var view = new google.visualization.DataView(data);
+                                        view.setColumns([0, 1,
+                                            {
+                                                calc: "stringify",
+                                                sourceColumn: 1,
+                                                type: "string",
+                                                role: "annotation"
+                                            },
+                                            2
+                                        ]);
+
+                                        var options = {
+                                            title: "Calificaciones finales",
+                                            width: '100%', // Cambiado a 100%
+                                            height: 400,
+                                            bar: { groupWidth: "95%" },
+                                            legend: { position: "none" },
+                                        };
+                                        var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
+                                        chart.draw(view, options);
+                                    }
+                                </script>
                             </div>
                         </div>
                     </div>
+
                     <!-- Grafica indice de reprobacion -->
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="card">
                             <div class="header">
-                                <h2>
-                                    Indices de reprobación
-                                </h2>
+                                <h2>Indices de Reprobación</h2>
                             </div>
                             <div align="center">
-                                <canvas id="apro_repro" width="400" height="300"></canvas>
+                                <canvas id="apro_repro" class="chart-container"></canvas>
                             </div>
 
-                        <script>
-                        // Datos de ejemplo: materias y calificaciones
-                        var calificaciones = [
-                        {% for calificacion in calificaciones %}
-                        ({{ calificacion.Parcial_1 }} + {{ calificacion.Parcial_2 }} + {{ calificacion.Parcial_3 }})/3,
-                        {% endfor %}
-                        ];
+                            <script>
+                                // Datos de ejemplo: materias y calificaciones
+                                var calificaciones = [
+                                    {% for calificacion in calificaciones %}
+                                        ({{ calificacion.Parcial_1 }} + {{ calificacion.Parcial_2 }} + {{ calificacion.Parcial_3 }})/3,
+                                    {% endfor %}
+                                ];
 
-                        // Contadores para valores por encima y por debajo de 80
-                        var aprobadas = 0;
-                        var reprobadas = 0;
+                                // Contadores para valores por encima y por debajo de 80
+                                var aprobadas = 0;
+                                var reprobadas = 0;
 
-                        // Contar valores por encima y por debajo de 80
-                        for (var i = 0; i < calificaciones.length; i++) {
-                            if (calificaciones[i] >= 69) {
-                                aprobadas++;
-                            } else {
-                                reprobadas++;
-                            }
-                        }
-
-                        // Obtén el contexto del canvas
-                        var ctxBar = document.getElementById('apro_repro').getContext('2d');
-
-                        // Configuración de la gráfica de barras
-                        var barChart = new Chart(ctxBar, {
-                            type: 'bar',
-                            data: {
-                            labels: ['Aprobadas', 'Reprobadas'],
-                            datasets: [{
-                                data: [aprobadas, reprobadas],
-                                backgroundColor: ['rgba(0, 255, 0, 0.2)', 'rgba(255, 99, 132, 0.2)'], // Colores de fondo de las barras
-                                borderColor: ['rgba(0, 255, 0, 1)', 'rgba(255, 99, 132, 1)'],         // Colores del borde de las barras
-                                borderWidth: 1
-                            }]
-                            },
-                            options: {
-                            scales: {
-                                y: {
-                                beginAtZero: true,
-                                max: calificaciones.length // Puedes ajustar este valor según tus necesidades
+                                // Contar valores por encima y por debajo de 80
+                                for (var i = 0; i < calificaciones.length; i++) {
+                                    if (calificaciones[i] >= 69) {
+                                        aprobadas++;
+                                    } else {
+                                        reprobadas++;
+                                    }
                                 }
-                            }
-                            }
-                        });
-                        </script>
 
+                                // Obtén el contexto del canvas
+                                var ctxBar = document.getElementById('apro_repro').getContext('2d');
+
+                                // Configuración de la gráfica de barras
+                                var barChart = new Chart(ctxBar, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: ['Aprobadas', 'Reprobadas'],
+                                        datasets: [{
+                                            data: [aprobadas, reprobadas],
+                                            backgroundColor: ['rgba(0, 255, 0, 0.2)', 'rgba(255, 99, 132, 0.2)'], // Colores de fondo de las barras
+                                            borderColor: ['rgba(0, 255, 0, 1)', 'rgba(255, 99, 132, 1)'],         // Colores del borde de las barras
+                                            borderWidth: 1
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        maintainAspectRatio: false, // Esto desactiva la relación de aspecto fija
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true,
+                                                max: calificaciones.length // Puedes ajustar este valor según tus necesidades
+                                            }
+                                        }
+                                    }
+                                });
+                            </script>
                         </div>
                     </div>
                 </div>
 
                 <div class="row clearfix">
                     <!-- Grafica primer parcial -->
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="card">
                             <div class="header">
-                                <h2>
-                                    Calificaciones del 1er parcial
-                                </h2>
+                                <h2>Calificaciones del 1er parcial</h2>
                             </div>
                             <div align="center">
-                                <canvas id="parcial1" width="400" height="400"></canvas>
+                                <canvas id="parcial1" class="chart-container"></canvas>
                             </div>
-                            
+                
                             <script>
                                 // Datos de ejemplo: materias y calificaciones
-                                var materias = [{% for calificacion in calificaciones %}
-                                "{{ calificacion.fk_Asignacion.fk_Materia.Materia }}",
-                                {% endfor %}];
-                                var calificaciones = [{% for calificacion in calificaciones %}
-                                {{ calificacion.Parcial_1 }},
-                                {% endfor %}];
-                              
+                                var materias1 = [
+                                    {% for calificacion in calificaciones %}
+                                        "{{ calificacion.fk_Asignacion.fk_Materia.Materia }}",
+                                    {% endfor %}
+                                ];
+                                var calificaciones1 = [
+                                    {% for calificacion in calificaciones %}
+                                        {{ calificacion.Parcial_1 }},
+                                    {% endfor %}
+                                ];
+                
                                 // Obtén el contexto del canvas
-                                var ctx = document.getElementById('parcial1').getContext('2d');
-                              
+                                var ctx1 = document.getElementById('parcial1').getContext('2d');
+                
                                 // Configuración de la gráfica de radar
-                                var radarChart = new Chart(ctx, {
-                                  type: 'radar',
-                                  data: {
-                                    labels: materias,
-                                    datasets: [{
-                                      label: '1er parcial',
-                                      data: calificaciones,
-                                      backgroundColor: 'rgba(40, 116, 166, 0.2)', // Color de fondo del área
-                                      borderColor: 'rgba(40, 116, 166, 1)',     // Color del borde del área
-                                      borderWidth: 2,
-                                      pointBackgroundColor: 'rgba(40, 116, 166, 1)', // Color de los puntos
-                                    }]
-                                  },
-                                  options: {
-                                    scale: {
-                                      ticks: {
-                                        beginAtZero: true,
-                                        max: 100, // Puedes ajustar este valor según tus necesidades
-                                      }
+                                var radarChart1 = new Chart(ctx1, {
+                                    type: 'radar',
+                                    data: {
+                                        labels: materias1,
+                                        datasets: [{
+                                            label: '1er parcial',
+                                            data: calificaciones1,
+                                            backgroundColor: 'rgba(40, 116, 166, 0.2)',
+                                            borderColor: 'rgba(40, 116, 166, 1)',
+                                            borderWidth: 2,
+                                            pointBackgroundColor: 'rgba(40, 116, 166, 1)',
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        maintainAspectRatio: false,
+                                        scale: {
+                                            ticks: {
+                                                beginAtZero: true,
+                                                max: 100,
+                                            }
+                                        }
                                     }
-                                  }
-                                });
-                              </script>
-                              
-                        </div>
-                    </div>
-                    <!-- Grafica segundo parcial -->
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                        <div class="card">
-                            <div class="header">
-                                <h2>
-                                    Calificaciones del 2do parcial
-                                </h2>
-                            </div>
-                            <div align="center">
-                                <canvas id="parcial2" width="400" height="400"></canvas>
-                            </div>
-                            
-                            <script>
-                                // Datos de ejemplo: materias y calificaciones
-                                var materias = [{% for calificacion in calificaciones %}
-                                "{{ calificacion.fk_Asignacion.fk_Materia.Materia }}",
-                                {% endfor %}];
-                                var calificaciones = [{% for calificacion in calificaciones %}
-                                {{ calificacion.Parcial_2 }},
-                                {% endfor %}];
-                              
-                                // Obtén el contexto del canvas
-                                var ctx = document.getElementById('parcial2').getContext('2d');
-                              
-                                // Configuración de la gráfica de radar
-                                var radarChart = new Chart(ctx, {
-                                  type: 'radar',
-                                  data: {
-                                    labels: materias,
-                                    datasets: [{
-                                      label: '2do parcial',
-                                      data: calificaciones,
-                                      backgroundColor: 'rgba(40, 180, 99, 0.2)', // Color de fondo del área
-                                      borderColor: 'rgba(40, 180, 99, 1)',     // Color del borde del área
-                                      borderWidth: 2,
-                                      pointBackgroundColor: 'rgba(740, 180, 99, 1)', // Color de los puntos
-                                    }]
-                                  },
-                                  options: {
-                                    scale: {
-                                      ticks: {
-                                        beginAtZero: true,
-                                        max: 100, // Puedes ajustar este valor según tus necesidades
-                                      }
-                                    }
-                                  }
-                                });
-                              </script>
-                              
-                        </div>
-                    </div>
-                    <!-- Grafica segundo parcial -->
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                        <div class="card">
-                            <div class="header">
-                                <h2>
-                                    Calificaciones del 3er parcial
-                                </h2>
-                            </div>
-                            <div align="center">
-                                <canvas id="parcial3" width="400" height="400"></canvas>
-                            </div>
-                            
-                            <script>
-                                // Datos de ejemplo: materias y calificaciones
-                                var materias = [{% for calificacion in calificaciones %}
-                                "{{ calificacion.fk_Asignacion.fk_Materia.Materia }}",
-                                {% endfor %}];
-                                var calificaciones = [{% for calificacion in calificaciones %}
-                                {{ calificacion.Parcial_2 }},
-                                {% endfor %}];
-                            
-                                // Obtén el contexto del canvas
-                                var ctx = document.getElementById('parcial3').getContext('2d');
-                            
-                                // Configuración de la gráfica de radar
-                                var radarChart = new Chart(ctx, {
-                                type: 'radar',
-                                data: {
-                                    labels: materias,
-                                    datasets: [{
-                                    label: '3er parcial',
-                                    data: calificaciones,
-                                    backgroundColor: 'rgba(231, 76, 60, 0.2)', // Color de fondo del área
-                                    borderColor: 'rgba(231, 76, 60, 1)',     // Color del borde del área
-                                    borderWidth: 2,
-                                    pointBackgroundColor: 'rgba(231, 76, 60, 1)', // Color de los puntos
-                                    }]
-                                },
-                                options: {
-                                    scale: {
-                                    ticks: {
-                                        beginAtZero: true,
-                                        max: 100, // Puedes ajustar este valor según tus necesidades
-                                    }
-                                    }
-                                }
                                 });
                             </script>
-                            
+                
+                        </div>
+                    </div>
+                    <!-- Grafica segundo parcial -->
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                        <div class="card">
+                            <div class="header">
+                                <h2>Calificaciones del 2do parcial</h2>
+                            </div>
+                            <div align="center">
+                                <canvas id="parcial2" class="chart-container"></canvas>
+                            </div>
+                
+                            <script>
+                                // Datos de ejemplo: materias y calificaciones
+                                var materias2 = [
+                                    {% for calificacion in calificaciones %}
+                                        "{{ calificacion.fk_Asignacion.fk_Materia.Materia }}",
+                                    {% endfor %}
+                                ];
+                                var calificaciones2 = [
+                                    {% for calificacion in calificaciones %}
+                                        {{ calificacion.Parcial_2 }},
+                                    {% endfor %}
+                                ];
+                
+                                // Obtén el contexto del canvas
+                                var ctx2 = document.getElementById('parcial2').getContext('2d');
+                
+                                // Configuración de la gráfica de radar
+                                var radarChart2 = new Chart(ctx2, {
+                                    type: 'radar',
+                                    data: {
+                                        labels: materias2,
+                                        datasets: [{
+                                            label: '2do parcial',
+                                            data: calificaciones2,
+                                            backgroundColor: 'rgba(40, 180, 99, 0.2)',
+                                            borderColor: 'rgba(40, 180, 99, 1)',
+                                            borderWidth: 2,
+                                            pointBackgroundColor: 'rgba(740, 180, 99, 1)',
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        maintainAspectRatio: false,
+                                        scale: {
+                                            ticks: {
+                                                beginAtZero: true,
+                                                max: 100,
+                                            }
+                                        }
+                                    }
+                                });
+                            </script>
+                
+                        </div>
+                    </div>
+                    <!-- Grafica tercer parcial -->
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                        <div class="card">
+                            <div class="header">
+                                <h2>Calificaciones del 3er parcial</h2>
+                            </div>
+                            <div align="center">
+                                <canvas id="parcial3" class="chart-container"></canvas>
+                            </div>
+                
+                            <script>
+                                // Datos de ejemplo: materias y calificaciones
+                                var materias3 = [
+                                    {% for calificacion in calificaciones %}
+                                        "{{ calificacion.fk_Asignacion.fk_Materia.Materia }}",
+                                    {% endfor %}
+                                ];
+                                var calificaciones3 = [
+                                    {% for calificacion in calificaciones %}
+                                        {{ calificacion.Parcial_3 }},
+                                    {% endfor %}
+                                ];
+                
+                                // Obtén el contexto del canvas
+                                var ctx3 = document.getElementById('parcial3').getContext('2d');
+                
+                                // Configuración de la gráfica de radar
+                                var radarChart3 = new Chart(ctx3, {
+                                    type: 'radar',
+                                    data: {
+                                        labels: materias3,
+                                        datasets: [{
+                                            label: '3er parcial',
+                                            data: calificaciones3,
+                                            backgroundColor: 'rgba(231, 76, 60, 0.2)',
+                                            borderColor: 'rgba(231, 76, 60, 1)',
+                                            borderWidth: 2,
+                                            pointBackgroundColor: 'rgba(231, 76, 60, 1)',
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        maintainAspectRatio: false,
+                                        scale: {
+                                            ticks: {
+                                                beginAtZero: true,
+                                                max: 100,
+                                            }
+                                        }
+                                    }
+                                });
+                            </script>
+                
                         </div>
                     </div>
                 </div>
+                
             </div>
         {% endif %}
         

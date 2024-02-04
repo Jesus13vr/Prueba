@@ -1,4 +1,4 @@
-﻿{% if user.is_authenticated and permisos == 4 %}
+{% if user.is_authenticated and permisos == 3 %}
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -31,9 +31,6 @@
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="{% static 'css/themes/all-themes.css' %}" rel="stylesheet" />
-
-    <!-- Chart js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body class="theme-teal">
@@ -120,16 +117,16 @@
                             <span>Inicio</span>
                         </a>
                     </li>
-                    <li class="active">
-                        <a href="{% url 'parciales' %}">
-                            <i class="material-icons">assignment</i>
-                            <span>Calificaciones</span>
+                    <li>
+                        <a href="{% url 'calificaciones' %}">
+                            <i class="material-icons">assignment_returned</i>
+                            <span>Subir calificaciones</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="{% url 'historial' %}">
-                            <i class="material-icons">reorder</i>
-                            <span>Historial academico</span>
+                    <li class="active">
+                        <a href="{% url 'seguimiento_calificaciones' %}">
+                            <i class="material-icons">library_books</i>
+                            <span>Seguimiento de calificaciones</span>
                         </a>
                     </li>
                 </ul>
@@ -247,177 +244,11 @@
             <!-- #END# Basic Examples -->
             <!-- Exportable Table -->
             <div class="row clearfix">
-                <!-- Grafica primer parcial -->
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                    <div class="card">
-                        <div class="header">
-                            <h2>Calificaciones del 1er parcial</h2>
-                        </div>
-                        <div align="center">
-                            <canvas id="parcial1" class="chart-container"></canvas>
-                        </div>
-            
-                        <script>
-                            // Datos de ejemplo: materias y calificaciones
-                            var materias1 = [
-                                {% for calificacion in calificaciones %}
-                                    "{{ calificacion.fk_Asignacion.fk_Materia.Materia }}",
-                                {% endfor %}
-                            ];
-                            var calificaciones1 = [
-                                {% for calificacion in calificaciones %}
-                                    {{ calificacion.Parcial_1 }},
-                                {% endfor %}
-                            ];
-            
-                            // Obtén el contexto del canvas
-                            var ctx1 = document.getElementById('parcial1').getContext('2d');
-            
-                            // Configuración de la gráfica de radar
-                            var radarChart1 = new Chart(ctx1, {
-                                type: 'radar',
-                                data: {
-                                    labels: materias1,
-                                    datasets: [{
-                                        label: '1er parcial',
-                                        data: calificaciones1,
-                                        backgroundColor: 'rgba(40, 116, 166, 0.2)',
-                                        borderColor: 'rgba(40, 116, 166, 1)',
-                                        borderWidth: 2,
-                                        pointBackgroundColor: 'rgba(40, 116, 166, 1)',
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                    scale: {
-                                        ticks: {
-                                            beginAtZero: true,
-                                            max: 100,
-                                        }
-                                    }
-                                }
-                            });
-                        </script>
-            
-                    </div>
-                </div>
-                <!-- Grafica segundo parcial -->
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                    <div class="card">
-                        <div class="header">
-                            <h2>Calificaciones del 2do parcial</h2>
-                        </div>
-                        <div align="center">
-                            <canvas id="parcial2" class="chart-container"></canvas>
-                        </div>
-            
-                        <script>
-                            // Datos de ejemplo: materias y calificaciones
-                            var materias2 = [
-                                {% for calificacion in calificaciones %}
-                                    "{{ calificacion.fk_Asignacion.fk_Materia.Materia }}",
-                                {% endfor %}
-                            ];
-                            var calificaciones2 = [
-                                {% for calificacion in calificaciones %}
-                                    {{ calificacion.Parcial_2 }},
-                                {% endfor %}
-                            ];
-            
-                            // Obtén el contexto del canvas
-                            var ctx2 = document.getElementById('parcial2').getContext('2d');
-            
-                            // Configuración de la gráfica de radar
-                            var radarChart2 = new Chart(ctx2, {
-                                type: 'radar',
-                                data: {
-                                    labels: materias2,
-                                    datasets: [{
-                                        label: '2do parcial',
-                                        data: calificaciones2,
-                                        backgroundColor: 'rgba(40, 180, 99, 0.2)',
-                                        borderColor: 'rgba(40, 180, 99, 1)',
-                                        borderWidth: 2,
-                                        pointBackgroundColor: 'rgba(740, 180, 99, 1)',
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                    scale: {
-                                        ticks: {
-                                            beginAtZero: true,
-                                            max: 100,
-                                        }
-                                    }
-                                }
-                            });
-                        </script>
-            
-                    </div>
-                </div>
-                <!-- Grafica tercer parcial -->
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                    <div class="card">
-                        <div class="header">
-                            <h2>Calificaciones del 3er parcial</h2>
-                        </div>
-                        <div align="center">
-                            <canvas id="parcial3" class="chart-container"></canvas>
-                        </div>
-            
-                        <script>
-                            // Datos de ejemplo: materias y calificaciones
-                            var materias3 = [
-                                {% for calificacion in calificaciones %}
-                                    "{{ calificacion.fk_Asignacion.fk_Materia.Materia }}",
-                                {% endfor %}
-                            ];
-                            var calificaciones3 = [
-                                {% for calificacion in calificaciones %}
-                                    {{ calificacion.Parcial_3 }},
-                                {% endfor %}
-                            ];
-            
-                            // Obtén el contexto del canvas
-                            var ctx3 = document.getElementById('parcial3').getContext('2d');
-            
-                            // Configuración de la gráfica de radar
-                            var radarChart3 = new Chart(ctx3, {
-                                type: 'radar',
-                                data: {
-                                    labels: materias3,
-                                    datasets: [{
-                                        label: '3er parcial',
-                                        data: calificaciones3,
-                                        backgroundColor: 'rgba(231, 76, 60, 0.2)',
-                                        borderColor: 'rgba(231, 76, 60, 1)',
-                                        borderWidth: 2,
-                                        pointBackgroundColor: 'rgba(231, 76, 60, 1)',
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                    scale: {
-                                        ticks: {
-                                            beginAtZero: true,
-                                            max: 100,
-                                        }
-                                    }
-                                }
-                            });
-                        </script>
-            
-                    </div>
-                </div>
-                <!-- Tabla de calificaciones -->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
                             <h2>
-                                Calificaciones semestrales
+                                Seguimiento de calificaciones
                             </h2>
                         </div>
                         <div class="body">
@@ -425,19 +256,35 @@
                                 <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                                     <thead>
                                         <tr>
+                                            <th>Alumno</th>
                                             <th>Materia</th>
-                                            <th>Profesor</th>
+                                            <th>Grupo</th>
+                                            <th>Semestre</th>
                                             <th>1er Parcial</th>
                                             <th>2do Parcial</th>
                                             <th>3er Parcial</th>
-                                            <th>Calificación Final</th>
+                                            <th>calificación Final</th>
                                         </tr>
                                     </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Alumno</th>
+                                            <th>Materia</th>
+                                            <th>Grupo</th>
+                                            <th>Semestre</th>
+                                            <th>1er Parcial</th>
+                                            <th>2do Parcial</th>
+                                            <th>3er Parcial</th>
+                                            <th>calificación Final</th>
+                                        </tr>
+                                    </tfoot>
                                     <tbody>
                                         {% for calificacion in calificaciones %}
                                             <tr>
-                                                <td>{{ calificacion.fk_Asignacion.fk_Materia.Materia }}</td>
-                                                <td>{{ calificacion.fk_Asignacion.fk_Docente.first_name }} {{ calificacion.fk_Asignacion.fk_Docente.last_name }}</td>
+                                                <td><p>{{ calificacion.fk_Asignacion.fk_Alumno.first_name }} {{ calificacion.fk_Asignacion.fk_Alumno.last_name }}</p></td>
+                                                <td><p>{{ calificacion.fk_Asignacion.fk_Materia.Materia }}</p></td>
+                                                <td><p>{{ calificacion.fk_Asignacion.fk_Grupo.Grupo }}</p></td>
+                                                <td><p>{{ calificacion.fk_Asignacion.fk_Grupo.Grupo|slice:":1" }}</p></td>
                                                 <td class="{% if calificacion.Parcial_1 <= 69 %}text-danger{% endif %}">{{ calificacion.Parcial_1 }}</td>
                                                 <td class="{% if calificacion.Parcial_2 <= 69 %}text-danger{% endif %}">{{ calificacion.Parcial_2 }}</td>
                                                 <td class="{% if calificacion.Parcial_3 <= 69 %}text-danger{% endif %}">{{ calificacion.Parcial_3 }}</td>
