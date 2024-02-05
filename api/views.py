@@ -644,9 +644,13 @@ class Unauthorized(APIView):
     template_name = "unauthorized.html"
     def get(self, request):
         permisos = request.user.fk_Rol.id_Rol
-        return render(request, self.template_name, {'permisos': permisos})
+        rol = request.user.fk_Rol.Rol
+        return render(request, self.template_name, {'permisos': permisos, 'rol': rol})
     def post(self, request):
         return render(request, self.template_name)
 
 def page_not_found(request, exception):
     return render(request, '404.html', status=404)
+
+def server_error(request):
+    return render(request, '500.html', status=500)
