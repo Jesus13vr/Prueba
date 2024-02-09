@@ -665,122 +665,26 @@
                     <h2>DASHBOARD</h2>
                 </div>
 
-                <!-- Widgets -->
                 <div class="row clearfix">
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <h4>MEJOR CALIFICACIÓN<h4>
-                        <div class="info-box bg-green hover-expand-effect">
-                            <div class="icon">
-                                <i class="material-icons">done</i>
-                            </div>
-                            <div class="content">
-                                <div class="text">{{ best_subject_name }}</div>
-                                <div class="number count-to" data-from="0" data-to="{{ best_average.average }}" data-speed="1000" data-fresh-interval="20"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <h4>PEOR CALIFICACIÓN<h4>
-                        <div class="info-box bg-red hover-expand-effect">
-                            <div class="icon">
-                                <i class="material-icons">close</i>
-                            </div>
-                            <div class="content">
-                                <div class="text">{{ worst_subject_name }}</div>
-                                <div class="number count-to" data-from="0" data-to="{{ worst_average.average }}" data-speed="15" data-fresh-interval="20"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row clearfix">
-                    <!-- Task Info -->
-                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                        <div class="card">
-                            <div class="header">
-                                <h2>CALIFICACIONES SEMESTRALES</h2>
-                            </div>
-                            <div class="body">
-                                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                                {% if calificaciones %}
-                                    <div id="chart_div" class="chart-container"></div>
-                                    <script type="text/javascript">
-                                        google.charts.load("current", { packages: ['corechart'] });
-                                        google.charts.setOnLoadCallback(drawChart);
-
-                                        function drawChart() {
-                                            var data = google.visualization.arrayToDataTable([
-                                                ["Materia", "Calificación", { role: "style" }],
-                                                {% for calificacion in calificaciones %}
-                                                [
-                                                    "{{ calificacion.fk_Asignacion.fk_Materia.Materia }}",
-                                                    ({{ calificacion.Parcial_1 }} + {{ calificacion.Parcial_2 }} + {{ calificacion.Parcial_3 }}) / 3,
-                                                    {% with resultado=calificacion.Parcial_1|add:calificacion.Parcial_2|add:calificacion.Parcial_3 %}
-                                                    {% if resultado <= 209 %}
-                                                    "#CB4335"
-                                                    {% elif resultado >= 210 and resultado <= 239 %}
-                                                    "#E67E22"
-                                                    {% elif resultado >= 240 and resultado <= 254 %}
-                                                    "#F1C40F"
-                                                    {% elif resultado >= 255 and resultado <= 269 %}
-                                                    "#16A085"
-                                                    {% elif resultado >= 270 and resultado <= 284 %}
-                                                    "#16A085"
-                                                    {% elif resultado >= 285 and resultado <= 300 %}
-                                                    "#2E86C1"
-                                                    {% else %}
-                                                    "black"
-                                                    {% endif %}
-                                                    {% endwith %}
-                                                ],
-                                                {% endfor %}
-                                            ]);
-
-                                            var view = new google.visualization.DataView(data);
-                                            view.setColumns([0, 1,
-                                                {
-                                                    calc: "stringify",
-                                                    sourceColumn: 1,
-                                                    type: "string",
-                                                    role: "annotation"
-                                                },
-                                                2
-                                            ]);
-
-                                            var options = {
-                                                title: "Calificaciones finales",
-                                                width: '100%', // Cambiado a 100%
-                                                height: 400,
-                                                bar: { groupWidth: "95%" },
-                                                legend: { position: "none" },
-                                            };
-                                            var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
-                                            chart.draw(view, options);
-                                        }
-                                    </script>
-                                {% else %}
-                                    <p>Aun no tienes se han registrado calificaciones durante este semestre</p>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-
+                    {% for materia in materias %}
                     <!-- Grafica indice de reprobacion -->
                     <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="card">
                             <div class="header">
-                                <h2>Indices de Reprobación</h2>
+                                <h2>Indices de aprobación y reprobación de la materia: "{{ materia }}"</h2>
                             </div>
                             <div class="body">
                                 {% if calificaciones %}
                                     <div align="center">
-                                        <canvas id="apro_repro" class="chart-container"></canvas>
+                                        <canvas id="{{ materia }}" class="chart-container"></canvas>
                                     </div>
                                     <script>
                                         // Datos de ejemplo: materias y calificaciones
                                         var calificaciones = [
                                             {% for calificacion in calificaciones %}
-                                                ({{ calificacion.Parcial_1 }} + {{ calificacion.Parcial_2 }} + {{ calificacion.Parcial_3 }})/3,
+                                                {% if calificacion.fk_Asignacion.fk_Materia.Materia == materia %}
+                                                    ({{ calificacion.Parcial_1 }} + {{ calificacion.Parcial_2 }} + {{ calificacion.Parcial_3 }})/3,
+                                                {% endif %}
                                             {% endfor %}
                                         ];
 
@@ -798,11 +702,11 @@
                                         }
 
                                         // Obtén el contexto del canvas
-                                        var ctxBar = document.getElementById('apro_repro').getContext('2d');
+                                        var ctxBar = document.getElementById('{{ materia }}').getContext('2d');
 
                                         // Configuración de la gráfica de barras
                                         var barChart = new Chart(ctxBar, {
-                                            type: 'bar',
+                                            type: 'pie',
                                             data: {
                                                 labels: ['Aprobadas', 'Reprobadas'],
                                                 datasets: [{
@@ -830,6 +734,7 @@
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
 
                 <div class="row clearfix">

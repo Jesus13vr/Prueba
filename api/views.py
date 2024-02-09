@@ -64,6 +64,7 @@ class Home(APIView):
                 permisos = request.user.fk_Rol.id_Rol
                 return render(request, self.template_name, {
                     "calificaciones": calificaciones,
+                    "materias": materias,
                     "permisos": permisos
                 })
                 
