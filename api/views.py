@@ -291,8 +291,16 @@ class Materias(APIView):
                 materia = request.POST.get('materia')
                 clave = request.POST.get('clave')
                 no_creditos = request.POST.get('no_creditos')
+
+                # Verificar que los campos obligatorios no estén vacíos
+                if not (materia and clave and no_creditos):
+                    return render(request, self.template_name, {"error": 'Todos los campos son obligatorios', "materias": materias, "permisos": permisos})
+
+                # Crear y guardar la materia
                 registrarMateria = Materia(Materia=materia, Clave=clave, No_creditos=no_creditos)
                 registrarMateria.save()
+
+                # Otros procesamientos y retornar la respuesta
                 return render(request, self.template_name, {"mensaje": 'Materia registrada con éxito', "materias": materias, "permisos": permisos})
             except IntegrityError:
                 return render(request, self.template_name, {"error": 'Error al registrar la materia', "materias": materias, "permisos": permisos})
@@ -334,13 +342,27 @@ class Periodos(APIView):
         if 'Crear' in request.POST:
             try:
                 periodo = request.POST.get('periodo')
+
+                # Verificar que los campos obligatorios no estén vacíos
+                if not periodo:
+                    return render(request, self.template_name, {"error": 'El campo Periodo no puede estar vacío', "periodos": periodos, "ultimo_periodo": ultimo_periodo, "permisos": permisos})
+
+                # Obtener objetos relacionados
                 status = get_object_or_404(Status, id_Status=1)
+
+                # Crear y guardar el periodo
                 registrarPeriodo = Periodo(Periodo=periodo, fk_Status=status)
                 registrarPeriodo.save()
+
+                # Obtener el último periodo registrado
                 ultimo_periodo = Periodo.objects.latest('id_Periodo')
+
+                # Otros procesamientos y retornar la respuesta
                 return render(request, self.template_name, {"mensaje": 'Periodo registrado con éxito', "periodos": periodos, "ultimo_periodo": ultimo_periodo, "permisos": permisos})
             except IntegrityError:
                 return render(request, self.template_name, {"error": 'Error al registrar el periodo', "periodos": periodos, "ultimo_periodo": ultimo_periodo, "permisos": permisos})
+
+        # Otros bloques de código si hay más acciones en el formulario
         elif 'Borrar' in request.POST:
             try:
                 periodo_id = request.POST.get('Borrar')
@@ -370,10 +392,20 @@ class Alumno(APIView):
                 email = request.POST.get('email')
                 username = request.POST.get('username')
                 password = request.POST.get('password')
+
+                # Verificar que los campos obligatorios no estén vacíos
+                if not (first_name and last_name and email and username and password):
+                    return render(request, self.template_name, {"error": 'Todos los campos son obligatorios', "alumnos": alumnos, "permisos": permisos})
+
+                # Obtener objetos relacionados
                 rol = get_object_or_404(Rol, id_Rol=4)
                 status = get_object_or_404(Status, id_Status=1)
-                registrarDocente = CustomUser.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, password=password, fk_Rol=rol, fk_Status=status)
-                registrarDocente.save()
+
+                # Crear y guardar el alumno
+                registrarAlumno = CustomUser.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, password=password, fk_Rol=rol, fk_Status=status)
+                registrarAlumno.save()
+
+                # Otros procesamientos y retornar la respuesta
                 return render(request, self.template_name, {"mensaje": 'Alumno registrado con éxito', "alumnos": alumnos, "permisos": permisos})
             except IntegrityError:
                 return render(request, self.template_name, {"error": 'Error al registrar el alumno', "alumnos": alumnos, "permisos": permisos})
