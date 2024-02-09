@@ -57,6 +57,16 @@ class Home(APIView):
                         "permisos": permisos
                     })
                 
+            elif permisos == 3:
+                calificaciones = Calificacion.objects.filter(fk_Asignacion__fk_Docente=user_id, fk_Asignacion__fk_Periodo__Periodo=ultimo_periodo.Periodo)
+                materias = list(calificaciones.values_list('fk_Asignacion__fk_Materia__Materia', flat=True).distinct())
+                print(materias)
+                permisos = request.user.fk_Rol.id_Rol
+                return render(request, self.template_name, {
+                    "calificaciones": calificaciones,
+                    "permisos": permisos
+                })
+                
             else:
                 return render(request, self.template_name, {
                     "permisos": permisos,
