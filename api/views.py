@@ -61,11 +61,28 @@ class Home(APIView):
                 calificaciones = Calificacion.objects.filter(fk_Asignacion__fk_Docente=user_id, fk_Asignacion__fk_Periodo__Periodo=ultimo_periodo.Periodo)
                 materias = list(calificaciones.values_list('fk_Asignacion__fk_Materia__Materia', flat=True).distinct())
                 print(materias)
+                promedios_por_materia = {}
+                for calificacion in calificaciones:
+                    materia = calificacion.fk_Asignacion.fk_Materia.Materia
+                    calificacion_final = (calificacion.Parcial_1 + calificacion.Parcial_2 + calificacion.Parcial_3) / 3
+                    
+                    if materia in promedios_por_materia:
+                        promedios_por_materia[materia].append(calificacion_final)
+                    else:
+                        promedios_por_materia[materia] = [calificacion_final]
+                
+                # Calcular el promedio de las calificaciones finales para cada materia
+                promedios_finales_por_materia = {}
+                for materia, calificaciones_finales in promedios_por_materia.items():
+                    promedio_final = sum(calificaciones_finales) / len(calificaciones_finales)
+                    promedios_finales_por_materia[materia] = promedio_final
+                print(promedios_finales_por_materia)
                 permisos = request.user.fk_Rol.id_Rol
                 return render(request, self.template_name, {
                     "calificaciones": calificaciones,
                     "materias": materias,
-                    "permisos": permisos
+                    "permisos": permisos,
+                    "promedios": promedios_finales_por_materia
                 })
                 
             else:
@@ -328,6 +345,7 @@ class Materias(APIView):
                 return render(request, self.template_name, {'mensaje': 'La materia ha sido modificada', "materias": materias, "permisos": permisos})
             except Exception as e:
                 return render(request, self.template_name, {'error': 'No se pudo modificar la materia', "materias": materias, "permisos": permisos})
+
 @method_decorator(login_required, name='dispatch')
 class Periodos(APIView):
     template_name = "periodo.html"

@@ -672,12 +672,24 @@
                 </div>
 
                 <div class="row clearfix">
-                    {% for materia in materias %}
+                    <div class="header">
+                        <h2>INDICES DE APROBACIÓN Y REPROBACIÓN.</h2>
+                    </div>
+                    {% for materia, promedio in promedios.items %}
                     <!-- Grafica indice de reprobacion -->
                     <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="card">
                             <div class="header">
-                                <h2>Indices de aprobación y reprobación de la materia: "{{ materia }}"</h2>
+                                <h2>{{ materia }}</h2>
+                            </div>
+                            <div class="body">
+                                {% if calificaciones %}
+                                    <p><Strong>Calificación promedio: </Strong>{{ promedio|floatformat:2 }}</p>
+                                    <p id="aprobadas_{{ forloop.counter }}"></p>
+                                    <p id="reprobadas_{{ forloop.counter }}"></p>
+                                {% else %}
+                                    <p>Aun no tienes se han registrado calificaciones durante este semestre</p>
+                                {% endif %}
                             </div>
                             <div class="body">
                                 {% if calificaciones %}
@@ -697,6 +709,9 @@
                                         // Contadores para valores por encima y por debajo de 80
                                         var aprobadas = 0;
                                         var reprobadas = 0;
+                                        var total = 0;
+                                        var porcenaprobadas = 0;
+                                        var porcenreprobadas = 0;
 
                                         // Contar valores por encima y por debajo de 80
                                         for (var i = 0; i < calificaciones.length; i++) {
@@ -706,7 +721,11 @@
                                                 reprobadas++;
                                             }
                                         }
-
+                                        total = aprobadas + reprobadas;
+                                        porcenaprobadas = ((aprobadas/total)*100).toFixed(2);
+                                        porcenreprobadas = ((reprobadas/total)*100).toFixed(2);
+                                        document.getElementById("aprobadas_{{ forloop.counter }}").innerHTML = "<strong>Porcentaje de aprobados:</strong> " + porcenaprobadas + "%";
+                                        document.getElementById("reprobadas_{{ forloop.counter }}").innerHTML = "<strong>Porcentaje de aprobados:</strong> " + porcenreprobadas + "%";
                                         // Obtén el contexto del canvas
                                         var ctxBar = document.getElementById('{{ materia }}').getContext('2d');
 
@@ -737,70 +756,6 @@
                                 {% else %}
                                     <p>Aun no tienes se han registrado calificaciones durante este semestre</p>
                                 {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                        <div class="card">
-                            <div class="header">
-                                <h2>
-                                    Seguimiento de calificaciones
-                                </h2>
-                            </div>
-                            <div class="body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped table-hover dataTable js-exportable">
-                                        <thead>
-                                            <tr>
-                                                <th>Alumno</th>
-                                                <th>Materia</th>
-                                                <th>Grupo</th>
-                                                <th>Semestre</th>
-                                                <th>1er Parcial</th>
-                                                <th>2do Parcial</th>
-                                                <th>3er Parcial</th>
-                                                <th>calificación Final</th>
-                                            </tr>
-                                        </thead>
-                                        <tfoot>
-                                            <tr>
-                                                <th>Alumno</th>
-                                                <th>Materia</th>
-                                                <th>Grupo</th>
-                                                <th>Semestre</th>
-                                                <th>1er Parcial</th>
-                                                <th>2do Parcial</th>
-                                                <th>3er Parcial</th>
-                                                <th>calificación Final</th>
-                                            </tr>
-                                        </tfoot>
-                                        <tbody>
-                                            {% for calificacion in calificaciones %}
-                                                <tr>
-                                                    <td><p>{{ calificacion.fk_Asignacion.fk_Alumno.first_name }} {{ calificacion.fk_Asignacion.fk_Alumno.last_name }}</p></td>
-                                                    <td><p>{{ calificacion.fk_Asignacion.fk_Materia.Materia }}</p></td>
-                                                    <td><p>{{ calificacion.fk_Asignacion.fk_Grupo.Grupo }}</p></td>
-                                                    <td><p>{{ calificacion.fk_Asignacion.fk_Grupo.Grupo|slice:":1" }}</p></td>
-                                                    <td class="{% if calificacion.Parcial_1 <= 69 %}text-danger{% endif %}">{{ calificacion.Parcial_1 }}</td>
-                                                    <td class="{% if calificacion.Parcial_2 <= 69 %}text-danger{% endif %}">{{ calificacion.Parcial_2 }}</td>
-                                                    <td class="{% if calificacion.Parcial_3 <= 69 %}text-danger{% endif %}">{{ calificacion.Parcial_3 }}</td>
-                                                    <td id="resultado_{{ forloop.counter }}"></td>
-                                                    <script>
-                                                        var parcial1 = {{ calificacion.Parcial_1 }};
-                                                        var parcial2 = {{ calificacion.Parcial_2 }};
-                                                        var parcial3 = {{ calificacion.Parcial_3 }};
-                                                        var resultado = ((parcial1 + parcial2 + parcial3) / 3).toFixed(2);
-                                                        var resultadoElement = document.getElementById("resultado_{{ forloop.counter }}");
-                                                        resultadoElement.innerText = resultado;
-                                                        if (resultado <= 69) {
-                                                            resultadoElement.classList.add("text-danger");
-                                                        }
-                                                    </script>
-                                                </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
                             </div>
                         </div>
                     </div>
