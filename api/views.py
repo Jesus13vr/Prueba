@@ -25,8 +25,8 @@ class Home(APIView):
             permisos = request.user.fk_Rol.id_Rol
             user_id = request.user.id
             ultimo_periodo = Periodo.objects.latest('id_Periodo')
-            calificaciones = Calificacion.objects.filter(fk_Asignacion__fk_Alumno=user_id, fk_Asignacion__fk_Periodo__Periodo=ultimo_periodo.Periodo)
             if permisos == 4:
+                calificaciones = Calificacion.objects.filter(fk_Asignacion__fk_Alumno=user_id, fk_Asignacion__fk_Periodo__Periodo=ultimo_periodo.Periodo)
                 total_calificaciones = []
                 for calificacion in calificaciones:
                     total = calificacion.Parcial_1 + calificacion.Parcial_2 + calificacion.Parcial_3
@@ -36,33 +36,29 @@ class Home(APIView):
                         "total": total,
                         "average": average
                     })
-
-                # Find the best and worst average
-                best_average = max(total_calificaciones, key=lambda x: x["average"])
-                print(best_average)
-                worst_average = min(total_calificaciones, key=lambda x: x["average"])
-                print(worst_average)
-
-                # Retrieve the names of the subjects for the best and worst averages
-                best_subject_name = best_average["calificacion"].fk_Asignacion.fk_Materia.Materia
-                print(best_subject_name)
+                if total_calificaciones:
+                        best_average = max(total_calificaciones, key=lambda x: x["average"])
+                        worst_average = min(total_calificaciones, key=lambda x: x["average"])
+                        best_subject_name = best_average["calificacion"].fk_Asignacion.fk_Materia.Materia
+                        worst_subject_name = worst_average["calificacion"].fk_Asignacion.fk_Materia.Materia
+                        
+                        permisos = request.user.fk_Rol.id_Rol
+                        return render(request, self.template_name, {
+                            "calificaciones": calificaciones,
+                            "permisos": permisos,
+                            "best_average": best_average,
+                            "worst_average": worst_average,
+                            "best_subject_name": best_subject_name,
+                            "worst_subject_name": worst_subject_name,
+                        })
+                else:
+                    return render(request, self.template_name, {
+                        "calificaciones": calificaciones,
+                        "permisos": permisos
+                    })
                 
-                worst_subject_name = worst_average["calificacion"].fk_Asignacion.fk_Materia.Materia
-                print(worst_subject_name)
-                
-
-                permisos = request.user.fk_Rol.id_Rol
-                return render(request, self.template_name, {
-                    "calificaciones": calificaciones,
-                    "permisos": permisos,
-                    "best_average": best_average,
-                    "worst_average": worst_average,
-                    "best_subject_name": best_subject_name,
-                    "worst_subject_name": worst_subject_name,
-                })
             else:
                 return render(request, self.template_name, {
-                    "calificaciones": calificaciones,
                     "permisos": permisos,
                 })
         else:
