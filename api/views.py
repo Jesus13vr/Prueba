@@ -84,7 +84,35 @@ class Home(APIView):
                     "permisos": permisos,
                     "promedios": promedios_finales_por_materia
                 })
+            
+            elif permisos == 1 or permisos == 2 :
+                calificaciones = Calificacion.objects.filter(fk_Asignacion__fk_Periodo__Periodo=ultimo_periodo.Periodo)
+                materias = list(calificaciones.values_list('fk_Asignacion__fk_Materia__Materia', flat=True).distinct())
+                print(materias)
+                promedios_por_materia = {}
+                for calificacion in calificaciones:
+                    materia = calificacion.fk_Asignacion.fk_Materia.Materia
+                    calificacion_final = (calificacion.Parcial_1 + calificacion.Parcial_2 + calificacion.Parcial_3) / 3
+                    
+                    if materia in promedios_por_materia:
+                        promedios_por_materia[materia].append(calificacion_final)
+                    else:
+                        promedios_por_materia[materia] = [calificacion_final]
                 
+                # Calcular el promedio de las calificaciones finales para cada materia
+                promedios_finales_por_materia = {}
+                for materia, calificaciones_finales in promedios_por_materia.items():
+                    promedio_final = sum(calificaciones_finales) / len(calificaciones_finales)
+                    promedios_finales_por_materia[materia] = promedio_final
+                print(promedios_finales_por_materia)
+                permisos = request.user.fk_Rol.id_Rol
+                return render(request, self.template_name, {
+                    "calificaciones": calificaciones,
+                    "materias": materias,
+                    "permisos": permisos,
+                    "promedios": promedios_finales_por_materia
+                })
+              
             else:
                 return render(request, self.template_name, {
                     "permisos": permisos,
