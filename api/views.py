@@ -173,6 +173,11 @@ class Grupos(APIView):
         if 'Crear' in request.POST:
             try:
                 grupo = request.POST.get('Grupo')
+
+                # Verificar que el campo no esté vacío
+                if not grupo:
+                    return render(request, self.template_name, {"error": 'El campo Grupo no puede estar vacío', "grupos": grupos, "permisos": permisos})
+
                 registrarGrupo = Grupo(Grupo=grupo)
                 registrarGrupo.save()
                 return render(request, self.template_name, {"mensaje": 'Grupo registrado con éxito', "grupos": grupos, "permisos": permisos})
@@ -200,16 +205,26 @@ class Docentes(APIView):
         permisos = request.user.fk_Rol.id_Rol
         docentes = CustomUser.objects.filter(fk_Rol=3)
         if 'Crear' in request.POST:
-            try:
+           try:
                 first_name = request.POST.get('first_name')
                 last_name = request.POST.get('last_name')
                 email = request.POST.get('email')
                 username = request.POST.get('username')
                 password = request.POST.get('password')
+
+                # Verificar que los campos obligatorios no estén vacíos
+                if not (first_name and last_name and email and username and password):
+                    return render(request, self.template_name, {"error": 'Todos los campos son obligatorios', "docentes": docentes, "permisos": permisos})
+
+                # Obtener objetos relacionados
                 rol = get_object_or_404(Rol, id_Rol=3)
                 status = get_object_or_404(Status, id_Status=1)
+
+                # Crear y guardar el docente
                 registrarDocente = CustomUser.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, password=password, fk_Rol=rol, fk_Status=status)
                 registrarDocente.save()
+
+                # Otros procesamientos y retornar la respuesta
                 return render(request, self.template_name, {"mensaje": 'Docente registrado con éxito', "docentes": docentes, "permisos": permisos})
             except IntegrityError:
                 return render(request, self.template_name, {"error": 'Error al registrar el docente', "docentes": docentes, "permisos": permisos})
