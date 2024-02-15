@@ -421,12 +421,7 @@
                                     <div align="center">
                                         <canvas id="apro_repro" class="chart-container"></canvas>
                                     </div>
-                                    <div align="center">
-                                        <!-- Agregar un botón para descargar la gráfica -->
-                                        <a href="#" id="downloadChart" download="grafica_apro_repro.png" onclick="downloadChart()">
-                                            <button class="btn btn-primary">Descargar Gráfica</button>
-                                        </a>
-                                    </div>
+                                    
                                     <script>
                                         // Datos de ejemplo: materias y calificaciones
                                         var calificaciones = [
@@ -453,7 +448,7 @@
 
                                         // Configuración de la gráfica de barras
                                         var barChart = new Chart(ctxBar, {
-                                            type: 'bar',
+                                            type: 'pie',
                                             data: {
                                                 labels: ['Aprobadas', 'Reprobadas'],
                                                 datasets: [{
