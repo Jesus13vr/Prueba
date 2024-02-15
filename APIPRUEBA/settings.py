@@ -32,7 +32,7 @@ DEBUG = True
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'api/static')
 
-ALLOWED_HOSTS = ['192.168.137.231', '192.168.1.66','localhost']
+ALLOWED_HOSTS = []
 
 RENDER_EXTERNAL_HOSTNAME= os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
@@ -90,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'admon',
         'USER': 'postgres',
-        'PASSWORD': 'root',
+        'PASSWORD': '123',
         'HOST': 'localhost',  # O la dirección de tu servidor PostgreSQL
         'PORT': '',           # Puerto de PostgreSQL (generalmente 5432)
    }
