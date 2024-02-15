@@ -861,6 +861,96 @@
                     </div>
                     {% endfor %}
                 </div>
+                <div class="row clearfix">
+                    <div class="header">
+                        <h2>Promedios grupales.</h2>
+                    </div>
+                    {% for materia, promedio in promedios.items %}
+                    <!-- Grafica indice de reprobacion -->
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                        <div class="card">
+                            <div class="header">
+                                <h2>{{ materia }}</h2>
+                            </div>
+                            <div class="body">
+                                {% if calificaciones %}
+                                    <p><Strong>Calificación promedio: </Strong>{{ promedio|floatformat:2 }}</p>
+                                    <p id="aprobadas_{{ forloop.counter }}"></p>
+                                    <p id="reprobadas_{{ forloop.counter }}"></p>
+                                {% else %}
+                                    <p>Aun no tienes se han registrado calificaciones durante este semestre</p>
+                                {% endif %}
+                            </div>
+                            <div class="body">
+                                {% if calificaciones %}
+                                    <div align="center">
+                                        <canvas id="{{ materia }}{{ forloop.counter }}" class="chart-container"></canvas>
+                                    </div>
+                                    <script>
+                                        // Datos de ejemplo: materias y calificaciones
+                                        var calificaciones = [
+                                            {% for calificacion in calificaciones %}
+                                                {% if calificacion.fk_Asignacion.fk_Materia.Materia == materia %}
+                                                    ({{ calificacion.Parcial_1 }} + {{ calificacion.Parcial_2 }} + {{ calificacion.Parcial_3 }})/3,
+                                                {% endif %}
+                                            {% endfor %}
+                                        ];
+
+                                        // Contadores para valores por encima y por debajo de 80
+                                        var aprobadas = 0;
+                                        var reprobadas = 0;
+                                        var total = 0;
+                                        var porcenaprobadas = 0;
+                                        var porcenreprobadas = 0;
+
+                                        // Contar valores por encima y por debajo de 80
+                                        for (var i = 0; i < calificaciones.length; i++) {
+                                            if (calificaciones[i] >= 69) {
+                                                aprobadas++;
+                                            } else {
+                                                reprobadas++;
+                                            }
+                                        }
+                                        total = aprobadas + reprobadas;
+                                        porcenaprobadas = ((aprobadas/total)*100).toFixed(2);
+                                        porcenreprobadas = ((reprobadas/total)*100).toFixed(2);
+                                        document.getElementById("aprobadas_{{ forloop.counter }}").innerHTML = "<strong>Porcentaje de aprobados:</strong> " + porcenaprobadas + "%";
+                                        document.getElementById("reprobadas_{{ forloop.counter }}").innerHTML = "<strong>Porcentaje de aprobados:</strong> " + porcenreprobadas + "%";
+                                        // Obtén el contexto del canvas
+                                        var ctxBar = document.getElementById('{{ materia }}{{ forloop.counter }}').getContext('2d');
+
+                                        // Configuración de la gráfica de barras
+                                        var barChart = new Chart(ctxBar, {
+                                            type: 'bar',
+                                            data: {
+                                                labels: ['Aprobadas', 'Reprobadas'],
+                                                datasets: [{
+                                                    data: [aprobadas, reprobadas],
+                                                    backgroundColor: ['rgba(0, 255, 0, 0.2)', 'rgba(255, 99, 132, 0.2)'], // Colores de fondo de las barras
+                                                    borderColor: ['rgba(0, 255, 0, 1)', 'rgba(255, 99, 132, 1)'],         // Colores del borde de las barras
+                                                    borderWidth: 1
+                                                }]
+                                            },
+                                            options: {
+                                                responsive: true,
+                                                maintainAspectRatio: false, // Esto desactiva la relación de aspecto fija
+                                                scales: {
+                                                    y: {
+                                                        beginAtZero: true,
+                                                        max: calificaciones.length // Puedes ajustar este valor según tus necesidades
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    </script>
+                                {% else %}
+                                    <p>Aun no tienes se han registrado calificaciones durante este semestre</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
                 
             </div>
         {% endif %}
