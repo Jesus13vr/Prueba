@@ -724,7 +724,8 @@
                                         document.getElementById("reprobadas_{{ forloop.counter }}").innerHTML = "<strong style='color: red';>Porcentaje de Reprobados:</strong> " + porcenreprobadas + "%";
                                         
                                         // DESVIACION ESTANDAR
-                                        var datosInput = "{{ calificacionesArray }}";
+                                        let datosInput = [1, 2, 3]; // Array inicial con datos
+                                        datosInput.push(4);
                                         var datos = datosInput.split(",").map(Number); // Convertir los datos a una lista de números
 
                                         var suma = datos.reduce(function(a, b) { return a + b; }, 0); // Calcular la suma de los datos
