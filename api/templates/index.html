@@ -687,6 +687,7 @@
                                     <p><Strong>Calificación promedio: </Strong>{{ promedio|floatformat:2 }}</p>
                                     <p id="aprobadas_{{ forloop.counter }}"></p>
                                     <p id="reprobadas_{{ forloop.counter }}"></p>
+                                    <p id="desviacion_{{ forloop.counter }}"></p>
                                 {% else %}
                                     <p>Aun no tienes se han registrado calificaciones durante este semestre</p>
                                 {% endif %}
@@ -726,6 +727,18 @@
                                         porcenreprobadas = ((reprobadas/total)*100).toFixed(2);
                                         document.getElementById("aprobadas_{{ forloop.counter }}").innerHTML = "<strong style='color: green';>Porcentaje de Aprobados:</strong>  " + porcenaprobadas + "%";
                                         document.getElementById("reprobadas_{{ forloop.counter }}").innerHTML = "<strong style='color: red';>Porcentaje de Reprobados:</strong> " + porcenreprobadas + "%";
+                                        
+                                        // DESVIACION ESTANDAR
+                                        var datosInput = "{{ calificacionesArray }}";
+                                        var datos = datosInput.split(",").map(Number); // Convertir los datos a una lista de números
+
+                                        var suma = datos.reduce(function(a, b) { return a + b; }, 0); // Calcular la suma de los datos
+                                        var media = suma / datos.length; // Calcular la media
+
+                                        var sumaCuadrados = datos.map(function(dato) { return Math.pow(dato - media, 2); }).reduce(function(a, b) { return a + b; }, 0); // Calcular la suma de los cuadrados de las diferencias con la media
+                                        var desviacionEstandar = Math.sqrt(sumaCuadrados / datos.length); // Calcular la desviación estándar
+
+                                        document.getElementById("desviacion_{{ forloop.counter }}").innerHTML = "<strong>Desviación estandar:</strong> " + desviacionEstandar.toFixed(2);
                                         // Obtén el contexto del canvas
                                         var ctxBar = document.getElementById('{{ materia }}').getContext('2d');
 

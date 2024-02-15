@@ -240,6 +240,10 @@
     </section>
 
     <section class="content">
+        <script>
+            var sumaPromedios = 0;
+            var cantidadMaterias = 0;
+        </script>
         <div class="container-fluid">
             <!-- #END# Basic Examples -->
             <!-- Exportable Table -->
@@ -266,12 +270,8 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Materia</th>
-                                            <th>Semestre</th>
-                                            <th>1er Parcial</th>
-                                            <th>2do Parcial</th>
-                                            <th>3er Parcial</th>
-                                            <th>Calificación Final</th>
+                                            <th colspan="5">Suma de Promedios Finales</th>
+                                            <th id="suma_promedios"></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -293,6 +293,9 @@
                                                     if (resultado <= 69) {
                                                         resultadoElement.classList.add("text-danger");
                                                     }
+                                                    sumaPromedios = sumaPromedios + (parseFloat(resultado));
+                                                    console.log(sumaPromedios);
+                                                    cantidadMaterias = cantidadMaterias + 1;
                                                 </script>
                                             </tr>
                                         {% endfor %}
@@ -305,6 +308,11 @@
             </div>
             <!-- #END# Exportable Table -->
         </div>
+        
+        <script>
+            var promedioFinal = sumaPromedios/cantidadMaterias;
+            document.getElementById("suma_promedios").innerText = promedioFinal.toFixed(2);
+        </script>
     </section>
 
     <!-- Jquery Core Js -->
