@@ -85,16 +85,16 @@ WSGI_APPLICATION = 'APIPRUEBA.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#    'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'admon',
-#         'USER': 'postgres',
-#         'PASSWORD': '123',
-#         'HOST': 'localhost',  # O la dirección de tu servidor PostgreSQL
-#         'PORT': '',           # Puerto de PostgreSQL (generalmente 5432)
-#    }
-# }
+DATABASES = {
+   'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'admon_xm9o',
+        'USER': 'root',
+        'PASSWORD': '9IvwXcLnOdLqcrhePbhDQVqGAn2pGTpM',
+        'HOST': 'dpg-cn6oitmct0pc73fft890-a.oregon-postgres.render.com',  # O la dirección de tu servidor PostgreSQL
+        'PORT': '',           # Puerto de PostgreSQL (generalmente 5432)
+   }
+}
 # DATABASES ={
 #     'default': dj_database_url
 # }
