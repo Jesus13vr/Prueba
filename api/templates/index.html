@@ -368,11 +368,11 @@
                                                     {% elif resultado >= 240 and resultado <= 254 %}
                                                     "#F1C40F"
                                                     {% elif resultado >= 255 and resultado <= 269 %}
-                                                    "#16A085"
-                                                    {% elif resultado >= 270 and resultado <= 284 %}
-                                                    "#16A085"
-                                                    {% elif resultado >= 285 and resultado <= 300 %}
                                                     "#2E86C1"
+                                                    {% elif resultado >= 270 and resultado <= 284 %}
+                                                    "#2E86C1"
+                                                    {% elif resultado >= 285 and resultado <= 300 %}
+                                                    "#16A085"
                                                     {% else %}
                                                     "black"
                                                     {% endif %}
@@ -421,12 +421,7 @@
                                     <div align="center">
                                         <canvas id="apro_repro" class="chart-container"></canvas>
                                     </div>
-                                    <div align="center">
-                                        <!-- Agregar un botón para descargar la gráfica -->
-                                        <a href="#" id="downloadChart" download="grafica_apro_repro.png" onclick="downloadChart()">
-                                            <button class="btn btn-primary">Descargar Gráfica</button>
-                                        </a>
-                                    </div>
+                                    
                                     <script>
                                         // Datos de ejemplo: materias y calificaciones
                                         var calificaciones = [
@@ -453,7 +448,7 @@
 
                                         // Configuración de la gráfica de barras
                                         var barChart = new Chart(ctxBar, {
-                                            type: 'bar',
+                                            type: 'pie',
                                             data: {
                                                 labels: ['Aprobadas', 'Reprobadas'],
                                                 datasets: [{
@@ -687,6 +682,7 @@
                                     <p><Strong>Calificación promedio: </Strong>{{ promedio|floatformat:2 }}</p>
                                     <p id="aprobadas_{{ forloop.counter }}"></p>
                                     <p id="reprobadas_{{ forloop.counter }}"></p>
+                                    <p id="desviacion_{{ forloop.counter }}"></p>
                                 {% else %}
                                     <p>Aun no tienes se han registrado calificaciones durante este semestre</p>
                                 {% endif %}
@@ -724,8 +720,9 @@
                                         total = aprobadas + reprobadas;
                                         porcenaprobadas = ((aprobadas/total)*100).toFixed(2);
                                         porcenreprobadas = ((reprobadas/total)*100).toFixed(2);
-                                        document.getElementById("aprobadas_{{ forloop.counter }}").innerHTML = "<strong>Porcentaje de aprobados:</strong> " + porcenaprobadas + "%";
-                                        document.getElementById("reprobadas_{{ forloop.counter }}").innerHTML = "<strong>Porcentaje de aprobados:</strong> " + porcenreprobadas + "%";
+                                        document.getElementById("aprobadas_{{ forloop.counter }}").innerHTML = "<strong style='color: green';>Porcentaje de Aprobados:</strong>  " + porcenaprobadas + "%";
+                                        document.getElementById("reprobadas_{{ forloop.counter }}").innerHTML = "<strong style='color: red';>Porcentaje de Reprobados:</strong> " + porcenreprobadas + "%";
+
                                         // Obtén el contexto del canvas
                                         var ctxBar = document.getElementById('{{ materia }}').getContext('2d');
 
@@ -760,6 +757,63 @@
                         </div>
                     </div>
                     {% endfor %}
+                </div>
+
+                <div class="row clearfix">
+                    <div class="header">
+                        <h2>DATOS ESTADISTICOS</h2>
+                    </div>
+                        {% for materia, desviacion in desviaciones.items %}
+                        <!-- Grafica indice de reprobacion -->
+                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="card">
+                                <div class="header">
+                                    <h2>{{ materia }}</h2>
+                                </div>
+                                <div class="body">
+                                    {% if calificaciones %}
+                                        <p><Strong>Desviación estandar: </Strong>{% if desviacion %}{{ desviacion }}{% else %}No fue posible calcular la desviación estandar debido a que no existen suficientes calificaciones{% endif %}</li></p>
+                                    {% else %}
+                                        <p>Aun no tienes se han registrado calificaciones durante este semestre</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                </div>
+
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2>
+                                    Rankeo de calificaciones
+                                </h2>
+                            </div>
+                            <div class="body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                        <thead>
+                                            <tr>
+                                                <th>Apellidos</th>
+                                                <th>Nombre(s)</th>
+                                                <th>Promedio</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for alumno in datos_alumnos %}
+                                                <tr>
+                                                    <td>{{ alumno.apellido }}</td>
+                                                    <td>{{ alumno.nombre }}</td>
+                                                    <td>{{ alumno.promedio }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
             </div>
@@ -824,8 +878,8 @@
                                         total = aprobadas + reprobadas;
                                         porcenaprobadas = ((aprobadas/total)*100).toFixed(2);
                                         porcenreprobadas = ((reprobadas/total)*100).toFixed(2);
-                                        document.getElementById("aprobadas_{{ forloop.counter }}").innerHTML = "<strong>Porcentaje de aprobados:</strong> " + porcenaprobadas + "%";
-                                        document.getElementById("reprobadas_{{ forloop.counter }}").innerHTML = "<strong>Porcentaje de aprobados:</strong> " + porcenreprobadas + "%";
+                                        document.getElementById("aprobadas_{{ forloop.counter }}").innerHTML = "<strong style='color: green';>Porcentaje de Aprobados:</strong>  " + porcenaprobadas + "%";
+                                        document.getElementById("reprobadas_{{ forloop.counter }}").innerHTML = "<strong style='color: red';>Porcentaje de Reprobados:</strong> " + porcenreprobadas + "%";
                                         // Obtén el contexto del canvas
                                         var ctxBar = document.getElementById('{{ materia }}').getContext('2d');
 
@@ -875,6 +929,7 @@
                             <div class="body">
                                 {% if calificaciones %}
                                     <p><Strong>Calificación promedio: </Strong>{{ promedio|floatformat:2 }}</p>
+
                                     <p id="aprobadas_{{ forloop.counter }}"></p>
                                     <p id="reprobadas_{{ forloop.counter }}"></p>
                                 {% else %}
@@ -951,7 +1006,12 @@
                     </div>
                     {% endfor %}
                 </div>
-                
+                <div class="row clearfix">
+                    <div class="header">
+                        <h2>Taza de Retencion  .</h2>
+                    </div>
+                    <iframe title="admon 1" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=f8928883-f9b8-43a6-a880-82310e568fa7&autoAuth=true&ctid=dcec6cc1-cc36-4bdf-a82c-eaddb2de00ea" frameborder="0" allowFullScreen="true"></iframe>
+                </div>
             </div>
         {% endif %}
         
