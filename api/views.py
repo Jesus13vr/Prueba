@@ -16,7 +16,8 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-from django.db.models import Avg
+from django.db.models import Avg, F, FloatField, IntegerField, ExpressionWrapper
+from django.db.models.functions import Coalesce
 import statistics
 
 # Create your views here.
@@ -94,12 +95,45 @@ class Home(APIView):
 
                 print(promedios_finales_por_materia)
                 permisos = request.user.fk_Rol.id_Rol
+                
+                # Obtener los IDs de los CustomUser con fk_Rol=4
+                alumnos = CustomUser.objects.filter(fk_Rol=4).values_list('id', flat=True)
+
+                # Obtener el promedio de calificaciones de cada alumno
+                promedios = Calificacion.objects.filter(fk_Asignacion__fk_Alumno_id__in=alumnos)\
+                    .values('fk_Asignacion__fk_Alumno')\
+                    .annotate(promedio=Avg(F('Parcial_1') + F('Parcial_2') + F('Parcial_3'))/3.0)
+                print("PROMEDIOS: ", promedios)
+
+                # Filtrar por la materia específica
+                materia_id = 2  # ID de la materia específica
+                promedios = promedios.filter(fk_Asignacion__fk_Materia_id=materia_id)
+
+                # Ordenar por promedio de mayor a menor
+                promedios = promedios.order_by('-promedio')
+
+                # Obtener los nombres de los alumnos
+                alumnos_con_promedio = CustomUser.objects.filter(id__in=promedios.values('fk_Asignacion__fk_Alumno'))\
+                    .values('first_name', 'last_name')
+
+                # Imprimir resultados
+                print("ALUMNOS RANKEADOS")
+                datos_alumnos = []
+                for alumno, promedio in zip(alumnos_con_promedio, promedios):
+                    datos_alumnos.append({
+                        'nombre': alumno['first_name'],
+                        'apellido': alumno['last_name'],
+                        'promedio': promedio['promedio']
+                    })
+
+                    
                 return render(request, self.template_name, {
                     "calificaciones": calificaciones,
                     "materias": materias,
                     "permisos": permisos,
                     "promedios": promedios_finales_por_materia,
-                    "desviaciones": desviaciones_estandar_por_materia
+                    "desviaciones": desviaciones_estandar_por_materia,
+                    'datos_alumnos': datos_alumnos
                 })
             
             elif permisos == 1 or permisos == 2 :
