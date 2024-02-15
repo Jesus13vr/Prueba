@@ -368,11 +368,11 @@
                                                     {% elif resultado >= 240 and resultado <= 254 %}
                                                     "#F1C40F"
                                                     {% elif resultado >= 255 and resultado <= 269 %}
-                                                    "#16A085"
-                                                    {% elif resultado >= 270 and resultado <= 284 %}
-                                                    "#16A085"
-                                                    {% elif resultado >= 285 and resultado <= 300 %}
                                                     "#2E86C1"
+                                                    {% elif resultado >= 270 and resultado <= 284 %}
+                                                    "#2E86C1"
+                                                    {% elif resultado >= 285 and resultado <= 300 %}
+                                                    "#16A085"
                                                     {% else %}
                                                     "black"
                                                     {% endif %}
@@ -883,6 +883,7 @@
                             <div class="body">
                                 {% if calificaciones %}
                                     <p><Strong>Calificación promedio: </Strong>{{ promedio|floatformat:2 }}</p>
+
                                     <p id="aprobadas_{{ forloop.counter }}"></p>
                                     <p id="reprobadas_{{ forloop.counter }}"></p>
                                 {% else %}
@@ -959,7 +960,12 @@
                     </div>
                     {% endfor %}
                 </div>
-                
+                <div class="row clearfix">
+                    <div class="header">
+                        <h2>Cortes Generacionales .</h2>
+                    </div>
+                    <iframe title="admon 1" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=f8928883-f9b8-43a6-a880-82310e568fa7&autoAuth=true&ctid=dcec6cc1-cc36-4bdf-a82c-eaddb2de00ea" frameborder="0" allowFullScreen="true"></iframe>
+                </div>
             </div>
         {% endif %}
         
