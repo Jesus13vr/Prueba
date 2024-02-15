@@ -724,8 +724,8 @@
                                         total = aprobadas + reprobadas;
                                         porcenaprobadas = ((aprobadas/total)*100).toFixed(2);
                                         porcenreprobadas = ((reprobadas/total)*100).toFixed(2);
-                                        document.getElementById("aprobadas_{{ forloop.counter }}").innerHTML = "<strong>Porcentaje de aprobados:</strong> " + porcenaprobadas + "%";
-                                        document.getElementById("reprobadas_{{ forloop.counter }}").innerHTML = "<strong>Porcentaje de aprobados:</strong> " + porcenreprobadas + "%";
+                                        document.getElementById("aprobadas_{{ forloop.counter }}").innerHTML = "<strong  style='color: green';>Porcentaje de Aprobados:</strong> " + porcenaprobadas + "%";
+                                        document.getElementById("reprobadas_{{ forloop.counter }}").innerHTML = "<strong style='color: red;'>Porcentaje de Reprobados:</strong> " + porcenreprobadas + "%";
                                         // Obtén el contexto del canvas
                                         var ctxBar = document.getElementById('{{ materia }}').getContext('2d');
 
@@ -824,8 +824,8 @@
                                         total = aprobadas + reprobadas;
                                         porcenaprobadas = ((aprobadas/total)*100).toFixed(2);
                                         porcenreprobadas = ((reprobadas/total)*100).toFixed(2);
-                                        document.getElementById("aprobadas_{{ forloop.counter }}").innerHTML = "<strong>Porcentaje de aprobados:</strong> " + porcenaprobadas + "%";
-                                        document.getElementById("reprobadas_{{ forloop.counter }}").innerHTML = "<strong>Porcentaje de aprobados:</strong> " + porcenreprobadas + "%";
+                                        document.getElementById("aprobadas_{{ forloop.counter }}").innerHTML = "<strong  style='color: green';>Porcentaje de Aprobados:</strong>  " + porcenaprobadas + "%";
+                                        document.getElementById("reprobadas_{{ forloop.counter }}").innerHTML = "<strong  style='color: red';>Porcentaje de Reprobados:</strong> " + porcenreprobadas + "%";
                                         // Obtén el contexto del canvas
                                         var ctxBar = document.getElementById('{{ materia }}').getContext('2d');
 
