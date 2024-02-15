@@ -17,6 +17,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from django.db.models import Avg
+import statistics
 
 # Create your views here.
 @method_decorator(login_required, name='dispatch')
@@ -75,16 +76,30 @@ class Home(APIView):
                 
                 # Calcular el promedio de las calificaciones finales para cada materia
                 promedios_finales_por_materia = {}
+                desviaciones_estandar_por_materia = {}
                 for materia, calificaciones_finales in promedios_por_materia.items():
                     promedio_final = sum(calificaciones_finales) / len(calificaciones_finales)
                     promedios_finales_por_materia[materia] = promedio_final
+                    
+                    # Verificar que haya al menos dos puntos de datos antes de calcular la desviación estándar
+                    if len(calificaciones_finales) >= 2:
+                        desviacion = statistics.stdev(calificaciones_finales)
+                    else:
+                        desviacion = None  # Si no hay suficientes datos, asignamos None a la desviación
+                    desviaciones_estandar_por_materia[materia] = desviacion
+                    if desviacion is not None:
+                        print("Desviación estándar de", materia, ":", desviacion)
+                    else:
+                        print("No hay suficientes datos para calcular la desviación estándar de", materia)
+
                 print(promedios_finales_por_materia)
                 permisos = request.user.fk_Rol.id_Rol
                 return render(request, self.template_name, {
                     "calificaciones": calificaciones,
                     "materias": materias,
                     "permisos": permisos,
-                    "promedios": promedios_finales_por_materia
+                    "promedios": promedios_finales_por_materia,
+                    "desviaciones": desviaciones_estandar_por_materia
                 })
             
             elif permisos == 1 or permisos == 2 :

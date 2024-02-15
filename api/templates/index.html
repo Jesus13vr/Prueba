@@ -722,18 +722,7 @@
                                         porcenreprobadas = ((reprobadas/total)*100).toFixed(2);
                                         document.getElementById("aprobadas_{{ forloop.counter }}").innerHTML = "<strong style='color: green';>Porcentaje de Aprobados:</strong>  " + porcenaprobadas + "%";
                                         document.getElementById("reprobadas_{{ forloop.counter }}").innerHTML = "<strong style='color: red';>Porcentaje de Reprobados:</strong> " + porcenreprobadas + "%";
-                                        
-                                        // DESVIACION ESTANDAR
-                                        var datosInput = "{{ calificacionesArray }}";
-                                        var datos = datosInput.split(",").map(Number); // Convertir los datos a una lista de números
 
-                                        var suma = datos.reduce(function(a, b) { return a + b; }, 0); // Calcular la suma de los datos
-                                        var media = suma / datos.length; // Calcular la media
-
-                                        var sumaCuadrados = datos.map(function(dato) { return Math.pow(dato - media, 2); }).reduce(function(a, b) { return a + b; }, 0); // Calcular la suma de los cuadrados de las diferencias con la media
-                                        var desviacionEstandar = Math.sqrt(sumaCuadrados / datos.length); // Calcular la desviación estándar
-
-                                        document.getElementById("desviacion_{{ forloop.counter }}").innerHTML = "<strong>Desviación estandar:</strong> " + desviacionEstandar.toFixed(2);
                                         // Obtén el contexto del canvas
                                         var ctxBar = document.getElementById('{{ materia }}').getContext('2d');
 
@@ -768,6 +757,29 @@
                         </div>
                     </div>
                     {% endfor %}
+                </div>
+
+                <div class="row clearfix">
+                    <div class="header">
+                        <h2>DATOS ESTADISTICOS</h2>
+                    </div>
+                        {% for materia, desviacion in desviaciones.items %}
+                        <!-- Grafica indice de reprobacion -->
+                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="card">
+                                <div class="header">
+                                    <h2>{{ materia }}</h2>
+                                </div>
+                                <div class="body">
+                                    {% if calificaciones %}
+                                        <p><Strong>Desviación estandar: </Strong>{% if desviacion %}{{ desviacion }}{% else %}No fue posible calcular la desviación estandar debido a que no existen suficientes calificaciones{% endif %}</li></p>
+                                    {% else %}
+                                        <p>Aun no tienes se han registrado calificaciones durante este semestre</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
                 </div>
                 
             </div>
