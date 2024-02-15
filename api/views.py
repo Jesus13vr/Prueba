@@ -16,6 +16,8 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
+from django.db.models import Avg
+
 # Create your views here.
 @method_decorator(login_required, name='dispatch')
 class Home(APIView):
@@ -88,6 +90,7 @@ class Home(APIView):
             elif permisos == 1 or permisos == 2 :
                 calificaciones = Calificacion.objects.filter(fk_Asignacion__fk_Periodo__Periodo=ultimo_periodo.Periodo)
                 materias = list(calificaciones.values_list('fk_Asignacion__fk_Materia__Materia', flat=True).distinct())
+                grupos = list(calificaciones.values_list('fk_Asignacion__fk_Grupo__Grupo', flat=True).distinct())
                 print(materias)
                 promedios_por_materia = {}
                 for calificacion in calificaciones:
