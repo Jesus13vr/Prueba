@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY',default='your secret key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'RENDER' not in os.environ
 # DEBUG = False
 
 if not DEBUG:
@@ -81,40 +81,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'APIPRUEBA.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
 DATABASES = {
-   'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'admon_xm9o',
-        'USER': 'root',
-        'PASSWORD': '9IvwXcLnOdLqcrhePbhDQVqGAn2pGTpM',
-        'HOST': 'dpg-cn6oitmct0pc73fft890-a.oregon-postgres.render.com',  # O la dirección de tu servidor PostgreSQL
-        'PORT': '',           # Puerto de PostgreSQL (generalmente 5432)
-   }
+    'default': dj_database_url.parse("postgres://admon_4v0x_user:T7vS2svVe6Z0hPnclaZmyYj4Qb6NrINq@dpg-cnp9lhnsc6pc73fqe35g-a.oregon-postgres.render.com/admon_4v0x")
 }
-
-"""
-DATABASES = {
-   'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'admon',
-        'USER': 'postgres',
-        'PASSWORD': '123',
-        'HOST': 'localhost',  # O la dirección de tu servidor PostgreSQL
-        'PORT': '',           # Puerto de PostgreSQL (generalmente 5432)
-   }
-}
-"""
-# DATABASES ={
-#     'default': dj_database_url
-# }
-
-# Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
