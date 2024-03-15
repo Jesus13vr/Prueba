@@ -15,7 +15,9 @@ from django.template.loader import render_to_string
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-
+from django.shortcuts import render
+from django.http import HttpResponse
+from openpyxl import Workbook
 from django.db.models import Avg, F, FloatField, IntegerField, ExpressionWrapper
 from django.db.models.functions import Coalesce
 import statistics
@@ -806,3 +808,28 @@ def page_not_found(request, exception):
 
 def server_error(request):
     return render(request, '500.html', status=500)
+
+def export_to_excel(request):
+    if request.method == 'POST':
+        selected_cells = request.POST.getlist('selected_cells[]')  # Obtener celdas seleccionadas
+
+        # Procesar las celdas seleccionadas para extraer los datos correspondientes
+        data = []
+        for cell in selected_cells:
+            row_index, col_index = map(int, cell.split('_')[1:])  # Separar índices de fila y columna
+            data.append((row_index, col_index, request.POST.get(f'data_{row_index}_{col_index}')))
+
+        # Generar archivo Excel
+        workbook = Workbook()
+        sheet = workbook.active
+
+        for row_index, col_index, value in data:
+            sheet.cell(row=row_index, column=col_index, value=value)
+
+        response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = 'attachment; filename=datos.xlsx'
+        workbook.save(response)
+        return response
+    else:
+        # Aquí deberías pasar los datos de tu modelo a la plantilla HTML
+        return render(request, 'export.html', context={})

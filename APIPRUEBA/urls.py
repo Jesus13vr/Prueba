@@ -28,5 +28,6 @@ urlpatterns = [
      path('charts/', Charts.as_view(),name='charts'),
      path('enviar-contrasena-temporal/<str:correo>/',views.enviar_contrasena_temporal, name='enviar-cotrasena-temporal'),
      path('enviar_correo/<str:nombre>/<str:correo>/<str:apellido>/<str:usuario>/<str:contra>/', views.enviar_correo, name='enviar_correo'),
+      path('exportar-excel/', views.export_to_excel, name='export_to_excel'),
      path('prueba/', Prueba.as_view(),name='prueba'),
 ]
