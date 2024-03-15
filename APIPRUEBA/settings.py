@@ -81,19 +81,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'APIPRUEBA.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'admon',
-        'USER': 'postgres',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',  # O la dirección de tu servidor PostgreSQL
-        'PORT': '',  
-    }
-}
 # DATABASES = {
-#     'default': dj_database_url.parse("postgres://admon_4v0x_user:T7vS2svVe6Z0hPnclaZmyYj4Qb6NrINq@dpg-cnp9lhnsc6pc73fqe35g-a.oregon-postgres.render.com/admon_4v0x")
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'admon',
+#         'USER': 'postgres',
+#         'PASSWORD': 'root',
+#         'HOST': 'localhost',  # O la dirección de tu servidor PostgreSQL
+#         'PORT': '',  
+#     }
 # }
+DATABASES = {
+    'default': dj_database_url.parse("postgres://admon_4v0x_user:T7vS2svVe6Z0hPnclaZmyYj4Qb6NrINq@dpg-cnp9lhnsc6pc73fqe35g-a.oregon-postgres.render.com/admon_4v0x")
+}
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
